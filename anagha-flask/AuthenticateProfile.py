@@ -11,7 +11,7 @@ id = '1JS17CS420'
 org_id = '1JS'
 role = ''
 password = 'jerry123'
-email_id = "gonarayanraj48@gmail.com"
+email_id = "anaghakswamy14@gmail.com"
 
 docref_ins = db.collection('Organization').document(org_id).collection('Instructor').where('instructor_id', '==', id).get()
 
