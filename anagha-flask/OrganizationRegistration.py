@@ -16,6 +16,16 @@ data = {
     'type': 'C'
 }
 
-docref = db. collection('Organization').document(data['org_id'])
+docref = db.collection('Organization').document(data['org_id'])
 
 docref.set(data)
+
+data1 = {
+    'id': data['org_id'],
+    'password': data['password'],
+    'role': 'Organization'
+}
+
+docref1 = db.collection('Login').document(data1['id'])
+
+docref1.set(data1)
