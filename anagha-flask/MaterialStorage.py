@@ -18,3 +18,6 @@ blob = bucket.blob(org_id + '/' + classname + '/' + filename)
 # blob.upload_from_filename(filename)
 blob.make_public()
 print(blob.public_url)
+
+file_url = blob.generate_signed_url(datetime.timedelta(days=1), method='GET') #this URL valid for 1 day
+print(file_url)
