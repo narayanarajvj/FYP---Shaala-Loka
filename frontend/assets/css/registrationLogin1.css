@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap');
+body{
+	background: url("../Images/Background_mobile.jpg") ;
+	background-size: cover;
+}
+nav{
+	background:white;
+	width: 100%;
+	margin:0;
+}
+.nav-logo img{
+	width:43%;
+}
+.heading{
+	text-transform: capitalize;
+	text-align: center;
+	font-family: 'Lora', serif;
+	font-size: 52pt;
+	margin-top: 6%;
+	padding: 2%;
+}
+.login-link{
+	text-transform: capitalize;
+	text-align: center;
+	font-family: 'Lora', serif;
+	font-size: 42pt;
+	margin-top: 2%;
+	padding: 2%;
+}
+.login-link a{
+	text-decoration: none;
+	color:#245d74;
+}
+.form{
+	width:84%;
+	background:rgba(0,0,0,0.9);
+	margin: 10% auto;
+	text-align: center;
+
+}
+.form input{
+	display:block;
+	font-size: 38pt;
+	margin: 8%; 
+	padding: 2%;
+	font-family: 'Playfair Display', serif;
+	font-weight: 700;
+	border:none;
+	outline: none;
+	width:65%;
+	cursor: text;
+}
+::placeholder{
+	color:black;
+	text-transform: capitalize;
+}
+:-ms-input-placeholder{
+	color:black;
+	text-transform: capitalize;
+}
+::-ms-input-placeholder{
+	color:black;
+	text-transform: capitalize;
+}
+.form select{
+	font-size: 38pt;
+	margin: 8%; 
+	padding: 2%;
+	font-family: 'Playfair Display', serif;
+	font-weight: 900;
+	border:none;
+	outline: none;
+	width:67%;
+}
+.form optgroup{
+		font-weight: 800;
+	}
+.form button{
+	font-size: 45pt;
+	width:35%;
+	border-radius:5%;
+	padding: 3%;
+	margin:7%;
+	font-family: 'Playfair Display', serif;
+	font-weight: 700;
+	text-transform: capitalize;
+	background: #edb230;
+	color:black;
+	border:none;
+	outline: none;
+	cursor: pointer;
+}
+
+/*------------ MEDIA QUERIES -------------- */
+
+@media screen and (min-width:1025px){
+	body{
+		background: url("../Images/Background.png") no-repeat fixed;
+		background-size: cover;
+	}
+	nav{
+		margin-top:-1%;
+	}
+	.nav-logo img{
+		width:17%;
+	}
+	.heading{
+		font-size: 22pt;
+		margin: 1%;
+	}
+	.login-link {
+		font-size: 14pt;
+		margin-top: -1%;
+		padding: 0.5%;
+	}
+	.form{
+		width:28%;
+		margin: -1% auto;
+	}
+	.form input{
+		font-size: 13pt;
+		margin-top:2%; 
+		padding: 0.5%;
+		width:80%;
+	}
+	.form select{
+		font-size: 13pt;
+		margin-top:-1%;
+		margin-left: 4%; 
+		padding: 0.5%;
+		width:81%;
+	}
+	.form optgroup{
+		font-weight: 800;
+	}
+	.form button{
+		font-size: 13pt;
+		width:30%;
+		margin:-1% 0% 4% 0%;
+	}
+}
