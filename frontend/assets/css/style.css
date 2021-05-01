@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+body{
+	background: url("../Images/Background_mobile.jpg") no-repeat;
+	background-size: cover;
+}
+.banner{
+	padding:5%;
+	margin:15% 0;
+}
+.banner img{
+	display: block;
+	margin: 0 auto;
+	width:100%;
+}
+.organisation, .instructor, .student{
+	margin:12% auto;
+	width: fit-content;
+	border-radius:6%;
+	cursor:pointer;
+} 
+.organisation{
+	background:#edb230;
+}
+.instructor{
+	background:#245d74;
+}
+.student{
+	background:#be4162;
+}
+
+.organisation img, .instructor img, .student img{
+	display: block;
+	margin: -1% auto;
+	border-radius:6%;
+	width: 100%;
+}
+.organisation h3, .instructor h3, .student h3{
+	margin-top:-10%;
+	padding:4%;
+	font-family: 'Playfair Display', serif;
+	text-align: center;
+	font-size: 42pt;
+	color:white;
+	text-transform: capitalize;
+}
+.organisation a, .instructor a, .student a{
+	text-decoration: none;
+}
+
+
+/*--------- Orgaization account ----------*/
+
+.welcome h2{
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Playfair Display', serif;
+	font-size: 52pt;
+	padding:4%;
+	margin-top: 5%;
+}
+.org-container .instructor, .org-container .student{
+	position: static;
+	margin:12% auto;
+	width: fit-content;
+}
+
+/*------------ MEDIA QUERIES -------------- */
+
+@media screen and (min-width:1025px){
+	body{
+		background: url("../Images/Background.png") no-repeat;
+		background-size: cover;
+	}
+	.banner{
+		padding:3%;
+		margin:1% 0;
+	}
+	.banner img{
+		width:40%;
+	}
+	.organisation, .instructor, .student{
+		position: absolute;
+		margin:2% 4%;
+		width: 13%;
+		float:left;
+		transition: 0.8s;
+	} 
+	.organisation{
+		margin-left:22%;
+	}
+	.instructor{
+		margin-left:42%;
+	}
+	.student{
+		margin-left:62%;
+	}
+	
+
+	.organisation img, .instructor img, .student img{
+		margin: 1% auto;
+		width: 76%;
+	}
+	.organisation:hover, .instructor:hover, .student:hover{
+		width:15%;
+	}
+	.organisation h3, .instructor h3, .student h3{
+		margin-top:-6%;
+		padding:2%;
+		font-size: 19pt;
+	}
+
+	/*------- ORGANISATION ACCOUNT -------*/
+	.welcome h2{
+		font-size: 25pt;
+		padding:1%;
+		margin-top: 4%;
+	}
+	.org_heading h2{
+		font-size: 25pt;
+		padding:1%;
+		margin: 4% auto;
+		width:fit-content;
+	}
+	.container {
+		background: rgba(0,0,0,0.7);
+		width:48%;
+		height:350px;
+		margin:2% auto;
+		border-radius:8px;
+	}
+	.org-container .instructor, .org-container .student{
+		position: absolute;
+		margin:5% 7%;
+		width: 14%;
+		float:left;
+	}
+	.org-container .instructor{
+		margin-left: 28%;
+	}
+	.org-container .student{
+		margin-left: 55%;
+	}
+	.org-container .instructor:hover, .org-container .student:hover{
+		width:16%;
+	}
+	.org-nav-buttons, .instr-nav-buttons, .stud-nav-buttons{
+		width: 30%;
+		height:79px;
+		float: right;
+		margin-top: -6%;
+	}
+	.org-nav-buttons li, .instr-nav-buttons li, .stud-nav-buttons li{
+		margin:-3% 5%;
+		height: 76px;
+		list-style: none;
+		display: inline-flex;
+		text-transform: capitalize;
+		width:30%;
+		text-align: center;
+	}
+	.org-nav-buttons li:hover{
+		background: #edb230;
+	}
+	.instr-nav-buttons li:hover a{
+		background:#245d74;
+		color:white;
+	}	
+	.stud-nav-buttons li:hover a{
+		background:#be4162;
+		color:white;
+	}
+	.org-nav-buttons a, .instr-nav-buttons a, .stud-nav-buttons a, .inst-nav-buttons a, .stu-nav-buttons a{
+		text-decoration:none;
+		color:black;
+		font-family: font-family: 'Lora', serif;
+		font-size:16pt;
+		margin:auto;
+		height:76px;
+		line-height: 35px;
+		width:110px;
+		text-align: center;
+	}
+	.table{
+		margin: 5% 4%;
+		width:75%;
+	}
+	.table table{
+		border:1px solid black;
+		border-collapse: collapse;
+	}
+	.table th{
+		background: white;
+	}
+	.table table{
+		width: 100%;
+	}
+	.table th, .table td{
+		text-transform: capitalize;
+		font-size:14pt;
+		padding:1%;
+		font-family: 'Lora', serif;
+		text-align: center;
+	}
+	.table table>tbody>tr:nth-child(even)>td{
+	    background-color: #e1e2e3;
+	}
+
+
+	/*--------------------- INSTRUCTOR ACCOUNT --------------------- */
+
+	.container, .inst-specific-stud-room-container{
+		width:75%;
+	}
+	.container .schedule, .container .study_room, .container .discussions, .container .archives,
+	.container .lecture, .container .resources, .container .test, .container .session{
+		position: absolute;
+		margin:4% 7%;
+		width: 18%;
+		float:left;
+	}
+	.container .schedule img, .container .study_room img, .container .discussions img, .container .archives img, .container .lecture img, .container .resources img, .container .test img, .container .session img{
+		margin: 2% auto;
+		width: 76%;
+		border-radius:5px;
+	}
+	.container .schedule, .container .lecture{
+		margin-left:3%;
+	}
+	.container .study_room, .container .resources{
+		margin-left: 21%;
+	}
+	.container .discussions, .container .test{
+		margin-left: 39%;
+	}
+	.container .archives, .container .session{
+		margin-left: 57%;
+	}
+	.container .schedule:hover, .container .study_room:hover, .container .discussions:hover, .container .archives:hover {
+		width:20%;
+	}
+
+	.container h4{
+		margin-left:19%;
+		width:fit-content;
+		color:white;
+		text-transform: capitalize;
+		font-family: 'Lora', serif;
+		font-weight:300;
+		font-size:14pt;
+
+	}
+	.container a{
+		text-decoration: none;
+	}
+
+	.inst-nav-buttons, .stu-nav-buttons{
+		width: 59%;
+		height:79px;
+		float: right;
+		margin-top: -6%;
+	}
+	.inst-nav-buttons li, .stu-nav-buttons li{
+		list-style: none;
+		display:inline-flex;
+		margin: -1.5% 3%;
+		height:75px;
+		text-transform: capitalize;
+	}
+	.inst-nav-buttons a:hover{
+		background: #245d74;
+		color:white;
+	}
+	.stu-nav-buttons a:hover{
+		background:#be4162;
+		color:white;
+	}
+	.inst-nav-buttons li ul, .stu-nav-buttons li ul{
+		position: absolute;
+		top:77px;
+		margin-left:-2%;
+		list-style: none;
+		display:none;
+		width:fit-content;
+	}
+	.inst-nav-buttons li:hover ul, .stu-nav-buttons li:hover ul{
+		display:block;
+	}
+	.inst-nav-buttons li ul li, .stu-nav-buttons li ul li{
+		margin-left:-25%;
+		height:50px;
+		width: 90%;
+	}
+	.inst-nav-buttons li ul li a, .stu-nav-buttons li ul li a{
+		height:47px;
+		width:82%;
+		line-height: 47px;
+		margin: 0%;
+		font-size: 16pt;
+		text-align: center;
+		background:white;
+		padding:1%;
+	}
+		
+	.inst-first-container{
+		width:75%;
+		background:#245d74;
+		margin:4% auto;
+		border-radius:8px 8px 0px 0px;
+		text-transform: uppercase;
+		font-family:'Playfair Display', serif; 
+	}
+	.inst-first-container h3{
+		font-weight: 300;
+		font-size:18pt;
+		margin-top:2%;
+		padding:1%;
+		text-align:center;
+		color: white;
+	}
+}
+
