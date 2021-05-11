@@ -1,0 +1,549 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+body{
+	background: url("../Images/Background_mobile.jpg") no-repeat;
+	background-size: cover;
+}
+.banner{
+	padding:5%;
+	margin:15% 0;
+}
+.banner img{
+	display: block;
+	margin: 0 auto;
+	width:100%;
+}
+.organisation, .instructor, .student{
+	margin:12% auto;
+	width: fit-content;
+	border-radius:6%;
+	cursor:pointer;
+} 
+.organisation{
+	background:#edb230;
+}
+.instructor{
+	background:#245d74;
+}
+.student{
+	background:#be4162;
+}
+
+.organisation img, .instructor img, .student img{
+	display: block;
+	margin: -1% auto;
+	border-radius:6%;
+	width: 100%;
+}
+.organisation h3, .instructor h3, .student h3{
+	margin-top:-10%;
+	padding:4%;
+	font-family: 'Playfair Display', serif;
+	text-align: center;
+	font-size: 42pt;
+	color:white;
+	text-transform: capitalize;
+}
+.organisation a, .instructor a, .student a{
+	text-decoration: none;
+}
+
+
+/*--------- Orgaization account ----------*/
+
+.welcome h2{
+	text-align: center;
+	text-transform: uppercase;
+	font-family: 'Playfair Display', serif;
+	font-size: 52pt;
+	padding:4%;
+	margin-top: 5%;
+}
+.org-container .instructor, .org-container .student{
+	position: static;
+	margin:12% auto;
+	width: fit-content;
+}
+
+/*------------ MEDIA QUERIES -------------- */
+
+@media screen and (min-width:1025px){
+	body{
+		background: url("../Images/Background.png") no-repeat;
+		background-size: cover;
+	}
+	.banner{
+		padding:3%;
+		margin:1% 0;
+	}
+	.banner img{
+		width:40%;
+	}
+	.organisation, .instructor, .student{
+		position: absolute;
+		margin:2% 4%;
+		width: 13%;
+		float:left;
+		transition: 0.8s;
+	} 
+	.organisation{
+		margin-left:22%;
+	}
+	.instructor{
+		margin-left:42%;
+	}
+	.student{
+		margin-left:62%;
+	}
+	
+
+	.organisation img, .instructor img, .student img{
+		margin: 1% auto;
+		width: 76%;
+	}
+	.organisation:hover, .instructor:hover, .student:hover{
+		width:15%;
+	}
+	.organisation h3, .instructor h3, .student h3{
+		margin-top:-6%;
+		padding:2%;
+		font-size: 19pt;
+	}
+
+	/*------- ORGANISATION ACCOUNT -------*/
+	.welcome h2{
+		font-size: 25pt;
+		padding:1%;
+		margin-top: 2%;
+	}
+	.org_heading h2{
+		font-size: 25pt;
+		padding:1%;
+		margin: 4% auto;
+		width:fit-content;
+	}
+	.container {
+		background: rgba(0,0,0,0.7);
+		width:48%;
+		height:310px;
+		margin:1% auto;
+		border-radius:8px;
+	}
+	.org-container .instructor, .org-container .student{
+		position: absolute;
+		margin:5% 7%;
+		width: 14%;
+		float:left;
+	}
+	.org-container .instructor{
+		margin-left: 28%;
+	}
+	.org-container .student{
+		margin-left: 55%;
+	}
+	.org-container .instructor:hover, .org-container .student:hover{
+		width:16%;
+	}
+	.org-nav-buttons, .instr-nav-buttons, .stud-nav-buttons{
+		width: 30%;
+		height:79px;
+		float: right;
+		margin-top: -6%;
+	}
+	.org-nav-buttons li, .instr-nav-buttons li, .stud-nav-buttons li{
+		margin:-3% 5%;
+		height: 76px;
+		list-style: none;
+		display: inline-flex;
+		text-transform: capitalize;
+		width:30%;
+		text-align: center;
+	}
+	.org-nav-buttons li:hover{
+		background: #edb230;
+	}
+	.instr-nav-buttons li:hover a{
+		background:#245d74;
+		color:white;
+	}	
+	.stud-nav-buttons li:hover a{
+		background:#be4162;
+		color:white;
+	}
+	.org-nav-buttons a, .instr-nav-buttons a, .stud-nav-buttons a, .inst-nav-buttons a, .stu-nav-buttons a{
+		text-decoration:none;
+		color:black;
+		font-family: font-family: 'Lora', serif;
+		font-size:16pt;
+		margin:auto;
+		height:76px;
+		line-height: 35px;
+		width:110px;
+		text-align: center;
+	}
+	.table{
+		margin: 5% 4%;
+		width:75%;
+	}
+	.table table, .modal-body table{
+		border:1px solid black;
+		border-collapse: collapse;
+	}
+	.table th, .modal-body th{
+		background: white;
+	}
+	.table table, .modal-body table{
+		width: 100%;
+	}
+	.table th, .table td, .modal-body th, .modal-body td{
+		text-transform: capitalize;
+		font-size:14pt;
+		padding:1%;
+		font-family: 'Lora', serif;
+		text-align: center;
+	}
+	.table table>tbody>tr:nth-child(even)>td, .modal-body table>tbody>tr:nth-child(even)>td{
+	    background-color: #e1e2e3;
+	}
+	#check{
+		margin-top:-2%;
+		padding:0.5%;
+		text-align: left
+	}
+	#close{
+		margin-top:-2%;
+		padding: 0.5%;
+	}
+
+	/*--------------------- INSTRUCTOR ACCOUNT --------------------- */
+
+	.inst-spec-stud-container{
+		background: rgba(0,0,0,0.7);
+		width:48%;
+		height:290px;
+		margin:-4% auto;
+		border-radius:0px 0px 8px 8px;
+	}
+	.container, .inst-spec-stud-container{
+		width:75%;
+		cursor: pointer;
+	}
+	.container .schedule, .container .study_room, .container .discussions, .container .archives,
+	.inst-spec-stud-container .lecture, .inst-spec-stud-container .resources, .inst-spec-stud-container .test, .inst-spec-stud-container .session{
+		position: absolute;
+		margin:2% 7%;
+		width: 18%;
+		float:left;
+	}
+	.container .schedule img, .container .study_room img, .container .discussions img, .container .archives img, .inst-spec-stud-container .lecture img, .inst-spec-stud-container .resources img, .inst-spec-stud-container .test img, .inst-spec-stud-container .session img{
+		margin: 2% auto;
+		width: 76%;
+		border-radius:5px;
+	}
+	.container .schedule, .inst-spec-stud-container .lecture{
+		margin-left:3%;
+	}
+	.container .study_room, .inst-spec-stud-container .resources{
+		margin-left: 21%;
+	}
+	.container .discussions, .inst-spec-stud-container .test{
+		margin-left: 39%;
+	}
+	.container .archives, .inst-spec-stud-container .session{
+		margin-left: 57%;
+	}
+	.container .schedule:hover, .container .study_room:hover, .container .discussions:hover, .container .archives:hover {
+		width:20%;
+	}
+
+	.container h4, .inst-spec-stud-container h4{
+		margin-left:22%;
+		width:fit-content;
+		color:white;
+		text-transform: capitalize;
+		font-family: 'Lora', serif;
+		font-weight:300;
+		margin-top: 4%;
+		font-size:14pt;
+
+	}
+	.container a, .inst-spec-stud-container a{
+		text-decoration: none;
+	}
+
+	.inst-nav-buttons, .stu-nav-buttons{
+		width: 59%;
+		height:79px;
+		float: right;
+		margin-top: -6%;
+	}
+	.inst-nav-buttons li, .stu-nav-buttons li{
+		list-style: none;
+		display:inline-flex;
+		margin: -1.5% 3%;
+		height:75px;
+		text-transform: capitalize;
+	}
+	.inst-nav-buttons a:hover{
+		background: #245d74;
+		color:white;
+	}
+	.stu-nav-buttons a:hover{
+		background:#be4162;
+		color:white;
+	}
+	.inst-nav-buttons li ul, .stu-nav-buttons li ul{
+		position: absolute;
+		top:77px;
+		margin-left:-2%;
+		list-style: none;
+		display:none;
+		width:fit-content;
+	}
+	.inst-nav-buttons li:hover ul, .stu-nav-buttons li:hover ul{
+		display:block;
+	}
+	.inst-nav-buttons li ul li, .stu-nav-buttons li ul li{
+		margin-left:-25%;
+		height:50px;
+		width: 90%;
+	}
+	.inst-nav-buttons li ul li a, .stu-nav-buttons li ul li a{
+		height:47px;
+		width:82%;
+		line-height: 47px;
+		margin: 0%;
+		font-size: 16pt;
+		text-align: center;
+		background:white;
+		padding:1%;
+	}
+	.inst-study-container-two{
+		border:1px solid black;
+		margin-top: -5.2%;
+		padding: -3%;
+	}
+/*------------------------ INSTRUCTOR SCHEDULE PAGE ----------------------*/
+
+	.inst-heading{
+		font-weight: 600;
+		font-size:18pt;
+		text-transform: uppercase;
+		font-family:'Playfair Display', serif; 
+		padding: 1%;
+	}
+
+	.schedule-container{
+		position: relative;
+		font-family: 'Lora', serif;
+
+	}
+	.schedule-card{
+		background:#d5d6d3;
+		width:79%;
+		height:130px;
+		margin:2%;
+		box-shadow: 5px 5px 10px rgba(0,0,0,0.4);
+		border-radius: 2px;
+	}
+	.schedule-card h4{
+		text-transform: capitalize;
+		font-size: 14pt;
+		margin: 2% 2% 2% 2%;
+		text-transform: uppercase;
+		font-weight: 300;
+		padding-top: 1.5%;
+
+	}
+	.schedule-card h5{
+		text-transform: capitalize;
+		font-size: 12pt;
+		margin:-1% 2%;
+		font-weight: 300;
+	}
+	.schedule-card .schedule-class, .schedule-card .schedule-section{
+		display: inline;
+		float: left;
+		margin: 2.4% 2%;
+		text-transform: capitalize;
+	}
+
+	.schedule-card .schedule-date-time {
+		display: inline;
+		float: right;
+		clear:both;
+		margin: -7.5% 4%;
+		text-transform: capitalize;
+	}
+	.schedule-card .clear{
+		clear: both;
+		display: block;
+	}
+
+
+/*------------------------- INSTRUCTOR STUDY ROOM --------------------*/
+
+
+	.inst-stud-room-container{
+		background: rgba(0,0,0,0.7);
+		width:68%;
+		height:350px;
+		margin:6% auto;
+		border-radius:8px;
+	}
+	.inst-stud-room-card{
+		background: #245d74;
+		color:white;
+		width:20%;
+		float:left;
+		margin: 6% 4%;
+		height:160px;
+		border-radius: 6px;
+	}
+	.inst-stud-room-card h4{
+		text-align: center;
+		padding:0.5%;
+		margin: 6%;
+		text-transform: capitalize;
+		font-size: 15pt;
+		font-weight: 300;
+	}
+	#first-card{
+		margin-left:10%;
+	}
+	.stud-room-form{
+		width:80%;
+		margin: 2% auto;
+		background:#282923;
+		border-radius: 5px;
+	}
+	.stud-room-form input{
+		font-size: 13pt;
+		display:block;
+		margin:4% auto; 
+		padding: 1.5%;
+		width:75%;
+		background: #42433e;
+		cursor: text;
+		color:white;
+		border:none;
+		outline: none;
+		border-radius: 10px;
+		font-family: 'Playfair Display', serif;
+	}
+	.stud-room-form ::placeholder{
+		color:white;
+	}	
+	.stud-room-form button{
+		font-size: 13pt;
+		background-color: #245d74;
+		color:white;
+		width:30%;
+		padding:1%;
+		font-size:13pt;
+		margin:2% 35%;
+		border-radius: 5px;
+		outline: none;
+		border: none;
+	}
+
+/*------------ INSTRUCTOR SPECIFIC STUDY ROOM ------------- */
+
+		
+	.inst-study-container{
+		width:75%;
+		background:#245d74;
+		height:120px;
+		margin:4% auto;
+		border-radius:8px 8px 0px 0px;
+		text-transform: uppercase;
+		font-family:'Playfair Display', serif; 
+	}
+	.inst-study-container h3, .inst-study-container h4, .inst-stud-room-container h3{
+		font-weight: 300;
+		font-size:18pt;
+		margin-top:2%;
+		padding:1%;
+		text-align:center;
+		color: white;
+		font-family: 'Lora', serif;
+	}
+	.inst-study-container h4{
+		font-size: 15pt;
+		margin:-1% 3%;
+		padding:1%;
+		text-align:left;
+	}
+	.inst-button{
+		background:#245d74;
+		color:white;
+		border:1px solid white;
+		box-shadow: 4px 5px 8px white;
+		padding:0.5%;
+		float:right;
+		width:20%;
+		font-size: 14pt;
+		border-radius: 5px;
+		margin: -3% 2%;
+		cursor: pointer;
+	}
+	
+	.modal{
+		position: fixed;
+		top:50%;
+		left:50%;
+		transform: translate(-50%,-50%) scale(0);
+		transition: 200ms ease-in-out;
+		border:1px solid black;
+		border-radius: 5px;
+		width:60%;
+		background-color: white;
+		z-index: 10;
+	}
+	.modal.active{
+		transform: translate(-50%,-50%) scale(1);
+	}
+	.modal-header{
+		padding:0.2% 4%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid black;
+		background-color:white; 
+	}
+	.modal-header h4{
+		font-size:16pt;
+		text-transform:uppercase;
+		margin-top: 1%;
+		padding:0.2%;
+		margin-bottom: 0.5%;
+		font-family: 'Lora', serif;
+	}
+	.modal-header .btn-close{
+		background: none;
+		outline: none;
+		border: none;
+		font-size: 2.25rem;
+		cursor: pointer;
+	}
+	.modal-body{
+		width:87%;
+		margin:3% auto;
+	}
+	#overlay{
+		position: fixed;
+		opacity: 0;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom:0;
+		transition: 200ms ease-in-out;
+		background-color: rgba(0,0,0,.5);
+		pointer-events: none;
+	}
+	#overlay.active{
+		opacity: 1;
+		pointer-events: all;
+	}
+
+}
+
