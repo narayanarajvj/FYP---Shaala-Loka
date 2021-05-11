@@ -22,7 +22,7 @@ function instAddToTable() {
     // Append product to the table
   $("#instTable tbody").append(
     "<tr>" +
-    "<td>"  "</td>" +
+    "<td>" "</td>" +
     "<td>" "</td>" +
     "<td>" "</td>" +
     "<td>" "</td>" +
@@ -35,10 +35,14 @@ function instAddToTable() {
     "</td>" +
     "</tr>");
 }
-function approveInst(ctl) {
+function approveInst(btn) {
     //code to delete the instructor;
+    var button = document.getElementById(btn.id);
+    button.disabled = true;
+    button.style.display = "none";
+   
 }
-function deleteInst(ctl) {
+function deleteInst(btn) {
     //code to delete the instructor;
     alert('Are you sure you wish to delete Instructor with ID = ?');
 }
@@ -56,7 +60,7 @@ function stuAddToTable() {
     // Append product to the table
   $("#stuTable tbody").append(
     "<tr>" +
-    "<td>" "</td>" +
+    "<td>""</td>" +
     "<td>" "</td>" +
     "<td>" "</td>" +
     "<td>" "</td>" +
@@ -70,10 +74,13 @@ function stuAddToTable() {
     "</td>" +
     "</tr>");
 }
-function approveStu(ctl) {
+function approveStu(btn) {
     //code to delete the instructor;
+    var button = document.getElementById(btn.id);
+    button.disabled = true;
+    button.style.display = "none";
 }
-function deleteStu(ctl) {
+function deleteStu(btn) {
     //code to delete the instructor;
     alert('Are you sure you wish to delete Instructor with ID = ?');
 }
