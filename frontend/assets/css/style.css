@@ -172,8 +172,8 @@ body{
 	.org-nav-buttons a, .instr-nav-buttons a, .stud-nav-buttons a, .inst-nav-buttons a, .stu-nav-buttons a{
 		text-decoration:none;
 		color:black;
-		font-family: font-family: 'Lora', serif;
-		font-size:16pt;
+		font-family: 'Lora', serif;
+		font-size:14pt;
 		margin:auto;
 		height:76px;
 		line-height: 35px;
@@ -207,9 +207,14 @@ body{
 	#check{
 		margin-top:-2%;
 		padding:0.5%;
-		text-align: left
 	}
-	#close{
+	#check-btn, #times-btn{
+		background: none;
+		border:none;
+		outline: none;
+		margin:3%;
+	}
+	#times{
 		margin-top:-2%;
 		padding: 0.5%;
 	}
@@ -476,8 +481,7 @@ body{
 	.inst-button{
 		background:#245d74;
 		color:white;
-		border:1px solid white;
-		box-shadow: 4px 5px 8px white;
+		border:2px solid white;
 		padding:0.5%;
 		float:right;
 		width:20%;
