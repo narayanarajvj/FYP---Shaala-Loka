@@ -1,0 +1,164 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap');
+body{
+	background: url("/static/assets/Background_mobile.jpg") ;
+	background-size: cover;
+}
+nav{
+	background:white;
+	width: 100%;
+	margin:0;
+}
+.nav-logo img{
+	width:43%;
+}
+.heading{
+	text-transform: capitalize;
+	text-align: center;
+	font-family: 'Lora', serif;
+	font-size: 52pt;
+	margin-top: 6%;
+	padding: 2%;
+}
+.login-link{
+	text-transform: capitalize;
+	text-align: center;
+	font-family: 'Lora', serif;
+	font-size: 42pt;
+	margin-top: 2%;
+	padding: 2%;
+}
+.login-link a{
+	text-decoration: none;
+	color:#245d74;
+}
+.form, .stu-form{
+	width:84%;
+	background:#282923;
+	margin: 10% auto;
+	text-align: center;
+	border-radius:20px;
+}
+.form input, .stu-form input{
+	display:block;
+	font-size: 38pt;
+	margin: 8%; 
+	padding: 2%;
+	font-family: 'Playfair Display', serif;
+	border:none;
+	outline: none;
+	width:78%;
+	border-radius: 20px;
+	background: #42433e;
+	cursor: text;
+	color:white;
+}
+::placeholder{
+	color:#aaaeb4;
+	text-transform: capitalize;
+}
+:-ms-input-placeholder{
+	color:#aaaeb4;
+	text-transform: capitalize;
+}
+::-ms-input-placeholder{
+	color:#aaaeb4;
+	text-transform: capitalize;
+}
+.stu-form select{
+	font-size: 38pt;
+	margin: 8%; 
+	padding: 2%;
+	font-family: 'Playfair Display', serif;
+	border:none;
+	outline: none;
+	width:67%;
+	color:#aaaeb4;
+	background: #42433e;
+}
+.form optgroup{
+		font-weight: 800;
+	}
+.form button{
+	font-size: 45pt;
+	width:35%;
+	border-radius:8px;
+	padding: 3%;
+	margin:7%;
+	font-family: 'Playfair Display', serif;
+	font-weight: 700;
+	text-transform: capitalize;
+	background: #edb230;
+	color:black;
+	border:none;
+	outline: none;
+	cursor: pointer;
+}
+
+/*------------ MEDIA QUERIES -------------- */
+
+@media screen and (min-width:1025px){
+	body{
+		background: url("/static/assets/Background.png") no-repeat fixed;
+		background-size: cover;
+	}
+	nav{
+		margin-top:-1%;
+	}
+	.nav-logo{
+		width: 210px;
+	}
+	.nav-logo img{
+		width:100%;
+	}
+	.heading{
+		font-size: 22pt;
+		margin: 1%;
+	}
+	.login-link {
+		font-size: 14pt;
+		margin-top: -1%;
+		padding: 0.5%;
+	}
+	.form, .stu-form{
+		width:40%;
+		margin: 1% auto;
+	}
+	.form input, .stu-form input{
+		font-size: 13pt;
+		margin-top:2%; 
+		padding: 1.5%;
+		width:78%;
+		border-radius: 10px;
+	}
+	.stu-form input{
+		width:75.5%;
+	}
+	.stu-form select{
+		font-size: 13pt;
+		margin-top:0%;
+		margin-left: 1.7%; 
+		padding: 1.5%;
+		width:78%;
+		border-radius: 10px;
+	}
+	.stu-form .section{
+		margin-top:-0.8%;
+	}
+	i{
+		width: 5%;
+		float:right;
+		margin: -13.5% 7%;
+		cursor:pointer;
+	}
+	#info_icon{
+		margin: -13.5% 1%;
+		float:right;
+		width:5%;
+	}
+	.form button{
+		font-size: 13pt;
+		width:30%;
+		margin:-1% 0% 4% 0%;
+	}
+}
