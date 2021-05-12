@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shaala Loka</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="shortcut icon" href="/static/assets/title_logo.ico">
+</head>
+<body>
+    <nav>
+        <div class="nav-logo">
+            <a href="/">
+                <img src="/static/assets/Shaala_Loka_Logo.png" alt="Shaala Loka Logo"/>
+            </a>
+  	    </div>
+    </nav>
+
+    <h2 class="heading">Student Registration</h2>
+    <h4 class="login-link"> Have an account? <a href="/login"> Login to your account </a> </h4>
+
+    {% if error %}
+        <p class="login-link" style="color: red"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+
+    <div class="stu-form">
+  	    <form action = "/student-registration" method = "POST">
+  		<br><br>
+            <input type="text" name="student_id" id="student_id" placeholder="student Id" pattern="[A-Za-z]{3}[A-Za-z0-9]{3-9}" required>
+            <input type="text" name="student_name" id="student_name" placeholder="student name" pattern="[a-zA-Z\s]+$" required>
+            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" required>
+            <input type="email" name="email_id" id="email_id" placeholder="Email-Id" required>
+            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required>
+            <input type="password" name="password_two" id="password_two" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm your Password" pattern="^\S{6,}$" required>
+            <select name="level" id="level" required>
+                <option selected disabled value="">Please Select Your Level</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11"> 11</option>
+                <option value="12"> 12</option>
+            </select>
+            <input type="text" name="section" class="section" placeholder="section" required>
+            <div id="department_field">
+                <input type="text" name="department" class="department" placeholder="department" required>
+                <a href="#" id="add_more"><i class="fa fa-plus-circle" style="font-size:23px; color:#aaaeb4" title="Please click the 'Plus' symbol incase you have multiple departments."></i></a>
+                <i class="fa fa-info-circle" id="info_icon" style="font-size:22px; color:#aaaeb4" title="Please click the 'Plus' symbol incase you have multiple departments."></i>
+            </div>
+
+  		    <button class="submit" name="submit" type="submit"> sign up </button>
+            <script src="/static/script.js"></script>
+  	    </form>
+    </div>
+</body>
+</html>
