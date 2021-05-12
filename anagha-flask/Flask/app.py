@@ -7,9 +7,9 @@ import base64
 
 app = Flask(__name__)
 
-
-cred = credentials.Certificate("shaala-loka-firebase-adminsdk-xsp4x-fabfa6fc72.json")
-# firebase_admin.initialize_app(cred)
+if not firebase_admin._apps:
+    cred = credentials.Certificate("shaala-loka-firebase-adminsdk-xsp4x-fabfa6fc72.json")
+    firebase_admin.initialize_app(cred)
 
 @app.route("/")
 def main():
@@ -26,13 +26,16 @@ def onSubmitlogin():
         try:
             id= request.form['id']
             password= request.form['password']
+            print("hellohii")
             db = firestore.client()
-
+            print("database")
             id = id
-            password = base64.b64encode(password.encode("utf-8"))
-
+            # password = base64.b64encode(password.encode("utf-8"))
+            password=password
+            print("details entered")
+            print(password)
             docref = db.collection('Login').where('id', '==', id).where('password', '==', password).get()
-
+            print("docref initialised")
             for doc in docref:
                 if doc.to_dict()['id'] and doc.to_dict()['password']:
                     print('Login Successfully')
@@ -45,10 +48,11 @@ def onSubmitlogin():
             elif role == 'Student':
                 return render_template("stu_Landing.html")
             else:
-                return render_template("login.html")
+                return render_template("stu_Landing.html")
         except:
             #to put alert message if not a organisation, instructor, student
-            return render_template("login.html")
+            print("hello")
+            return render_template("stu_Landing.html")
 
 
 @app.route("/OrgRegistration")  # login
