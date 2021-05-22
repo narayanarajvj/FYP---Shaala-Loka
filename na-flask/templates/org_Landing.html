@@ -4,7 +4,7 @@
 	<title>Shaala Loka</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
-    <link rel="shortcut icon" href="/static/assets/title_logo.ico">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
 </head>
 <body>
     <nav>
@@ -35,13 +35,13 @@
 
     <div class="org-container">
         <div class="instructor">
-            <a href="/OrgInstructor">
+            <a href="/{{ orgId }}/instructor">
                 <img src="/static/assets/3.png" alt="organisation">
                 <h3>Instructor  </h3>
             </a>
         </div>
         <div class="student">
-            <a href="/OrgStudent">
+            <a href="/{{ orgId }}/student">
                 <img src="/static/assets/2.png" alt="instructor">
                 <h3>student </h3>
             </a>

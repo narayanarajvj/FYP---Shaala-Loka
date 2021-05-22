@@ -2,9 +2,20 @@ from flask import Flask, render_template, request, flash, redirect, url_for
 import firebase_admin
 from firebase_admin import credentials, firestore
 import base64
+from flask_mail import Mail, Message
 
 app = Flask(__name__)
 app.secret_key = 'vijay'
+
+mail = Mail()
+
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USERNAME'] = 'shaalaloka@gmail.com'
+app.config['MAIL_PASSWORD'] = 'tfgkdqhihsasqhyn'
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USE_SSL'] = True
+mail.init_app(app)
 
 cred = credentials.Certificate("shaala-loka-firebase-adminsdk-xsp4x-5eea3da522.json")
 firebase_admin.initialize_app(cred)
@@ -104,17 +115,18 @@ def instructorRegistration():
                         'department': dept,
                         'designation': designation,
                         'email_id': emailId,
-                        'instructor_id': instId,
+                        'id': instId,
                         'instructor_name': instName,
                         'org_id': orgId,
                         'password': enc_password
                     }
 
                     docref = db.collection('Organization').document(data['org_id']).collection('Instructor').document(
-                        data['instructor_id'])
+                        data['id'])
                     docref.set(data)
 
-                    flash('You are Successfully Registered! Please wait till Organization Approve and you will be soon notified...')
+                    flash(
+                        'You are Successfully Registered! Please wait till Organization Approve and you will be soon notified...')
                     return redirect(url_for('login'))
         else:
             error = 'Organization ID does not exist. Please enter the valid ID...'
@@ -136,6 +148,10 @@ def studentRegistration():
         stuDept = request.form['department']
         enc_password = base64.b64encode(password.encode("utf-8"))
 
+        names = request.json['data']
+        for name in names:
+            print(name)
+
         org_ref = db.collection('Organization').where('org_id', '==', orgId).get()
         if org_ref:
             for doc in org_ref:
@@ -148,17 +164,18 @@ def studentRegistration():
                         'level': level,
                         'section': sec,
                         'email_id': emailId,
-                        'student_id': stuId,
+                        'id': stuId,
                         'student_name': stuName,
                         'org_id': orgId,
                         'password': enc_password
                     }
 
                     docref = db.collection('Organization').document(data['org_id']).collection('Student').document(
-                        data['student_id'])
+                        data['id'])
 
                     docref.set(data)
-                    flash('You are Successfully Registered! Please wait till Organization Approve and you will be soon notified...')
+                    flash(
+                        'You are Successfully Registered! Please wait till Organization Approve and you will be soon notified...')
                     return redirect(url_for('login'))
         else:
             error = 'Organization ID does not exist. Please enter the valid ID...'
@@ -169,6 +186,82 @@ def studentRegistration():
 @app.route("/<orgId>")
 def organizationHome(orgId):
     return render_template("org_Landing.html", orgId=orgId)
+
+
+@app.route("/<orgId>/instructor")
+def organizationInstructor(orgId):
+    docs = db.collection(u'Organization').document(orgId).collection('Instructor').order_by(u'id').limit(
+        10).stream()
+    return render_template("org_Instructor.html", orgId=orgId, docs=docs)
+
+
+@app.route("/<orgId>/student")
+def organizationStudent(orgId):
+    docs = db.collection(u'Organization').document(orgId).collection('Student').order_by(u'id').limit(
+        10).stream()
+    return render_template("org_Student.html", orgId=orgId, docs=docs)
+
+
+@app.route("/<orgId>/approve/<collectionName>/<id>")
+def approval(orgId, collectionName, id):
+    role = None
+    password = None
+    email = None
+    docref = db.collection('Organization').document(orgId).collection(collectionName).where('id', '==', id).get()
+    for doc in docref:
+        if not doc.to_dict()['approval_status']:
+            doc_id = doc.id
+            db.collection('Organization').document(orgId).collection(collectionName).document(doc_id).update(
+                {'approval_status': True})
+            password = doc.to_dict()['password']
+            email = doc.to_dict()['email_id']
+        role = collectionName
+
+    if role:
+        data = {
+            'id': id,
+            'password': password,
+            'role': role
+        }
+        docref = db.collection('Login').document(data['id'])
+        docref.set(data)
+
+    flash(id+" Approved Successfully")
+
+    msg = Message('Shaala Loka - Profile Approved - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
+    msg.body = f"Your Organization has successfully authenticated your account (ID: {id}). You can Login from now " \
+               "onwards."
+    mail.send(msg)
+    if collectionName == "Instructor":
+        return redirect(url_for('organizationInstructor', orgId=orgId))
+    if collectionName == "Student":
+        return redirect(url_for('organizationStudent', orgId=orgId))
+    return redirect(url_for('organizationHome', orgId=orgId))
+
+@app.route("/<orgId>/remove/<collectionName>/<id>")
+def removal(orgId, collectionName, id):
+    email = None
+    docs = db.collection('Organization').document(orgId).collection(collectionName).where('id', '==', id).get()
+    for doc in docs:
+        key1 = doc.id
+        email = doc.to_dict()['email_id']
+        db.collection('Organization').document(orgId).collection(collectionName).document(key1).delete()
+
+    msg = Message('Shaala Loka - Profile Disabled - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
+    msg.body = f"Your Organization has disabled your account (ID: {id}). You will be unable to Login henceforth."
+    mail.send(msg)
+
+    docs2 = db.collection('Login').where('id', '==', id).get()
+    for doc in docs2:
+        key2 = doc.id
+        db.collection('Login').document(key2).delete()
+
+    flash(id+" Removed Successfully")
+    if collectionName == "Instructor":
+        return redirect(url_for('organizationInstructor', orgId=orgId))
+    if collectionName == "Student":
+        return redirect(url_for('organizationStudent', orgId=orgId))
+    return redirect(url_for('organizationHome', orgId=orgId))
 
 
 if __name__ == '__main__':

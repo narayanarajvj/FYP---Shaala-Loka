@@ -9,7 +9,7 @@
 <body>
     <nav>
         <div class="nav-logo">
-            <a href="/">
+            <a href="/home">
                 <img src="/static/assets/Shaala_Loka_Logo.png" alt="Shaala Loka Logo"/>
             </a>
   	    </div>
@@ -53,9 +53,9 @@
                 <i class="fa fa-info-circle" id="info_icon" style="font-size:22px; color:#aaaeb4" title="Please click the 'Plus' symbol incase you have multiple departments."></i>
             </div>
 
-  		    <button class="submit" name="submit" type="submit"> sign up </button>
-            <script src="/static/script.js"></script>
+  		    <button class="submit" name="submit" type="submit" id="submit"> sign up </button>
   	    </form>
     </div>
+    <script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
 </body>
 </html>
