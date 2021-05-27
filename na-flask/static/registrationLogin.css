@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap');
 body{
 	background: url("/static/assets/Background_mobile.jpg") ;
@@ -32,19 +31,19 @@ nav{
 	text-decoration: none;
 	color:#245d74;
 }
-.form, .stu-form{
+.form, .stu-form, .login-form{
 	width:84%;
 	background:#282923;
 	margin: 10% auto;
 	text-align: center;
 	border-radius:20px;
 }
-.form input, .stu-form input{
+.form input, .stu-form input, .login-form input{
 	display:block;
 	font-size: 38pt;
 	margin: 8%;
 	padding: 2%;
-	font-family: 'Playfair Display', serif;
+	font-family: 'Lora', serif;
 	border:none;
 	outline: none;
 	width:78%;
@@ -76,16 +75,13 @@ nav{
 	color:#aaaeb4;
 	background: #42433e;
 }
-.form optgroup{
-		font-weight: 800;
-	}
-.form button, .stu-form button{
+.form button, .stu-form button, .login-form button{
 	font-size: 45pt;
 	width:35%;
 	border-radius:8px;
 	padding: 3%;
 	margin:7%;
-	font-family: 'Playfair Display', serif;
+	font-family: 'Lora', serif;
 	font-weight: 700;
 	text-transform: capitalize;
 	background: #edb230;
@@ -124,20 +120,37 @@ nav{
 		width:40%;
 		margin: 1% auto;
 	}
-	.form input, .stu-form input{
+	.login-form{
+		width:30%;
+		margin: 1% auto;
+	}
+	.form input, .stu-form input, .login-form input{
 		font-size: 13pt;
 		margin-top:2%;
 		padding: 1.5%;
 		width:78%;
 		border-radius: 10px;
 	}
+	.form input[type=radio]{
+		display:inline;
+		border:1px solid red;
+	}
+	.form label{
+		display:inline;
+		color:#aaaeb4;
+		border:1px solid white;
+	}
+	.login-form input{
+		width:85%;
+		margin: 1% auto 5% auto;
+	}
 	.stu-form input{
 		width:75.5%;
 	}
 	.stu-form select{
+		margin-left: 1.7%;
 		font-size: 13pt;
 		margin-top:0%;
-		margin-left: 1.7%;
 		padding: 1.5%;
 		width:78%;
 		border-radius: 10px;
@@ -152,13 +165,14 @@ nav{
 		cursor:pointer;
 	}
 	#info_icon{
-		margin: -13.5% 1%;
+		margin: -13.5% 4%;
 		float:right;
 		width:5%;
 	}
-	.form button, .stu-form button{
+	.form button, .stu-form button, .login-form button{
 		font-size: 13pt;
-		width:30%;
+		width:24%;
 		margin:-1% 0% 4% 0%;
+		padding:2%;
 	}
 }

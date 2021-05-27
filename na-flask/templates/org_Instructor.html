@@ -5,34 +5,33 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
 <!--      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
-      <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo">
-      <a href="/{{ orgId }}">
-      <img src="/static/assets/Shaala_Loka_Logo.png" />
-    </a>
-    </div>
-    <div class="org-nav-buttons">
-      <ul>
-        <li>
-          <a href="">
-            <p>My Profile</p>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <p>Log Out</p>
-          </a>
-        </li>
-      </ul>
-      
-    </div>
-  </nav>
+    <nav>
+        <div class="nav-logo">
+            <a href="/{{ orgId }}">
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" />
+            </a>
+        </div>
+        <div class="org-nav-buttons">
+            <ul>
+                <li>
+                    <a href="">
+                        <p>My Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/home">
+                        <p>Log Out</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-  <div>
+    <div>
           {% with messages = get_flashed_messages() %}
           {% if messages %}
               <ul>
@@ -42,40 +41,38 @@
               </ul>
           {% endif %}
           {% endwith %}
-  </div>
+    </div>
 
 
-  <div class="table">
-    <table>
-      <thead>
-        <tr>
-          <th>id</th>
-          <th>name</th>
-          <th>email-id</th>
-          <th>department</th>
-          <th>designation</th>
-          <th></th>
-        </tr>
-      </thead>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email-id</th>
+                    <th>department</th>
+                    <th>designation</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-      <tbody>
-      {% for doc in docs %}
-        <tr>
-          <td>{{ doc.to_dict()['id'] }}</td>
-          <td>{{ doc.to_dict()['instructor_name'] }}</td>
-          <td>{{ doc.to_dict()['email_id'] }}</td>
-          <td>{{ doc.to_dict()['department'] }}</td>
-          <td>{{ doc.to_dict()['designation'] }}</td>
-          <td>
-              <a href="/{{ orgId }}/approve/Instructor/{{ doc.to_dict()['id'] }}" class="btn btn-warning btn-xs">Approve</a>
-              <a href="/{{ orgId }}/remove/Instructor/{{ doc.to_dict()['id'] }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
-          </td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div>
-  
-  
+            <tbody>
+                {% for doc in docs %}
+                    <tr>
+                        <td>{{ doc.to_dict()['id'] }}</td>
+                        <td>{{ doc.to_dict()['instructor_name'] }}</td>
+                        <td>{{ doc.to_dict()['email_id'] }}</td>
+                        <td>{{ doc.to_dict()['department'] }}</td>
+                        <td>{{ doc.to_dict()['designation'] }}</td>
+                        <td>
+                            <a href="/{{ orgId }}/approve/Instructor/{{ doc.to_dict()['id'] }}" class="btn btn-warning btn-xs">Approve</a>
+                            <a href="/{{ orgId }}/remove/Instructor/{{ doc.to_dict()['id'] }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </body>
 </html>

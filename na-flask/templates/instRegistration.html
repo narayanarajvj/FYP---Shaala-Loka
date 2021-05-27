@@ -3,13 +3,13 @@
 <head>
 	<title>Shaala Loka</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
-    <link rel="shortcut icon" href="/static/assets/title_logo.ico">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
 </head>
 <body>
     <nav>
         <div class="nav-logo">
             <a href="/home">
-                <img src="/static/assets/Shaala_Loka_Logo.png" alt="Shaala Loka Logo"/>
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
             </a>
   	    </div>
     </nav>

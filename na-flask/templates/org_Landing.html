@@ -10,7 +10,7 @@
     <nav>
         <div class="nav-logo">
             <a href="/{{ orgId }}">
-                <img src="/static/assets/Shaala_Loka_Logo.png" alt="Shaala Loka Logo"/>
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
             </a>
         </div>
         <div class="org-nav-buttons">
@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="">
+                    <a href="/home">
                         <p>Log Out</p>
                     </a>
                 </li>
@@ -36,13 +36,13 @@
     <div class="org-container">
         <div class="instructor">
             <a href="/{{ orgId }}/instructor">
-                <img src="/static/assets/3.png" alt="organisation">
+                <img src="{{ url_for('static', filename = 'assets/3.png') }}" alt="organisation">
                 <h3>Instructor  </h3>
             </a>
         </div>
         <div class="student">
             <a href="/{{ orgId }}/student">
-                <img src="/static/assets/2.png" alt="instructor">
+                <img src="{{ url_for('static', filename = 'assets/2.png') }}" alt="instructor">
                 <h3>student </h3>
             </a>
         </div>

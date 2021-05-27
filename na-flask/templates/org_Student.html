@@ -4,83 +4,75 @@
 	<title>Shaala Loka</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
-      <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
 <!--        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
-
-  
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo">
-    <a href="/{{ orgId }}">
-      <img src="/static/assets/Shaala_Loka_Logo.png" />
-    </a>
-    </div>
-    <div class="org-nav-buttons">
-      <ul>
-        <li>
-          <a href="">
-            <p>My Profile</p>
-          </a>
-        </li>
-        <li>
-          <a href="">
-            <p>Log Out</p>
-          </a>
-        </li>
-      </ul>
-      
-    </div>
-  </nav>
-
-            <div>
-          {% with messages = get_flashed_messages() %}
-          {% if messages %}
-              <ul>
-              {% for message in messages %}
-                  <p class="login-link" style="color:green;">{{ message }}</p>
-              {% endfor %}
-              </ul>
-          {% endif %}
-          {% endwith %}
+    <nav>
+        <div class="nav-logo">
+            <a href="/{{ orgId }}">
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" />
+            </a>
         </div>
+        <div class="org-nav-buttons">
+            <ul>
+                <li>
+                    <a href="">
+                        <p>My Profile</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="/home">
+                        <p>Log Out</p>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <p class="login-link" style="color:green;">{{ message }}</p>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </div>
 
 
-  <div class="table">
-    <table>
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email-id</th>
+                    <th>level</th>
+                    <th>section</th>
+                    <th>department</th>
+                    <th>approval status</th>
+                </tr>
+            </thead>
 
-      <thead>
-        <tr>
-        <th>id</th>
-        <th>name</th>
-        <th>email-id</th>
-        <th>level</th>
-        <th>section</th>
-        <th>department</th>
-        <th>approval status</th>
-      </tr>
-      </thead>
-
-      {% for doc in docs %}
-        <tr>
-          <td>{{ doc.to_dict()['id'] }}</td>
-          <td>{{ doc.to_dict()['student_name'] }}</td>
-          <td>{{ doc.to_dict()['email_id'] }}</td>
-          <td>{{ doc.to_dict()['level'] }}</td>
-          <td>{{ doc.to_dict()['section'] }}</td>
-          <td>{{ doc.to_dict()['department'] }}</td>
-          <td>
-              <a href="/{{ orgId }}/approve/Student/{{ doc.to_dict()['id'] }}" class="btn btn-warning btn-xs">Approve</a>
-              <a href="/{{ orgId }}/remove/Student/{{ doc.to_dict()['id'] }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
-          </td>
-        </tr>
-      {% endfor %}
-    </table>
-  </div>
-  
-  <!------------------- JAVA SCRIPT------------------>
-  
-  
+            {% for doc in docs %}
+                <tr>
+                      <td>{{ doc.to_dict()['id'] }}</td>
+                      <td>{{ doc.to_dict()['student_name'] }}</td>
+                      <td>{{ doc.to_dict()['email_id'] }}</td>
+                      <td>{{ doc.to_dict()['level'] }}</td>
+                      <td>{{ doc.to_dict()['section'] }}</td>
+                      <td>{{ doc.to_dict()['department'] }}</td>
+                      <td>
+                          <a href="/{{ orgId }}/approve/Student/{{ doc.to_dict()['id'] }}" class="btn btn-warning btn-xs">Approve</a>
+                          <a href="/{{ orgId }}/remove/Student/{{ doc.to_dict()['id'] }}" class="btn btn-danger btn-xs" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
+                      </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 </body>
 </html>

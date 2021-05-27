@@ -3,16 +3,19 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 import base64
 from flask_mail import Mail, Message
+import os
+from dotenv import load_dotenv
 
 app = Flask(__name__)
 app.secret_key = 'vijay'
 
 mail = Mail()
 
+load_dotenv()
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
-app.config['MAIL_USERNAME'] = 'shaalaloka@gmail.com'
-app.config['MAIL_PASSWORD'] = 'tfgkdqhihsasqhyn'
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 app.config['MAIL_USE_TLS'] = False
 app.config['MAIL_USE_SSL'] = True
 mail.init_app(app)

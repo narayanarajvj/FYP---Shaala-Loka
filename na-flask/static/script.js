@@ -1,27 +1,27 @@
-var department = document.getElementById('department_field');
-var add_more = document.getElementById('add_more');
-add_more.onclick = function(){
-	var newfield = document.createElement('input');
-	newfield.setAttribute('type','text');
-	newfield.setAttribute('name','department');
-	newfield.setAttribute('id','department');
-	newfield.setAttribute('class','department');
-	newfield.setAttribute('placeholder','another department');
-	department.appendChild(newfield);
-}
+// var department = document.getElementById('department_field');
+// var add_more = document.getElementById('add_more');
+// add_more.onclick = function(){
+// 	var newfield = document.createElement('input');
+// 	newfield.setAttribute('type','text');
+// 	newfield.setAttribute('name','department');
+// 	newfield.setAttribute('id','department');
+// 	newfield.setAttribute('class','department');
+// 	newfield.setAttribute('placeholder','another department');
+// 	department.appendChild(newfield);
+// }
 
-var submit = document.getElementById('submit');
-submit.onclick = function (){
-	var dept = document.getElementById('department').innerText;
-	var names = [];
-	names.push(dept);
-	$.ajax({
-          type: "POST",
-          contentType: "application/json;charset=utf-8",
-          url: "/student-registration",
-          data: {'data': names}
-          });
-}
+// var submit = document.getElementById('submit');
+// submit.onclick = function (){
+// 	var dept = document.getElementById('department').innerText;
+// 	var names = [];
+// 	names.push(dept);
+// 	$.ajax({
+//           type: "POST",
+//           contentType: "application/json;charset=utf-8",
+//           url: "/student-registration",
+//           data: {'data': names}
+//           });
+// }
 
 // $(document).ready(function boxes() {
 // 	$('#submit').click(function() {

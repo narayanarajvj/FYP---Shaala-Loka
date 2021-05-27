@@ -4,13 +4,13 @@
     <title>Shaala Loka</title>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="shortcut icon" href="/static/assets/title_logo.ico">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
 </head>
 <body>
     <nav>
         <div class="nav-logo">
             <a href="/home">
-                <img src="/static/assets/Shaala_Loka_Logo.png" alt="Shaala Loka Logo"/>
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
             </a>
   	    </div>
     </nav>
@@ -49,13 +49,12 @@
             <input type="text" name="section" class="section" placeholder="section" required>
             <div id="department_field">
                 <input type="text" name="department" class="department" placeholder="department" required>
-                <a href="#" id="add_more"><i class="fa fa-plus-circle" style="font-size:23px; color:#aaaeb4" title="Please click the 'Plus' symbol incase you have multiple departments."></i></a>
-                <i class="fa fa-info-circle" id="info_icon" style="font-size:22px; color:#aaaeb4" title="Please click the 'Plus' symbol incase you have multiple departments."></i>
+                <i class="fa fa-info-circle" id="info_icon" style="font-size:22px; color:#aaaeb4" title="Please fill in the Department name's in shorthand form. (ex: Computer Science Engineering = 'CSE')"></i>
             </div>
 
   		    <button class="submit" name="submit" type="submit" id="submit"> sign up </button>
   	    </form>
     </div>
-    <script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>
+<!--    <script type="text/javascript" src="{{ url_for('static', filename = 'script.js') }}"></script>-->
 </body>
 </html>
