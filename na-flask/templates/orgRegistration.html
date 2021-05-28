@@ -26,8 +26,8 @@
             <input type="email" name="email_id" id="email_id" placeholder="Email-Id" required>
             <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required>
             <input type="password" name="password_two" id="password_two" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm your Password" required>
-            <input type="radio" name="type" id="college" value="C"><label for="college"> College</label>
             <input type="radio" name="type" id="school" value="school"><label for="school"> School</label>
+            <input type="radio" name="type" id="college" value="C"><label for="college"> College</label>
             <br><br>
             <button name="submit" type="submit"> sign up </button>
   	    </form>
