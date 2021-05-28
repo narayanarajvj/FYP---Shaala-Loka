@@ -132,13 +132,19 @@ nav{
 		border-radius: 10px;
 	}
 	.form input[type=radio]{
-		display:inline;
-		border:1px solid red;
+		float: left;
+		clear: none;
+		margin: 1% 0 6% 21%;
+		width: auto;
 	}
 	.form label{
-		display:inline;
-		color:#aaaeb4;
-		border:1px solid white;
+		float: left;
+		clear: none;
+		padding: 0 1% 0 2%;
+		margin: 0 0 6% 0;
+		color: #aaaeb4;
+		font-size: 15.3pt;
+		cursor: pointer;
 	}
 	.login-form input{
 		width:85%;
