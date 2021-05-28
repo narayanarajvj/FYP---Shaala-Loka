@@ -206,6 +206,9 @@ body{
 	.table table>tbody>tr:nth-child(even)>td, .modal-body table>tbody>tr:nth-child(even)>td{
 	    background-color: #e1e2e3;
 	}
+	.table .table-email{
+		text-transform: lowercase;
+	}
 	#check{
 		margin-top:-2%;
 		padding:0.5%;

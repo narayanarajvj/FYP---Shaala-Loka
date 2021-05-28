@@ -63,13 +63,7 @@
 //     "</td>" +
 //     "</tr>");
 // }
-// function approveInst(btn) {
-//     //code to delete the instructor;
-//     var button = document.getElementById(btn.id);
-//     button.disabled = true;
-//     button.style.display = "none";
-//
-// }
+// 
 // function deleteInst(btn) {
 //     //code to delete the instructor;
 //     alert('Are you sure you wish to delete Instructor with ID = ?');
@@ -112,3 +106,10 @@
 //     //code to delete the instructor;
 //     alert('Are you sure you wish to delete Instructor with ID = ?');
 // }
+
+function approveBtn(btn) {
+    var button = document.getElementById(btn.id);
+    button.disabled = true;
+    button.style.display = "none";
+
+}
