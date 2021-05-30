@@ -3,6 +3,10 @@
 *{
 	font-family: 'Lora', serif;
 }
+html,body{
+	min-height: 100vh !important;
+    height: 100vh;
+}
 body{
 	background: url("../Images/Background_mobile.jpg") no-repeat;
 	background-size: cover;
@@ -170,7 +174,7 @@ body{
 		color:white;
 	}	
 	.stud-nav-buttons li:hover a{
-		background:#be4162;
+		background:#8e4162;
 		color:white;
 	}
 	.org-nav-buttons a, .instr-nav-buttons a, .stud-nav-buttons a, .inst-nav-buttons a, .stu-nav-buttons a{
@@ -205,6 +209,9 @@ body{
 	}
 	.table table>tbody>tr:nth-child(even)>td, .modal-body table>tbody>tr:nth-child(even)>td{
 	    background-color: #e1e2e3;
+	}
+	.table .table-email{
+		text-transform: lowercase;
 	}
 	#check{
 		margin-top:-2%;
@@ -288,7 +295,7 @@ body{
 		color:white;
 	}
 	.stu-nav-buttons a:hover{
-		background:#be4162;
+		background:#8e4162;
 		color:white;
 	}
 	.inst-nav-buttons li ul, .stu-nav-buttons li ul{
@@ -466,14 +473,12 @@ body{
 		outline: none;
 		border-radius: 10px;
 	}
-	
 	.stud-room-form button{
 		font-size: 13pt;
 		background-color: #245d74;
 		color:white;
 		width:30%;
 		padding:1%;
-		font-size:13pt;
 		margin:2% 35%;
 		border-radius: 5px;
 		outline: none;
@@ -484,7 +489,7 @@ body{
 /*------------------------------ INSTRUCTOR SPECIFIC STUDY ROOM --------------------- */
 
 		
-	.inst-study-container{
+	.inst-study-container, .stu-study-container{
 		width:75%;
 		background:#245d74;
 		height:120px;
@@ -492,7 +497,7 @@ body{
 		border-radius:8px 8px 0px 0px;
 		text-transform: uppercase;
 	}
-	.inst-study-container h3, .inst-study-container h4, .inst-stud-room-container h3{
+	.inst-study-container h3, .inst-study-container h4, .stu-study-container h4, .inst-stud-room-container h3, .stu-study-container h3{
 		font-weight: 300;
 		font-size:18pt;
 		margin-top:-1%;
@@ -500,7 +505,7 @@ body{
 		text-align:center;
 		color: white;
 	}
-	.inst-study-container h4{
+	.inst-study-container h4, .stu-study-container h4{
 		font-size: 15pt;
 		margin:-1% 3%;
 		padding:1%;
@@ -585,15 +590,53 @@ body{
 
 	/*-----------------------------INSTRUCTOR RESOURCES---------------------------*/
 
-	
+	.upload-file{
+		margin: -4.5% 0 0 70%;
+		width:fit-content;
+	}
+	.upload-file input{
+		color: white;
+		outline: none;
+		border: none;
+		cursor: pointer;
+		font-size: 12pt;
+
+	}
+	::-webkit-file-upload-button{
+		background: white;
+		color: black;
+		border-radius: 5px;
+		outline: none;
+		border: none;
+		padding: 4%;
+		line-height: 10px;
+		cursor: pointer;
+		font-size: 12pt;
+		font-weight: 600;
+	}
 	.inst-stud-room-resources-container{
 		display: grid;
-		grid-template-columns: 280px 280px 280px;
-		grid-gap: 20px;
+		grid-template-columns: 100px 100px 100px 100px 100px;
+		grid-row-gap: 40px;
 		justify-content: space-evenly;
 	}
 	.studyRoomResourcesCard {
 		background: rgba(0,0,0,0);
+	}
+	.studyRoomResourcesCard img{
+		width: 120%;
+		border-radius: 4px;
+	}
+	.studyRoomResourcesCard a{
+		text-decoration: none;
+		color: white;
+		text-align: center;
+		font-size: 14pt;
+		text-transform: capitalize;
+	}
+	.studyRoomResourcesCard p{
+		text-align: center;
+		margin: -1% 0 0 0;
 	}
 	#file-name{
 		font-size:12pt;
@@ -603,5 +646,202 @@ body{
 		}
 	}
 
+
+/*-------------------------STUDENT STUDY ROOM--------------------------------*/
+	.stu_nav{
+		margin:0;
+		padding: 0;
+		width:100%;
+		border: 1px solid black;
+		outline: none;
+	}
+	.stu-study-container{
+		width:75%;
+		background:#8e4162;
+		height:120px;
+		margin:4% auto;
+		border-radius:8px 8px 0px 0px;
+		text-transform: uppercase;
+	}
+	.custom-shape-divider-top-1621680160 .stu-shape-fill {
+	    fill: #8e4162;
+	}
+	.stu-study-container h3{
+		margin-top: -2%;
+	}
+	.stu-study-container h4{
+		margin:-2% 3%;
+	}
+
+/*--------------------------------DISCUSSION ROOM----------------------------------*/
+	
+
+	.discussion-container .side-div{
+		width: 16%;
+		height: 87.5vh;
+		border-right: 1px solid black;
+		float: left;
+		background: white;
+		overflow: auto;
+	}
+	.discussion-container .side-div::-webkit-scrollbar {
+  		display: none;
+  	}
+	.discussion-container .side-div h4, .discussion-container .side-div .inst-heading{
+		background: #8e4162;
+		text-align: center;
+		line-height: 28pt;
+		text-transform: uppercase;
+		font-size: 16pt;
+		font-weight: 300;
+		color: white;
+		width: 100%;
+		background-attachment: fixed;
+		margin-top: 0%;
+		height: 40px;
+		border-bottom: 1px solid black;
+	}
+	.discussion-container .side-div .inst-heading{
+		background: #245D74;
+		height: 35px;
+	}
+	.discussion-container .side-div .chat-list{
+		text-align: left;
+		text-transform: capitalize;
+		font-size: 14pt;
+		box-shadow: inset 0 0 10px #c7cbd1 ;
+		border-radius: 2px;
+		margin:4% 0 4% 0;
+		overflow: auto;
+	}
+	.discussion-container .side-div .chat-list::-webkit-scrollbar {
+  		display: none;
+  	}
+	.discussion-container .side-div .chat-list .name{
+		width: fit-content;
+		margin: 2% 3%;
+		padding: 2%;
+		
+	}
+	.discussion-container .main-div{
+		width: 68.5%;
+		height: 87.5vh;
+		float: left;
+	}
+	.discussion-container .main-div .main-div-stu-heading, .discussion-container .main-div .main-div-inst-heading{
+		background: #8e4162;
+		height: 40px;
+		margin-top: -3.5%;
+		border-left: 1px solid black;
+		border-right: 1px solid black;
+	}
+	.discussion-container .main-div .main-div-inst-heading{
+		background: #245D74;
+	}
+	.discussion-container .main-div .main-div-stu-heading h4, .discussion-container .main-div .main-div-inst-heading h4{
+		font-size: 18pt;
+		color: white;
+		font-weight: 400;
+		text-align: center;
+		line-height: 28pt;
+	}
+	.discussion-container .main-div .main-div-chat{
+		border: 1px solid black;
+		height: 440px;
+		overflow :auto ;
+		display: inline-block;
+		width: 99.8%;
+	}
+	.discussion-container .main-div .main-div-chat::-webkit-scrollbar {
+  		display: none;
+  	}
+	.discussion-container .main-div .main-div-chat .left-text{
+		margin: 2% 60% 1% 3%;
+		padding: 0 1%;
+		width: fit-content;
+		display: block;
+		background: white;
+		border-radius: 4px;
+	}
+	.discussion-container .main-div .main-div-chat .left-text .stu-name, .discussion-container .main-div .main-div-chat .left-text .inst-name{
+		font-size: 10pt;
+		font-style:italic;
+		margin: 0 0 -5% 0;
+		color:#8e4162;
+		text-align: left;
+		text-transform: capitalize;
+	}
+	.discussion-container .main-div .main-div-chat .left-text .inst-name{
+		color:#245D74;
+	}
+	.discussion-container .main-div .main-div-chat .left-text .time{
+		font-size: 9pt;
+		color:#72787e;
+		text-align: right;
+		margin: -4% 0 -2% 0;
+	}
+	.discussion-container .main-div .main-div-chat .stu-right-text, .discussion-container .main-div .main-div-chat .inst-right-text{
+		border-radius: 4px;
+		position: relative;
+		margin: 1% 3% 1% 1%;
+		left: 60%;
+		padding: 0.1% 1%;
+		display: block;
+		max-width:35%;
+		background: #8e4162;
+		color: white;
+	}
+	.discussion-container .main-div .main-div-chat .inst-right-text{
+		background: #245D74;
+	}
+	.discussion-container .main-div .main-div-chat .stu-right-text .time, .discussion-container .main-div .main-div-chat .inst-right-text .time{
+		font-size: 9pt;
+		color:white;
+		text-align: right;
+		margin:  -4% 0 0 -2%;
+	}
+	.discussion-container .main-div .main-div-text-area{
+		border-right: 1px solid black;
+		border-left: 1px solid black;
+		height: 67.5px;
+		margin-top: -0.5%;
+		background: rgba(0,0,0,0.8);
+	}
+	.discussion-container .main-div .main-div-text-area input{
+		display:inline-block;
+		font-size: 16pt; 
+		margin: 2% 1% 1% 3%;
+		border:none;
+		outline: none;
+		width:86%;
+		height: 30px;
+		border-radius: 4px;
+		background: #42433e;
+		cursor: text;
+		color:white;
+		font-weight: 300;
+	}
+	.discussion-container .main-div .main-div-text-area button{
+		cursor: pointer;
+		margin: 2% 1% 1% 1%;
+		background: green;
+		color: white;
+		border: none;
+		outline: none;
+		font-size: 17pt;
+		line-height: 17pt;
+		width: 4%;
+		height: 32px;
+		font-weight: 900;
+		border-radius: 2px;
+	}
+	.discussion-container .main-div .main-div-text-area ::placeholder{
+		font-size: 13pt;
+		line-height: 16pt;
+		margin-left: 2%;
+	}
 }
+
+
+
 
