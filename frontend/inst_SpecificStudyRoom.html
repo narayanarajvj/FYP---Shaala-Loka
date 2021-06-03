@@ -59,7 +59,7 @@
 
     <div class="inst-spec-stud-container">
       <div class="lecture" title="Lecture">
-      <a href="inst_Lecture.html" target="">
+      <a data-modal-target="#lecture-modal" >
       <img src="assets/Images/meet2.jpg" alt="Lecture">
       <h4>Lectures</h4>
       </a>
@@ -85,7 +85,7 @@
     </div>
 
 
-    <!-------------- MODAL POPUP --------------->
+<!------------------ LIST OF STUDENTS MODAL POPUP -------------------->
     <div class="modal" id="modal">
       <div class="modal-header" >
         <h4 class="modal-title">List Of Students</h4>
@@ -110,13 +110,31 @@
     </div>
     <div id="overlay"></div>
 
+
+<!--------------------- LECTURE MODAL POPUP ------------------------->
+    <div class="modal" id="lecture-modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">Schedule Lecture</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" method="" action="">
+          <br>
+          <input type="url" name="meetLink" id="meetLink" placeholder="Enter the link.">
+          <button name="submit" type="submit"> Submit </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+<!----------------------- SCHEDULE MODAL POPUP ---------------------------->
     <div class="modal" id="schedule-modal">
       <div class="modal-header" >
         <h4 class="modal-title">Schedule Next Session</h4>
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
-        <form class="stud-room-form" method="" class="">
+        <form class="stud-room-form" method="" action="">
           <br>
           <input type="text" name="topic_name" placeholder="Topic" required>
           <input type="date" name="date"  required>
