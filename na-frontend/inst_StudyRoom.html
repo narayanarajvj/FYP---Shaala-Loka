@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shaala Loka</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/registrationLogin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="inst_Landing.html">
+      <img src="assets/Images/Shaala_Loka_Logo.png" />
+    </a>
+    </div>
+    <div class="inst-nav-buttons">
+      <ul>
+        <li>
+          <a href="inst_Schedule.html">
+            <p>Schedule</p>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <p>Study Room</p>
+          </a>
+        </li>
+        <li>
+          <a href="inst_Archives.html">
+            <p>Archives</p>
+          </a>
+        </li>
+        <li>
+        <i class="fa fa-bars" style="font-size:24px"></i>
+        <ul>
+          <li><a href="#">My Profile</a></li>
+          <li><a href="#">LogOut</a></li>
+        </ul>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+<!------------------------- NAV BAR CLOSES -------------------->
+<div class="inst-study-container">
+  <br>
+    <h3>Your Current Classrooms</h3>
+    <br>
+    <button data-modal-target="#modal" class="inst-button"> New Class Room </button>
+</div>
+    
+<div class="inst-stud-room-container">
+
+  <!-- loop should start from here-->
+  <a href="inst_SpecificStudyRoom.html">
+    <div class="studyRoomCard">
+      <br><br>
+    <p id="sub"> Subject: lala</p>
+        <p id="desc"> Lorem ipsum dolor sit amet </p>
+        <div id="floatItems"> 
+        <p id="dept">Dept:lala</p>
+        <p id="class"> class: jdfsd</p>
+        <p id="sec"> section:sdhb</p></div>
+<div class="custom-shape-divider-top-1621680160" >
+    <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
+        <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" class="shape-fill"></path>
+        <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
+    </svg>
+</div>
+</div>
+</a>
+
+
+ <!-------------- MODAL POPUP --------------->
+    <div class="modal" id="modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">New Class Room</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" method="" action="">
+          <br>
+          <input type="text" name="subject_name" placeholder="Subject" required>
+          <input type="text" name="description" placeholder="Description" required>
+          <input type="text" name="department" placeholder="Department" required>
+          <input type="text" name="class" placeholder="Class" required>
+          <input type="text" name="section" placeholder="Section" required>
+          <button name="submit" type="submit"> Submit </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+<script >
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+const closeModalButtons = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
+openModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(button.dataset.modalTarget)
+      openModal(modal)
+  })
+})
+
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal')
+      closeModal(modal)
+  })
+})
+
+function openModal(modal){
+  if(modal == null) return
+  modal.classList.add('active')
+  overlay.classList.add('active')
+}
+
+function closeModal(modal){
+  if(modal == null) return
+  modal.classList.remove('active')
+  overlay.classList.remove('active')
+}
+  </script>
+  </body>
+</html>

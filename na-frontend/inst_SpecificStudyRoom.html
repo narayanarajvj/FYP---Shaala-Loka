@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shaala Loka</title>
+  <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/registrationLogin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="inst_Landing.html">
+      <img src="assets/Images/Shaala_Loka_Logo.png" />
+    </a>
+    </div>
+    <div class="inst-nav-buttons">
+      <ul>
+        <li>
+          <a href="inst_Schedule.html">
+            <p>Schedule</p>
+          </a>
+        </li>
+        <li>
+          <a href="inst_StudyRoom.html">
+            <p>Study Room</p>
+          </a>
+        </li>
+        
+        <li>
+          <a href="inst_Archives.html">
+            <p>Archives</p>
+          </a>
+        </li>
+        <li>
+        <i class="fa fa-bars" style="font-size:22px; margin-top:0.5%" ></i>
+        <ul>
+          <li><a href="#">My Profile</a></li>
+          <li><a href="#">LogOut</a></li>
+        </ul>
+      </li>
+      </ul>
+    </div>
+  </nav>
+
+<!------------------------- NAV BAR CLOSES -------------------->
+    
+  <div class="inst-study-container">
+    <br>
+    <h3> SUBJECT ABCD</h3>
+    
+    
+    <h4> Teacher : Lalalalala</h4>
+    <button data-modal-target="#schedule-modal" class="inst-schedule-button"> Create Schedule </button>
+    <button data-modal-target="#modal" class="inst-button"> List of Students </button>
+  </div>
+
+    <div class="inst-spec-stud-container">
+      <div class="lecture" title="Lecture">
+      <a data-modal-target="#lecture-modal" >
+      <img src="assets/Images/meet2.jpg" alt="Lecture">
+      <h4>Lectures</h4>
+      </a>
+    </div>
+    <div class="resources" title="Resources">
+      <a href="inst_StudyRoom_Resources.html">
+      <img src="assets/Images/resources.png" alt="resources">
+      <h4>resources</h4>
+      </a>
+    </div>
+    <div class="test" title="Quiz">
+      <a href="inst_Test.html">
+      <img src="assets/Images/inst_Quiz.png" alt="test">
+      <h4>quiz</h4>
+      </a>
+    </div>
+    <div class="session" title="Discussion room">
+      <a  href="inst_Discussions.html" >
+      <img src="assets/Images/discussions.png" alt="discussion">
+      <h4>discussions</h4>
+      </a>
+    </div>
+    </div>
+
+
+<!------------------ LIST OF STUDENTS MODAL POPUP -------------------->
+    <div class="modal" id="modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">List Of Students</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <table>
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Scores</th>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+           
+
+        </table>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+
+<!--------------------- LECTURE MODAL POPUP ------------------------->
+    <div class="modal" id="lecture-modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">Schedule Lecture</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" method="" action="">
+          <br>
+          <input type="url" name="meetLink" id="meetLink" placeholder="Enter the link.">
+          <button name="submit" type="submit"> Submit </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+<!----------------------- SCHEDULE MODAL POPUP ---------------------------->
+    <div class="modal" id="schedule-modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">Schedule Next Session</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" method="" action="">
+          <br>
+          <input type="text" name="topic_name" placeholder="Topic" required>
+          <input type="date" name="date"  required>
+          <input type="time" name="time"  required>
+          <button name="submit" type="submit"> Schedule </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+    
+  <script >
+    const openModalButtons = document.querySelectorAll('[data-modal-target]')
+const closeModalButtons = document.querySelectorAll('[data-close-button]')
+const overlay = document.getElementById('overlay')
+
+openModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = document.querySelector(button.dataset.modalTarget)
+      openModal(modal)
+  })
+})
+
+closeModalButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const modal = button.closest('.modal')
+      closeModal(modal)
+  })
+})
+
+function openModal(modal){
+  if(modal == null) return
+  modal.classList.add('active')
+  overlay.classList.add('active')
+}
+
+function closeModal(modal){
+  if(modal == null) return
+  modal.classList.remove('active')
+  overlay.classList.remove('active')
+}
+  </script>
+  </body>
+</html>
