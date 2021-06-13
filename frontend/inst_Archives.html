@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shaala Loka</title>
+	<link rel="stylesheet" type="text/css" href="assets/css/style1.css">
+  <link rel="stylesheet" type="text/css" href="assets/css/registrationLogin.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="inst_Landing.html">
+      <img src="assets/Images/Shaala_Loka_Logo.png" />
+    </a>
+    </div>
+    <div class="inst-nav-buttons">
+      <ul>
+        <li>
+          <a href="inst_Schedule.html">
+            <p>Schedule</p>
+          </a>
+        </li>
+        <li>
+          <a href="inst_StudyRoom.html">
+            <p>Study Room</p>
+          </a>
+        </li>
+        <li>
+          <a href="inst_Discussions.html">
+            <p>Discussions</p>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <p>Archives</p>
+          </a>
+        </li>
+        <li>
+        <i class="fa fa-bars" style="font-size:24px"></i>
+        <ul>
+          <li><a href="#">My Profile</a></li>
+          <li><a href="#">LogOut</a></li>
+        </ul>
+      </li>
+      </ul>
+      
+    </div>
+  </nav>
+  <!------------------------- NAV BAR CLOSES -------------------->
+
+<div class="inst-archives-top-container">
+  <br>
+  <h3> INSTRUCTOR ARCHIVES </h3>
+  <form method="" action="">
+    <button type="submit">Submit</button>
+    <div class="inst-archives-form" >
+
+    <input type="checkbox" name="" id="Chemistry">
+    <label for="Chemistry" onclick="button_click(this)">Chemistry</label>
+  
+    <input type="checkbox" name="" id="Physics">
+    <label for="Chemistry" onclick="button_click(this)">Physics</label>
+    
+    <input type="checkbox" name="" id="Biology">
+    <label for="Biology" onclick="button_click(this)">Biology</label>
+
+    <input type="checkbox" name="" id="History">
+    <label for="History" onclick="button_click(this)">History</label>
+    
+    <input type="checkbox" name="" id="Civics">
+    <label for="Civics" onclick="button_click(this)">Civics</label>
+
+    <input type="checkbox" name="" id="Networks">
+    <label for="Networks" onclick="button_click(this)">Networks</label>
+
+    <input type="checkbox" name="" id="Machine Learning">
+    <label for="Machine Learning" onclick="button_click(this)">Machine_Learning</label>
+
+    <input type="checkbox" name="" id="Cloud computing">
+    <label for="Cloud computing" onclick="button_click(this)">Cloud_computing</label>
+
+  </div>
+</form>
+</div>
+
+<div class="inst-archives-main-container">
+
+  <div class="inst-archives-card">
+      <br>
+      <h4>student name</h4>
+
+  <!--- LOOP FOR THE NO. OF FILES ---->
+    <div class="inst-archives-card-files">
+      <p class="archive-files">Chemistry: 56</p>  
+    </div>
+  </div>
+</div>
+
+  <script type="text/javascript" src="assets/script/script.js"></script>
+  </body>
+</html>
