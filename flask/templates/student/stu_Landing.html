@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shaala Loka</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+</head>
+<body>
+
+  <nav>
+    <div class="nav-logo">
+      <a href="/student/{{ stuId }}">
+        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+      </a>
+    </div>
+    <div class="stud-nav-buttons">
+      <ul>
+        <li>
+          <a href="">
+            <p>My Profile</p>
+          </a>
+        </li>
+        <li>
+          <a href="/home">
+            <p>Log Out</p>
+          </a>
+        </li>
+      </ul>   
+    </div>
+  </nav>
+
+  <div class="welcome">
+    <h2> Welcome, {{ stuName }}!</h2>
+  </div>
+
+  <div class="container">
+    <div class="schedule">
+      <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/schedule">
+        <img src="{{ url_for('static', filename = 'assets/schedule.png') }}" alt="schedule">
+        <h4>schedule</h4>
+      </a>
+    </div>
+    <div class="study_room">
+      <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall">
+        <img src="{{ url_for('static', filename = 'assets/study_room.png') }}" alt="study_room">
+        <h4>study room</h4>
+      </a>
+    </div>
+    <div class="archives">
+      <a href="stu_Archives.html">
+        <img src="{{ url_for('static', filename = 'assets/archives.png') }}" alt="archives">
+        <h4>archives</h4>
+      </a>
+    </div>
+  </div>
+  
+</body>
+</html>

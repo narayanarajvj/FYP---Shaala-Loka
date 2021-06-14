@@ -1,0 +1,137 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+  <div class="inst-study-container">
+    <br>
+    <h3> SUBJECT : {{ sh_name }}</h3>
+    <h4> Teacher : {{ insName }}</h4>
+    <button data-modal-target="#schedule-modal" class="inst-schedule-button"> Create Schedule </button>
+    <button data-modal-target="#modal" class="inst-button"> List of Students </button>
+  </div>
+
+    <div class="inst-spec-stud-container">
+      <div class="lecture" title="Lecture">
+      <a data-modal-target="#lecture-modal" >
+      <img src="{{ url_for('static', filename = 'assets/meet2.jpg') }}" alt="Lecture">
+      <h4>Lectures</h4>
+      </a>
+    </div>
+    <div class="resources" title="Resources">
+      <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/resources">
+      <img src="{{ url_for('static', filename = 'assets/resources.png') }}" alt="resources">
+      <h4>resources</h4>
+      </a>
+    </div>
+    <div class="test" title="Quiz">
+      <a href="inst_Test.html">
+      <img src="{{ url_for('static', filename = 'assets/inst_Quiz.png') }}" alt="test">
+      <h4 style="margin-left:30%">quiz</h4>
+      </a>
+    </div>
+    <div class="session" title="Discussion room">
+      <a  href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/discussion" >
+      <img src="{{ url_for('static', filename = 'assets/discussions.png') }}" alt="discussion">
+      <h4>discussions</h4>
+      </a>
+    </div>
+    </div>
+
+
+<!------------------ LIST OF STUDENTS MODAL POPUP -------------------->
+    <div class="modal" id="modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">List Of Students</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <table>
+        <tr>
+          <th>Student ID</th>
+          <th>Student Name</th>
+          <th>Scores</th>
+        </tr>
+        {% if docs %}
+        {% for doc in docs %}
+        <tr>
+          <td>{{ doc.to_dict()['student_id'] }}</td>
+          <td>{{ doc.to_dict()['student_name'] }}</td>
+          <td>{{ doc.to_dict()['score'] }}</td>
+        </tr>
+        {% endfor %}
+        {% endif %}
+        </table>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+
+<!--------------------- LECTURE MODAL POPUP ------------------------->
+    <div class="modal" id="lecture-modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">Schedule Lecture</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" action="{{ url_for('instructorSessionLink', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name) }}" method="POST">
+          <br>
+          <input type="url" name="meetLink" id="meetLink" placeholder="Enter the link.">
+          <button name="submit" type="submit" onClick="javascript: window.open(document.getElementById('meetLink').value);"> Submit </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+<!----------------------- SCHEDULE MODAL POPUP ---------------------------->
+    <div class="modal" id="schedule-modal">
+      <div class="modal-header" >
+        <h4 class="modal-title">Schedule Next Session</h4>
+        <button data-close-button class="btn-close">&times</button>
+      </div>
+      <div class="modal-body">
+        <form class="stud-room-form" action="{{ url_for('studyHallNewSchedule', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name) }}" method="POST">
+          <br>
+          <input type="text" name="topic_name" placeholder="Topic" required>
+          <input type="date" name="date"  required>
+          <input type="time" name="time"  required>
+          <button name="submit" type="submit"> Schedule </button>
+        </form>
+      </div>
+    </div>
+    <div id="overlay"></div>
+
+    
+<script >
+  const openModalButtons = document.querySelectorAll('[data-modal-target]')
+  const closeModalButtons = document.querySelectorAll('[data-close-button]')
+  const overlay = document.getElementById('overlay')
+
+  openModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const modal = document.querySelector(button.dataset.modalTarget)
+        openModal(modal)
+    })
+  })
+
+  closeModalButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const modal = button.closest('.modal')
+        closeModal(modal)
+    })
+  })
+
+  function openModal(modal){
+    if(modal == null) return
+    modal.classList.add('active')
+    overlay.classList.add('active')
+  }
+
+  function closeModal(modal){
+    if(modal == null) return
+    modal.classList.remove('active')
+    overlay.classList.remove('active')
+  }
+</script>
+
+{% endblock %}

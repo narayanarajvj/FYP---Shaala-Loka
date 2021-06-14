@@ -1,0 +1,43 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+  <div class="discussion-container">
+    <div class="main-div">
+      <div class="main-div-inst-heading">
+        <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="discussion-back-btn">&lt;</a>
+        <h4> {{ sh_name }} </h4>
+      </div>
+      <div class="main-div-chat">
+        {% if docs %}
+        {% for doc in docs %}
+
+        {% if doc.to_dict()['id'] != insId %}
+        <div class="left-text">
+          <p class="inst-name">{{ doc.to_dict()['name'] }}</p>
+          <p >{{ doc.to_dict()['message'] }}</p>
+          <p class="time">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+        </div>
+        {% endif %}
+        
+        {% if doc.to_dict()['id'] == insId %}
+        <div class="inst-right-text">
+          <p>{{ doc.to_dict()['message'] }}</p>
+          <p class="time">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+        </div>
+        {% endif %}
+        
+        {% endfor %}
+        {% endif %}
+      </div>
+      <div class="main-div-text-area">
+        <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/discussion" method="POST">
+          <input type="text" name="message" id="message" placeholder="enter your message..." required="required">
+          <button type="submit" name="submit">&gt;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

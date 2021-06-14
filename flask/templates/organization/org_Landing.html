@@ -1,0 +1,23 @@
+{% extends 'organization/base.html' %}
+{% include 'organization/header.html' %}
+
+{% block body %}
+    <div class="welcome">
+        <h2> Welcome, {{ orgName }}!</h2>
+    </div>
+
+    <div class="org-container">
+        <div class="instructor">
+            <a href="/{{ orgId }}/instructor">
+                <img src="{{ url_for('static', filename = 'assets/3.png') }}" alt="organisation">
+                <h3>Instructor  </h3>
+            </a>
+        </div>
+        <div class="student">
+            <a href="/{{ orgId }}/student">
+                <img src="{{ url_for('static', filename = 'assets/2.png') }}" alt="instructor">
+                <h3>student </h3>
+            </a>
+        </div>
+    </div>
+{% endblock %}

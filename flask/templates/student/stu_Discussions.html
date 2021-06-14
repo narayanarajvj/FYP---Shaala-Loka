@@ -1,0 +1,43 @@
+{% extends 'student/base.html' %}
+{% include 'student/header.html' %}
+
+{% block body %}
+
+  <div class="discussion-container">
+    <div class="main-div">
+      <div class="main-div-stu-heading">
+        <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">&lt;</a>
+        <h4> {{ sh_name }} </h4>
+      </div>
+      <div class="main-div-chat">
+        {% if docs %}
+        {% for doc in docs %}
+
+        {% if doc.to_dict()['id'] != stuId %}
+        <div class="left-text">
+            <p class="stu-name">{{ doc.to_dict()['name'] }}</p>
+            <p>{{ doc.to_dict()['message'] }}</p>
+            <p class="time">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+        </div>
+        {% endif %}
+
+        {% if doc.to_dict()['id'] == stuId %}
+        <div class="stu-right-text">
+            <p>{{ doc.to_dict()['message'] }}</p>
+            <p class="time">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+        </div>
+        {% endif %}
+
+        {% endfor %}
+        {% endif %}
+      </div>
+      <div class="main-div-text-area">
+        <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ subjectId }}/{{ sh_name }}/discussion" method="POST">
+          <input type="text" name="message" id="message" placeholder="enter your message..." required="required">
+          <button type="submit" name="submit">&gt;</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

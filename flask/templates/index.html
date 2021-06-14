@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Shaala Loka</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+</head>
+<body >
+    <div class="banner">
+            <a href="/home">
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+            </a>    </div>
+    <div class="organisation">
+        <a href="/login">
+  	        <img src="/static/assets/1.png" alt="organisation">
+  	        <h3>Organization</h3>
+        </a>
+    </div>
+    <div class="instructor">
+        <a href="/login">
+  	        <img src="/static/assets/3.png" alt="instructor">
+  	        <h3>Instructor</h3>
+        </a>
+    </div>
+    <div class="student">
+        <a href="/login">
+  	        <img src="/static/assets/2.png" alt="student">
+  	        <h3>Student</h3>
+        </a>
+    </div>
+</body>
+</html>

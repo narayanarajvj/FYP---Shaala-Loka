@@ -1,0 +1,49 @@
+{% extends 'student/base.html' %}
+{% include 'student/header.html' %}
+
+{% block body %}
+
+<div class="stu-study-container">
+    <br><br>
+    <h3> SUBJECT : {{ sh_name }}</h3>
+    <h4> Teacher : {{ insName }}</h4>
+</div>
+ 
+<div class="inst-spec-stud-container">
+  <div class="lecture" title="Lecture">
+    {% if session_link %}
+    <a href="{{ session_link }}" target="_blank" style="cursor: pointer;">
+    {% else %}
+    <a href="javascript:void(0)" style="cursor: not-allowed;">
+    {% endif %}
+      <img src="{{ url_for('static', filename = 'assets/meet2.jpg') }}" alt="Lecture">
+      <h4>Lectures</h4>
+    </a>
+    </a>
+  </div>
+  <div class="resources" title="Resources">
+    <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ subjectId }}/{{ sh_name }}/resources">
+      <img src="{{ url_for('static', filename = 'assets/resources.png') }}" alt="resources">
+      <h4>resources</h4>
+    </a>
+  </div>
+  <div class="test" title="Quiz">
+    <a href="stu_Test.html">
+      <img src="{{ url_for('static', filename = 'assets/stud_Quiz.png') }}" alt="test">
+      <h4 style="margin-left:28%">quiz</h4>
+    </a>
+  </div>
+  <div class="session" title="Discussions">
+    <a  href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ subjectId }}/{{ sh_name }}/discussion" >
+      <img src="{{ url_for('static', filename = 'assets/discussions.png') }}" alt="Discussions">
+      <h4>discussions</h4>
+    </a>
+  </div>
+</div>
+
+{% endblock %}
+
+
+
+
+

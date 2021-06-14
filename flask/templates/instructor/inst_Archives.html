@@ -1,0 +1,60 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+<div class="inst-archives-top-container">
+    <br>
+    <h2> INSTRUCTOR ARCHIVES </h2>
+    <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/filter" method="POST">
+      <button type="submit">Filter</button>
+      <div class="inst-archives-form" >
+  
+      <input type="checkbox" name="domain" id="Chemistry" value="Chemistry">
+      <label for="Chemistry" onclick="button_click(this)">Chemistry</label>
+    
+      <input type="checkbox" name="domain" id="Physics" value="Physics">
+      <label for="Chemistry" onclick="button_click(this)">Physics</label>
+      
+      <input type="checkbox" name="domain" id="Biology" value="Biology">
+      <label for="Biology" onclick="button_click(this)">Biology</label>
+  
+      <input type="checkbox" name="domain" id="History" value="History">
+      <label for="History" onclick="button_click(this)">History</label>
+      
+      <input type="checkbox" name="domain" id="Civics" value="Civics">
+      <label for="Civics" onclick="button_click(this)">Civics</label>
+  
+      <input type="checkbox" name="domain" id="Networks" value="Networks">
+      <label for="Networks" onclick="button_click(this)">Networks</label>
+  
+      <input type="checkbox" name="domain" id="Machine Learning" value="MachineLearning">
+      <label for="Machine Learning" onclick="button_click(this)">Machine Learning</label>
+  
+      <input type="checkbox" name="domain" id="Cloud computing" value="CloudComputing">
+      <label for="Cloud computing" onclick="button_click(this)">Cloud Computing</label>
+  
+    </div>
+  </form>
+  </div>
+  
+  <div class="inst-archives-main-container">
+    {% if docs %}
+      {% for doc in docs %}
+          <div class="inst-archives-card">
+              <br>
+              <h4>STUDENT NAME: <em>{{ doc.to_dict()['student_name'] }}</em></h4>
+              <h4>STUDENT ID: <em>{{ doc.to_dict()['student_id'] }}</em></h4>
+              {% for key, item in doc.to_dict()['interests'].items() %}
+                  <div class="inst-archives-card-files">
+                      <p class="archive-files"><b>{{ key }}</b>: {{ item }}</p>
+                  </div>
+              {% endfor %}
+          </div>
+      {% endfor %}
+    {% else %}
+        <p><b>No Students Found...</b></p>
+    {% endif %}
+  </div>
+
+{% endblock %}

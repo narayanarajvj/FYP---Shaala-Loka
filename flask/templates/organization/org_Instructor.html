@@ -1,0 +1,50 @@
+{% extends 'organization/base.html' %}
+{% include 'organization/header.html' %}
+
+{% block body %}
+    <div>
+          {% with messages = get_flashed_messages() %}
+          {% if messages %}
+              <ul>
+              {% for message in messages %}
+                  <p class="login-link" style="color:green;">{{ message }}</p>
+              {% endfor %}
+              </ul>
+          {% endif %}
+          {% endwith %}
+    </div>
+
+
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>email-id</th>
+                    <th>department</th>
+                    <th>designation</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for doc in docs %}
+                    <tr>
+                        <td>{{ doc.to_dict()['id'] }}</td>
+                        <td>{{ doc.to_dict()['instructor_name'] }}</td>
+                        <td class="table-email">{{ doc.to_dict()['email_id'] }}</td>
+                        <td>{{ doc.to_dict()['department'] }}</td>
+                        <td>{{ doc.to_dict()['designation'] }}</td>
+                        <td>
+                            {% if doc.to_dict()['approval_status'] == False %}
+                                <a href="/{{ orgId }}/approve/Instructor/{{ doc.to_dict()['id'] }}" id="{{ doc.to_dict()['id'] }}" class="approve-btn" onclick="approveBtn(this)">Approve</a>
+                            {% endif %}
+                            <a href="/{{ orgId }}/remove/Instructor/{{ doc.to_dict()['id'] }}" class="remove-btn" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

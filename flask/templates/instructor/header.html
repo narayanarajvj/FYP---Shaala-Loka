@@ -1,0 +1,38 @@
+{% extends 'instructor/base.html' %}
+
+{% block body %}
+<nav>
+    <div class="nav-logo">
+      <a href="/instructor/{{ insId }}">
+        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+      </a>
+    </div>
+    <div class="inst-nav-buttons">
+      <ul>
+        <li>
+          <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/schedule">
+            <p>Schedule</p>
+          </a>
+        </li>
+        <li>
+          <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall">
+            <p>Study Hall</p>
+          </a>
+        </li>
+        <li>
+          <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/archives">
+            <p>Archives</p>
+          </a>
+        </li>
+        <li>
+          <i class="fa fa-bars" style="font-size:24px"></i>
+          <ul>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="/home">LogOut</a></li>
+          </ul>
+        </li>
+      </ul>
+      
+    </div>
+</nav>
+{% endblock %}

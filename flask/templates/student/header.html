@@ -1,0 +1,37 @@
+{% extends 'student/base.html' %}
+
+{% block body %}
+<nav>
+    <div class="nav-logo">
+        <a href="/student/{{ stuId }}">
+            <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+        </a>
+    </div>
+    <div class="stu-nav-buttons">
+        <ul>
+        <li>
+            <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/schedule">
+                <p>Schedule</p>
+            </a>
+        </li>
+        <li>
+            <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall">
+                <p>Study Hall</p>
+            </a>
+        </li>
+        <li>
+            <a href="stu_Archives.html">
+                <p>Archives</p>
+            </a>
+        </li>
+        <li>
+        <i class="fa fa-bars" style="font-size:24px"></i>
+        <ul>
+            <li><a href="#">My Profile</a></li>
+            <li><a href="/home">LogOut</a></li>
+        </ul>
+        </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends 'organization/base.html' %}
+
+{% block body %}
+<nav>
+    <div class="nav-logo">
+        <a href="/{{ orgId }}">
+            <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+        </a>
+    </div>
+    <div class="org-nav-buttons">
+        <ul>
+            <li>
+                <a href="">
+                    <p>My Profile</p>
+                </a>
+            </li>
+            <li>
+                <a href="/home">
+                    <p>Log Out</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>
+{% endblock %}

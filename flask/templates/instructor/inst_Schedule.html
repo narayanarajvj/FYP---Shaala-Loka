@@ -1,0 +1,20 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+  <h1 class="inst-heading">  Your Upcoming Classes </h1>
+  {% for doc in docs_list %}
+      <div class="schedule-container">
+        <div class="schedule-card">
+          <h4>subject  :  {{ doc['sh_name'] }}</h4>
+          <h5>topic: {{ doc['topic_name'] }}</h5>
+          <p class="schedule-class">level: {{ doc['level'] }}</p>
+          <p class="schedule-section">section: {{ doc['section'] }}</p>
+          <p class="schedule-date-time">date: {{ doc['date'] }} <br> time: {{ doc['time'] }}</p>
+          <span class="clear"></span>
+        </div>
+      </div>
+  {% endfor %}
+
+{% endblock %}

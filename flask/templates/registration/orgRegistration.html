@@ -1,0 +1,24 @@
+{% extends 'registration/base.html' %}
+{% include 'registration/header.html' %}
+
+
+{% block body %}
+    <h2 class="heading">Organisation Registration</h2>
+    <h4 class="login-link"> Have an account? <a href="/login"> Login to your account </a> </h4>
+
+
+    <div class="form">
+  	    <form action = "/organization-registration" method = "POST">
+  		<br><br>
+            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" pattern="[A-Za-z]{3}[A-Za-z0-9]{3-9}"  required>
+            <input type="text" name="org_name" id="org_name" placeholder="Organization name" pattern="[a-zA-Z\s]+$" required>
+            <input type="email" name="email_id" id="email_id" placeholder="Email-Id" required>
+            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required>
+            <input type="password" name="password_two" id="password_two" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm your Password" required>
+            <input type="radio" name="type" id="school" value="S"><label for="school"> School</label>
+            <input type="radio" name="type" id="college" value="C"><label for="college"> College</label>
+            <br><br><br>
+            <button name="submit" type="submit"> sign up </button>
+  	    </form>
+    </div>
+{% endblock %}

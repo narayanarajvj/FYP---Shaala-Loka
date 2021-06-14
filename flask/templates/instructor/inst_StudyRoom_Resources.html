@@ -1,0 +1,33 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+<div class="inst-study-container">
+    <br>
+    <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">&lt;</a>
+    <h3> SUBJECT : {{ sh_name }} </h3>
+    <h4 class="teacher-name"> Teacher : {{ insName }} </h4>
+    <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/resources" method="POST" enctype="multipart/form-data">
+      <div class="upload-file"> 
+        <input type="file" id="inst_resources" class="file" name="inst_resources">
+        <input type = "submit" value="Upload" class="upload-submit"/>
+      </div>
+    </form>
+</div>
+
+<div class="inst-stud-room-resources-container">
+  {% if docs %}
+    {% for doc in docs %}
+    <div class="studyRoomResourcesCard">
+        <a style="text-decoration: none;" href="{{ doc.to_dict()['url'] }}">
+          <img src="{{ url_for('static', filename = 'assets/resource.jpg') }}" alt="file">
+          <p class="file-name" style="color: white;">{{ doc.to_dict()['filename'] }}</p>
+          <p class="uploaded-by">{{ doc.to_dict()['name'] }}</p>
+        </a>
+    </div>
+    {% endfor %}
+  {% endif %}
+</div>
+
+{% endblock %}
