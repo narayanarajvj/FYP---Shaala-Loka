@@ -1,0 +1,58 @@
+{% extends 'student/base.html' %}
+{% include 'student/header.html' %}
+
+{% block body %}
+
+<div class="stu-archives-top-container">
+    <br>
+    <h3>Your Archives</h3>
+    <br><br>
+    <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/archives-predict" method="POST" enctype="multipart/form-data">
+        <div class="upload-file"> 
+            <input type="file" id="stu_resources" name="stu_resources" />
+        <!-- <button onclick="reload()"> -->
+            <input type = "submit" value="Upload" class="upload-submit"/>
+        <!-- </button> -->
+        </div>
+    </form>
+</div>
+  
+<div class="stu-archives-main-container">
+    <div class="stu-archives-left-container">
+        <br>
+        <h4><b>INSIGHTS</b></h4>
+        {% if interests %}
+        {% for key, item in interests.items() %}
+        <label for="file">{{ key }}</label>
+        {% set val = ((item * 100)/files_count) |int %}
+        <progress id="file" class="progress" value="{{ val }}" max="100" data-label="{{ val }}%"> </progress>
+        {% endfor %}
+        {% endif %}
+    </div>
+  
+    <div class="stu-archives-right-container">
+        {% if docs %}
+        {% for doc in docs %}
+            <div class="stu-archives-file">
+                <img src="{{ url_for('static', filename = 'assets/stu_file.png') }}" alt="file">
+                <p class="file-name"> {{ doc.to_dict()['name'] }} </p>
+            </div>
+        {% endfor %}
+        {% else %}
+            <p style="color: white; text-align: center;">No Files Uploaded...</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- <script>
+
+function reload(){
+    console.log("Hai");
+    setTimeout(function(){
+    window.location.reload(1);
+    }, 5000);
+}
+
+</script> -->
+
+{% endblock %}

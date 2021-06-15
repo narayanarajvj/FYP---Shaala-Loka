@@ -45,6 +45,7 @@
               <br>
               <h4>STUDENT NAME: <em>{{ doc.to_dict()['student_name'] }}</em></h4>
               <h4>STUDENT ID: <em>{{ doc.to_dict()['student_id'] }}</em></h4>
+              <h4>STUDENT EMAIL ID: <em>{{ doc.to_dict()['email_id'] }}</em></h4>
               {% for key, item in doc.to_dict()['interests'].items() %}
                   <div class="inst-archives-card-files">
                       <p class="archive-files"><b>{{ key }}</b>: {{ item }}</p>

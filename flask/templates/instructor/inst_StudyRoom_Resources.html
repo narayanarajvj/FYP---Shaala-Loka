@@ -6,7 +6,7 @@
 <div class="inst-study-container">
     <br>
     <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">&lt;</a>
-    <h3> SUBJECT : {{ sh_name }} </h3>
+    <h3 style="margin-bottom: 18px;"> SUBJECT : {{ sh_name }} </h3>
     <h4 class="teacher-name"> Teacher : {{ insName }} </h4>
     <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/resources" method="POST" enctype="multipart/form-data">
       <div class="upload-file"> 
@@ -21,7 +21,11 @@
     {% for doc in docs %}
     <div class="studyRoomResourcesCard">
         <a style="text-decoration: none;" href="{{ doc.to_dict()['url'] }}">
-          <img src="{{ url_for('static', filename = 'assets/resource.jpg') }}" alt="file">
+          {% if doc.to_dict()['instructor_id'] %}
+            <img src="{{ url_for('static', filename = 'assets/inst_file.png') }}" alt="file">
+          {% else %}
+            <img src="{{ url_for('static', filename = 'assets/stu_file.png') }}" alt="file">
+          {% endif %}
           <p class="file-name" style="color: white;">{{ doc.to_dict()['filename'] }}</p>
           <p class="uploaded-by">{{ doc.to_dict()['name'] }}</p>
         </a>

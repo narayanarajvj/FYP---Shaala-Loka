@@ -12,6 +12,21 @@ from pytz import timezone
 from werkzeug.utils import secure_filename
 import json
 
+import multiprocessing
+from gensim.summarization import keywords
+from pdfminer.pdfinterp import PDFResourceManager, PDFPageInterpreter
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from io import StringIO
+from pdfminer.pdfparser import PDFParser
+from pdfminer.pdfdocument import PDFDocument
+from pdfminer.pdfpage import PDFPage
+from pdfminer.pdfinterp import resolve1
+from nltk.corpus import stopwords
+from nltk.stem.porter import PorterStemmer
+import pickle
+import numpy as np
+
 
 app = Flask(__name__)
 app.secret_key = 'vijay'
@@ -39,6 +54,128 @@ bucket = storage.bucket()
 
 db = firestore.client()
 
+ALLOWED_EXTENSIONS = {'pdf'}
+
+
+# NLP CONTEXT ANALYSIS STARTS HERE
+
+class PdfConverter:
+    
+    def __init__(self, file_path):
+        self.file_path = file_path
+
+    def convert_pdf_to_txt(self, pagenos):
+        rsrcmgr = PDFResourceManager()
+        retstr = StringIO()
+        laparams = LAParams()
+        device = TextConverter(rsrcmgr, retstr, laparams=laparams)
+        fp = open(self.file_path, 'rb')
+        interpreter = PDFPageInterpreter(rsrcmgr, device)
+        password = ""
+        maxpages = 1
+        pagenos = range(pagenos, pagenos + maxpages)
+        pagenos = set(pagenos)
+        caching = True
+        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching,
+                                      check_extractable=True):
+            interpreter.process_page(page)
+        fp.close()
+        device.close()
+        str = retstr.getvalue()
+        retstr.close()
+        return str
+
+
+def max_occurrences(nums):
+    max_val = 0
+    result = nums[0]
+    for i in nums:
+        occu = nums.count(i)
+        if occu > max_val:
+            max_val = occu
+            result = i
+    return result
+
+
+def predict(filepath, blobname, orgId, stuId, stuName):
+    reference = {0: 'Biology', 1: 'Chemistry', 2: 'Civics', 3: 'CloudComputing', 4: 'History', 5: 'MachineLearning',
+                 6: 'Networks', 7: 'Physics'}
+    pdfConverter = PdfConverter(file_path=filepath)
+    file = open(filepath, 'rb')
+    parser = PDFParser(file)
+    document = PDFDocument(parser)
+    pages = resolve1(document.catalog['Pages'])['Count']
+    file.close()
+    data = []
+    for i in range(0, pages + 1):
+        page = pdfConverter.convert_pdf_to_txt(pagenos=i)
+        if len(page.split(' ')) > 50:
+            data.append(keywords(page, words=10, lemmatize=True).replace('\n', ' '))
+    data = list(set(data))
+    corpus = []
+    for i in range(0, len(data)):
+        data[i] = data[i].lower()
+        data[i] = data[i].split()
+        ps = PorterStemmer()
+        all_stopwords = stopwords.words('english')
+        data[i] = [ps.stem(word) for word in data[i] if not word in set(all_stopwords)]
+        data[i] = ' '.join(data[i])
+        corpus.append(data[i])
+    corpus = list(set(corpus))
+    clf = pickle.load(open("content/model.pkl", "rb"))
+    corpus = np.array(corpus)
+    corpus.reshape(1, -1)
+    cv = pickle.load(open("content/cvector.pkl", "rb"))
+    test = cv.transform(corpus).toarray()
+    pred = clf.predict(test)
+    domain = max_occurrences(list(pred))
+
+    doc_arc  = db.collection('Archives').where('org_id', '==', orgId).where('student_id','==', stuId).get()
+
+    if not doc_arc:
+        doc_em = db.collection('Organization').document(orgId).collection('Student').document(stuId).get()
+        emailId = doc_em.to_dict()['email_id']
+        data = {
+            'interests': {
+                str(reference[domain]): 0
+            },
+            'interests_list': [],
+            'org_id': orgId,
+            'student_id': stuId,
+            'student_name': stuName,
+            'email_id': emailId 
+        }
+        doc = db. collection('Archives').document()
+        doc.set(data)
+
+    data1 = {
+        'domain': str(reference[domain]),
+        'name': filepath,
+        'path': blobname
+    }
+
+    docs  = db.collection('Archives').where('org_id', '==', orgId).where('student_id','==', stuId).get()
+
+    if docs:
+        for doc in docs:
+            doc_id = doc.id
+            doc_doc = db.collection('Archives').document(doc_id).collection('Documents').document()
+            doc_doc.set(data1)
+            doc_int = db.collection('Archives').document(doc_id)
+            doc_int.update({f"interests.{str(reference[domain])}": firestore.Increment(1)})
+            doc_int.update({'interests_list': firestore.ArrayUnion([str(reference[domain])])})
+
+    os.remove(os.path.join(filepath))
+    return 
+
+# NLP CONTEXT ANALYSIS ENDS
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# HOME PAGE
 
 @app.route("/")
 @app.route("/home")
@@ -62,9 +199,7 @@ def login():
         if docref:
             for doc in docref:
                 if doc.to_dict()['id'] and doc.to_dict()['password']:
-                    # print('Login Successfully')
                     role = doc.to_dict()['role']
-                    # print(role)
         else:
             error = 'Invalid ID or Password. Please try again!'
         if role == 'Organization':
@@ -599,6 +734,52 @@ def studentDiscussionRoom(orgId, stuId, stuName, subjectId, sh_name):
         return str(hr)+":"+str(mi)
 
     return render_template("student/stu_Discussions.html", orgId=orgId, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, docs=docs, convert_timestamp=convert_timestamp)
+
+@app.route("/student/<orgId>/<stuId>/<stuName>/archives")
+def studentArchives(orgId, stuId, stuName):
+    files_count = 0
+    interests = None
+    docs = None
+    docs_int = db.collection('Archives').where('org_id', '==', orgId).where('student_id', '==', stuId).get()
+    for doc in docs_int:
+        doc_id = doc.id
+        interests = doc.to_dict()['interests']
+
+        for item in interests.values():
+            files_count += int(item)
+        docs = db.collection('Archives').document(doc_id).collection('Documents').limit(10).get()
+    return render_template("student/stu_Archives.html", orgId=orgId, stuId=stuId, stuName=stuName, docs=docs, interests=interests, files_count=files_count)
+
+@app.route("/student/<orgId>/<stuId>/<stuName>/archives-predict", methods = ['GET', 'POST'])
+def studentArchivesPredict(orgId, stuId, stuName):
+    if request.method == 'POST':
+        file_uploaded = request.files['stu_resources']
+        if file_uploaded and allowed_file(file_uploaded.filename):
+            filename = secure_filename(file_uploaded.filename)
+            docs  = db.collection('Archives').where('org_id', '==', orgId).where('student_id','==', stuId).get()
+            if docs:
+                for doc in docs:
+                    doc_id = doc.id
+                    doc_doc = db.collection('Archives').document(doc_id).collection('Documents').where('name', '==', filename).get()
+                    if not doc_doc:
+                        file_uploaded.save(filename)
+                        file_uploaded.seek(0)
+                        source_blob_name = orgId + '/' + stuId + '/' + filename
+                        blob = bucket.blob(source_blob_name)
+                        blob.upload_from_file(file_uploaded)
+                        p1 = multiprocessing.Process(target=predict, args=(filename, str(blob.name), orgId, stuId, stuName))
+                        p1.start()
+                    else:
+                        return redirect(url_for("studentArchives", orgId=orgId, stuId=stuId, stuName=stuName))
+            else:
+                file_uploaded.save(filename)
+                file_uploaded.seek(0)
+                source_blob_name = orgId + '/' + stuId + '/' + filename
+                blob = bucket.blob(source_blob_name)
+                blob.upload_from_file(file_uploaded)
+                p1 = multiprocessing.Process(target=predict, args=(filename, str(blob.name), orgId, stuId, stuName))
+                p1.start()
+    return redirect(url_for("studentArchives", orgId=orgId, stuId=stuId, stuName=stuName))
 
 
 if __name__ == '__main__':

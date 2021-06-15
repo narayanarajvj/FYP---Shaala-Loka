@@ -106,37 +106,38 @@ def predict(filepath, blobname):
     test = cv.transform(corpus).toarray()
     pred = clf.predict(test)
     domain = max_occurrences(list(pred))
+    print(domain)
 
-    org_id = '1JS'
-    student_id = '1JS17CS004'
-    data = {
-        'interests': {
-            str(reference[domain]): 0
-        },
-        'org_id': org_id,
-        'student_id': student_id
-    }
-    doc_arc  = db.collection('Archives').where('org_id', '==', org_id).where('student_id','==', student_id).get()
+    # org_id = '1JS'
+    # student_id = '1JS17CS004'
+    # data = {
+    #     'interests': {
+    #         str(reference[domain]): 0
+    #     },
+    #     'org_id': org_id,
+    #     'student_id': student_id
+    # }
+    # doc_arc  = db.collection('Archives').where('org_id', '==', org_id).where('student_id','==', student_id).get()
 
-    if not doc_arc:
-        doc = db. collection('Archives').document()
-        doc.set(data)
+    # if not doc_arc:
+    #     doc = db. collection('Archives').document()
+    #     doc.set(data)
 
-    data1 = {
-        'domain': str(reference[domain]),
-        'name': filepath,
-        'path': blobname
-    }
+    # data1 = {
+    #     'domain': str(reference[domain]),
+    #     'name': filepath,
+    #     'path': blobname
+    # }
 
-    docs  = db.collection('Archives').where('org_id', '==', org_id).where('student_id','==', student_id).get()
+    # docs  = db.collection('Archives').where('org_id', '==', org_id).where('student_id','==', student_id).get()
 
-    if docs:
-        for doc in docs:
-            doc_id = doc.id
-            doc_doc = db.collection('Archives').document(doc_id).collection('Documents').document()
-            doc_doc.set(data1)
-            doc_int = db.collection('Archives').document(doc_id)
-            doc_int.update({f"interests.{str(reference[domain])}": firestore.Increment(1)})
+    # if docs:
+    #     for doc in docs:
+    #         doc_id = doc.id
+    #         doc_doc = db.collection('Archives').document(doc_id).collection('Documents').document()
+    #         doc_doc.set(data1)
+    #         doc_int = db.collection('Archives').document(doc_id)
+    #         doc_int.update({f"interests.{str(reference[domain])}": firestore.Increment(1)})
 
     os.remove(os.path.join(filepath))
     return 
