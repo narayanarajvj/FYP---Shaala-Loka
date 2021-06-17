@@ -35,7 +35,7 @@
         {% for doc in docs %}
             <div class="stu-archives-file">
                 <img src="{{ url_for('static', filename = 'assets/stu_file.png') }}" alt="file">
-                <p class="file-name"> {{ doc.to_dict()['name'] }} </p>
+                <p class="file-name" title="{{ doc.to_dict()['name'] }}"> {{ doc.to_dict()['name'] }} </p>
             </div>
         {% endfor %}
         {% else %}

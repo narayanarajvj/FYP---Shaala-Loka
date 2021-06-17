@@ -459,6 +459,7 @@ body{
 		margin-top: 1vh;
 		text-transform: capitalize;
 		font-weight: 400;
+		font-size:12pt;
 	}
 	#floatItems{
 		display: grid;
@@ -567,7 +568,7 @@ body{
 		transition: 200ms ease-in-out;
 		border:1px solid black;
 		border-radius: 5px;
-		width:60%;
+		width:62%;
 		background-color: white;
 		z-index: 10;
 	}
@@ -598,7 +599,9 @@ body{
 	}
 	.modal-body{
 		width:87%;
+		height:70vh;
 		margin:3% auto;
+		overflow:auto;
 	}
 	#overlay{
 		position: fixed;
@@ -732,7 +735,33 @@ body{
 	.stu-study-container h4{
 		margin:-2% 3%;
 	}
-
+	#teacher_name{
+		font-size:13pt;
+		text-align:center;
+		margin-bottom:0;
+	} 
+	.stu-button{
+		background:#8e4162;
+		color:white;
+		border:2px solid white;
+		padding:0.5%;
+		float:right;
+		cursor: pointer;
+		width:17%;
+		font-size: 14pt;
+		border-radius: 5px;
+		margin: -2% 2%;
+		
+	}
+	.stu-approve-btn{
+		border:1px solid green;
+		background:green;
+		padding:4% 20%;
+		font-size:13pt;
+		border-radius:8px;
+		text-decoration: none;
+		color:white;
+	}
 /*--------------------------------DISCUSSION ROOM----------------------------------*/
 	
 	.discussion-back-btn{
@@ -957,6 +986,12 @@ body{
 		margin: -0.5% 0 1% 2%;
 		text-transform: capitalize;
 	}
+	.inst-archives-card em{
+		font-weight:300;
+	}
+	.inst-archives-card .email{
+		text-transform: lowercase;
+	}
 	.inst-archives-card-files{
 		display: inline-block;
 		/* grid-template-columns: 190px 190px 190px 190px;
@@ -968,6 +1003,9 @@ body{
 	.inst-archives-card-files p{
 		padding: 0% 2%;
 		margin: 1% 0 2% 0;
+	}
+	.res-domain{
+		font-weight:500;
 	}
 
 
@@ -1083,6 +1121,10 @@ body{
         text-overflow: clip;
 		margin-bottom: 0;
 		color: white;
+	}
+	.error-msg{
+		text-align: center;
+		font-size:13pt;
 	}
 
 	

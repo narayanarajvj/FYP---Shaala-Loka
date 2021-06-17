@@ -485,7 +485,7 @@ def instructorNewClassroom(orgId, insId, insName):
         docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
         if docs:
             docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).order_by('subject_id').limit(10).get()
-            error = f"Subject ID - {subjectId} is already used. Use a different Subject ID"
+            error = f"Subject Code - {subjectId} is already used. Use a different Subject Code."
             return render_template("instructor/inst_StudyRoom.html", orgId=orgId, insId=insId, insName=insName, error=error, docs=docs)
 
         docref = db.collection('StudyHall').document()

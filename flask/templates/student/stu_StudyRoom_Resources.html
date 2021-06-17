@@ -26,7 +26,7 @@
         {% else %}
           <img src="{{ url_for('static', filename = 'assets/inst_file.png') }}" alt="file">
         {% endif %}
-          <p class="file-name" style="color: white;">{{ doc.to_dict()['filename'] }}</p>
+          <p class="file-name" style="color: white;" title="{{ doc.to_dict()['filename'] }}">{{ doc.to_dict()['filename'] }}</p>
           <p class="uploaded-by">{{ doc.to_dict()['name'] }}</p>
         </a>
     </div>
