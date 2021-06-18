@@ -49,12 +49,16 @@
       <th>Instructor</th>
       <th></th>
     </tr>
+    {% for doc in docs_join %}
+    {% if stuId not in doc.to_dict()['students'] %}
     <tr>
-      <td>123456789</td>
-      <td>Cloud Computing</td>
-      <td>Narayaanaaarajj</td>
-      <td><a href="" id="" class="stu-approve-btn" onclick="approveBtn(this)">Join</a></td>
+      <td>{{ doc.to_dict()['subject_id'] }}</td>
+      <td>{{ doc.to_dict()['sh_name'] }}</td>
+      <td>{{ doc.to_dict()['instructor_name'] }}</td>
+      <td><a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ doc.to_dict()['instructor_id'] }}/{{ doc.to_dict()['subject_id'] }}/join-new" class="stu-approve-btn">Join</a></td>
     </tr>
+    {% endif %}
+    {% endfor %}
     </table>
   </div>
 </div>

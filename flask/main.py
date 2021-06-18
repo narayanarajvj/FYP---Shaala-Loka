@@ -416,7 +416,7 @@ def removal(orgId, collectionName, id):
     if collectionName == "Instructor":
         arr_upd.update({u'instructors': firestore.ArrayRemove([id])})
     elif collectionName == "Student":
-        arr_upd.update({u'students': firestore.ArrayRemovew([id])})
+        arr_upd.update({u'students': firestore.ArrayRemove([id])})
 
     msg = Message('Shaala Loka - Profile Disabled - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
     msg.body = f"Your Organization has disabled your account (ID: {id}). You will be unable to Login henceforth."
@@ -659,8 +659,30 @@ def studentSchedule(orgId, stuId, stuName):
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/study-hall")
 def studentStudyHall(orgId, stuId, stuName):
+    doc_type = db.collection('Organization').document(orgId).get()
+    if doc_type.to_dict()['type'] == 'S':
+        doc_info = db.collection('Organization').document(orgId).collection('Student').document(stuId).get()
+        level = doc_info.to_dict()['level']
+        section = doc_info.to_dict()['section']
+        docs_join = db.collection('StudyHall').where('org_id', '==', orgId).where('level', '==', level).where('section', '==', section).get()
+    elif doc_type.to_dict()['type'] == 'C':
+        doc_info = db.collection('Organization').document(orgId).collection('Student').document(stuId).get()
+        level = doc_info.to_dict()['level']
+        department = doc_info.to_dict()['department']
+        section = doc_info.to_dict()['section']
+        docs_join = db.collection('StudyHall').where('org_id', '==', orgId).where('department', '==', department).where('level', '==', level).where('section', '==', section).get()
+    
     docs = db.collection('StudyHall').where('org_id', '==', orgId).where('students', 'array_contains', stuId).order_by('subject_id').limit(10).get()
-    return render_template("student/stu_StudyRoom.html", orgId=orgId, stuId=stuId, stuName=stuName, docs=docs)
+    return render_template("student/stu_StudyRoom.html", orgId=orgId, stuId=stuId, stuName=stuName, docs=docs, docs_join=docs_join)
+
+@app.route("/student/<orgId>/<stuId>/<stuName>/<insId>/<subjectId>/join-new")
+def studentJoin(orgId, stuId, stuName, insId,subjectId):
+    docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
+    for doc in docs:
+        doc_id = doc.id
+        student_list = db.collection('StudyHall').document(doc_id)
+        student_list.update({'students': firestore.ArrayUnion([stuId])})
+    return redirect(url_for("studentStudyHall", orgId=orgId, stuId=stuId, stuName=stuName))
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/study-hall/<subjectId>/<sh_name>")
 def studentSpecificStudyHall(orgId, stuId, stuName, subjectId, sh_name):
