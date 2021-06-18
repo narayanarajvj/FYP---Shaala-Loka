@@ -1,4 +1,5 @@
-import numpy as np # linear algebra
+import numpy as np
+from numpy.random import rand # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import time
 import torch
@@ -254,7 +255,9 @@ def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec
         index = 3
         #individual_question["extra_options"]= individual_question["options"][index:]
         individual_question["options"] = individual_question["options"][:index]
+        individual_question['options'].append(val)
         #individual_question["context"] = keyword_sent_mapping[val]
+        random.shuffle(individual_question["options"])
      
         if len(individual_question["options"])>0:
             output_array["questions"].append(individual_question)

@@ -6,3 +6,6 @@
 .pub
 *.json
 __pycache__
+*.tar.gz
+._s2v_old
+s2v_old

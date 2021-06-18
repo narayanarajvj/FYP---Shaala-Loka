@@ -95,13 +95,14 @@ class QGen:
             end = time.time()
 
             #final_output["statement"] = modified_text
-            final_output["questions"] = generated_questions["questions"]
+            # final_output["questions"] = generated_questions["questions"]
             #final_output["time_taken"] = end-start
             
             if torch.device=='cuda':
                 torch.cuda.empty_cache()
                 
-            return final_output
+            # return final_output
+            return generated_questions['questions']
     
 #     def predict_shortq(self, payload):
 #         inp = {
