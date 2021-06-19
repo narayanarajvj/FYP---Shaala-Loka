@@ -17,9 +17,9 @@ import string
 import pke
 import nltk
 from nltk import FreqDist
-nltk.download('brown')
-nltk.download('stopwords')
-nltk.download('popular')
+# nltk.download('brown')
+# nltk.download('stopwords')
+# nltk.download('popular')
 from nltk.corpus import stopwords
 from nltk.corpus import brown
 from similarity.normalized_levenshtein import NormalizedLevenshtein
@@ -259,7 +259,7 @@ def generate_questions_mcq(keyword_sent_mapping,device,tokenizer,model,sense2vec
         #individual_question["context"] = keyword_sent_mapping[val]
         random.shuffle(individual_question["options"])
 
-        if len(individual_question["options"])>=4:
+        if len(individual_question["options"])>=2:
             output_array["questions"].append(individual_question)
         
         

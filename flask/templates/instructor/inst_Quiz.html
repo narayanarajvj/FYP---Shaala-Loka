@@ -1,0 +1,38 @@
+{% extends 'instructor/base.html' %}
+{% include 'instructor/header.html' %}
+
+{% block body %}
+
+<div>
+    {% if error %}
+    <p class="error-msg" style="color: red"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        <ul>
+        {% for message in messages %}
+            <p class="login-link" style="color:green;"><b>{{ message }}</b></p>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+</div>
+
+<div class="inst-study-container">
+    <br>
+    <h3> SUBJECT : {{ sh_name }}</h3>
+    <h4> Teacher : {{ insName }}</h4>
+</div>
+
+<div class="inst-quiz-container"><br>
+    <p class="instr">Please Enter the content for Generating the Quiz. </p>
+    <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/quiz" method="POST">
+        <div class="quiz_form">
+            <textarea id="textarea" placeholder="Enter the content" name="textarea" rows="10" cols="80" required="required"></textarea>
+            <button type="submit" value="submit">Generate Quiz</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

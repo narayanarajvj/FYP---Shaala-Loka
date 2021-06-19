@@ -1126,7 +1126,46 @@ body{
 		text-align: center;
 		font-size:13pt;
 	}
+	
 
+	/* INSTRUCTOR QUIZ */
+	.inst-quiz-container{
+		width:75%;
+		height: 55vh;
+		background: rgba(0,0,0,0.7);
+		width:75%;
+		margin:-4% auto;
+		border-radius:0px 0px 8px 8px;
+	}
+	.inst-quiz-container .instr{
+		text-align: center;
+		color: white;
+		margin: 0 0 2% 0;
+	}
+	#textarea{
+		margin: 0 auto;
+		display: block;
+		border-radius: 3px;
+		outline: none;
+		border: none;
+		padding: 2%;
+	}
+	#textarea::placeholder{
+		text-align: center;
+		font-size: 12pt;
+	}
+	.inst-quiz-container button{
+		border: 1px solid white;
+		display: block;
+		margin: 1.5% auto;
+		background: #245d74;
+		padding: 1%;
+		outline: none;
+		color: white;
+		font-size: 12.5pt;
+		border-radius: 4px;
+		cursor: pointer;
+	}
 	
 }
 

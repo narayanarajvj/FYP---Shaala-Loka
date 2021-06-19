@@ -27,6 +27,11 @@ from nltk.stem.porter import PorterStemmer
 import pickle
 import numpy as np
 
+# import nltk
+# from pprint import pprint
+# from Question.OuterQuestgen.Questgen import quiz_main
+from Question import question
+
 
 app = Flask(__name__)
 app.secret_key = 'vijay'
@@ -174,6 +179,27 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+# NLP QUIZ
+
+def quiz(textarea, orgId, insId, subjectId):
+    docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
+    payload = {
+        "input_text": textarea
+    }
+
+    questions = question.find_questions(payload)
+
+    data = {
+        'questions': questions
+    }
+
+    for doc in docs_sh:
+        doc_id = doc.id
+        docref = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId)
+        docref.set(data)
+
+    return
 
 # HOME PAGE
 
@@ -608,6 +634,19 @@ def instructorSessionLink(orgId, insId, insName, subjectId, sh_name):
             docs = db.collection('StudyHall').document(doc_id).collection('Scores').order_by('student_id').limit(30).get()
     return redirect(url_for('instructorSpecificStudyHall', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs))
 
+@app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/quiz", methods=["POST", "GET"])
+def instructorQuiz(orgId, insId, insName, subjectId, sh_name):
+    error = None
+    if request.method == 'POST':
+        textarea = request.form['textarea']
+        if len(textarea.split()) > 50:
+            p2 = multiprocessing.Process(target=quiz, args=(textarea, orgId, insId, subjectId))
+            p2.start()
+            flash("Quiz has succesfully generated for students")
+        else:
+            error = "Please give sufficient content with a minimum of 50 words without any symbols"
+    return render_template("instructor/inst_Quiz.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, error=error)
+
 @app.route("/<orgId>/<insId>/<insName>/archives")
 def instructorArchives(orgId, insId, insName):
     docs = db.collection('Archives').where('org_id', '==', orgId).limit(15).get()
@@ -756,6 +795,20 @@ def studentDiscussionRoom(orgId, stuId, stuName, subjectId, sh_name):
         return str(hr)+":"+str(mi)
 
     return render_template("student/stu_Discussions.html", orgId=orgId, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, docs=docs, convert_timestamp=convert_timestamp)
+
+@app.route("/student/<orgId>/<stuId>/<stuName>/<subjectId>/<sh_name>/quiz")
+def studentQuiz(orgId, stuId, stuName, subjectId, sh_name):
+    docs = None
+    questions = None
+    docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('students', 'array_contains', stuId).where('subject_id', '==', subjectId).get()
+    for doc in docs_sh:
+        doc_id = doc.id
+        insName = doc.to_dict()['instructor_name']
+        docs = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId).get()
+        questions = docs.to_dict()['questions']
+        if not questions:
+            docs = None
+    return render_template("student/stu_Quiz.html", orgId=orgId, insName=insName, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, questions=questions)
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/archives")
 def studentArchives(orgId, stuId, stuName):
