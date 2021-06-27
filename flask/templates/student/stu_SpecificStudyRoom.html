@@ -7,6 +7,7 @@
     <br><br>
     <h3> SUBJECT : {{ sh_name }}</h3>
     <h4> Teacher : {{ insName }}</h4>
+    <h4 title="Cummulative Score - sum of all points scored in quiz"> Score : {{ score }}</h4>
 </div>
  
 <div class="inst-spec-stud-container">
@@ -14,7 +15,7 @@
     {% if session_link %}
     <a href="{{ session_link }}" target="_blank" style="cursor: pointer;">
     {% else %}
-    <a href="javascript:void(0)" style="cursor: not-allowed;">
+    <a href="javascript:void(0)" style="cursor: not-allowed;" title="No Session Link">
     {% endif %}
       <img src="{{ url_for('static', filename = 'assets/meet2.jpg') }}" alt="Lecture">
       <h4>Lectures</h4>

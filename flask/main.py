@@ -634,6 +634,16 @@ def instructorSessionLink(orgId, insId, insName, subjectId, sh_name):
             docs = db.collection('StudyHall').document(doc_id).collection('Scores').order_by('student_id').limit(30).get()
     return redirect(url_for('instructorSpecificStudyHall', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs))
 
+@app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/clear-session-link")
+def instructorClearSessionLink(orgId, insId, insName, subjectId, sh_name):
+    docs = None
+    docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
+    for doc in docs_sh:
+        doc_id = doc.id
+        db.collection('StudyHall').document(doc_id).update('session_link', firestore.DELETE_FIELD)
+        docs = db.collection('StudyHall').document(doc_id).collection('Scores').order_by('student_id').limit(30).get()
+    return redirect(url_for('instructorSpecificStudyHall', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs))  
+
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/quiz", methods=["POST", "GET"])
 def instructorQuiz(orgId, insId, insName, subjectId, sh_name):
     error = None
@@ -642,10 +652,25 @@ def instructorQuiz(orgId, insId, insName, subjectId, sh_name):
         if len(textarea.split()) > 50:
             p2 = multiprocessing.Process(target=quiz, args=(textarea, orgId, insId, subjectId))
             p2.start()
-            flash("Quiz has succesfully generated for students")
+            flash("Quiz has successfully generated for students")
         else:
             error = "Please give sufficient content with a minimum of 50 words without any symbols"
     return render_template("instructor/inst_Quiz.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, error=error)
+
+@app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/clear-quiz")
+def instructorClearQuiz(orgId, insId, insName, subjectId, sh_name):
+    docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
+    for doc in docs_sh:
+        doc_id = doc.id
+        docref = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId)
+        docref.update("questions", firestore.DELETE_FIELD)
+        flash("Previous Quiz has successfully ended")
+        docs = db.collection('StudyHall').document(doc_id).collection('Scores').where('flag', '==', True).get()
+        for d in docs:
+            d_id = d.id
+            docre = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id)
+            docre.update({"flag": False})
+    return redirect(url_for('instructorQuiz', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name))
 
 @app.route("/<orgId>/<insId>/<insName>/archives")
 def instructorArchives(orgId, insId, insName):
@@ -729,7 +754,14 @@ def studentSpecificStudyHall(orgId, stuId, stuName, subjectId, sh_name):
     for doc in docs_sh:
         insName = doc.to_dict()['instructor_name']
         session_link = doc.to_dict()['session_link']
-    return render_template("student/stu_SpecificStudyRoom.html", orgId=orgId, insName=insName, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, session_link=session_link)
+        doc_id = doc.id
+        docs = db.collection('StudyHall').document(doc_id).collection('Scores').where('student_id', '==', stuId).where('student_name', '==', stuName).get()
+        if docs:
+            for d in docs:
+                score = d.to_dict()['score']
+        else:
+            score = 0
+    return render_template("student/stu_SpecificStudyRoom.html", orgId=orgId, insName=insName, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, session_link=session_link, score=score)
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/<subjectId>/<sh_name>/resources", methods=["POST", "GET"])
 def studentResources(orgId, stuId, stuName, subjectId, sh_name):
@@ -800,15 +832,43 @@ def studentDiscussionRoom(orgId, stuId, stuName, subjectId, sh_name):
 def studentQuiz(orgId, stuId, stuName, subjectId, sh_name):
     docs = None
     questions = None
+    insName = None
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('students', 'array_contains', stuId).where('subject_id', '==', subjectId).get()
     for doc in docs_sh:
         doc_id = doc.id
         insName = doc.to_dict()['instructor_name']
         docs = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId).get()
         questions = docs.to_dict()['questions']
-        if not questions:
-            docs = None
     return render_template("student/stu_Quiz.html", orgId=orgId, insName=insName, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, questions=questions)
+
+@app.route("/student/<orgId>/<stuId>/<stuName>/<subjectId>/<sh_name>/get-score", methods=['GET', 'POST'])
+def studentScore(orgId, stuId, stuName, subjectId, sh_name):
+    if request.method == "POST":
+        score = request.data
+        docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('students', 'array_contains', stuId).where('subject_id', '==', subjectId).get()
+        for doc in docs_sh:
+            doc_id = doc.id
+            docs = db.collection('StudyHall').document(doc_id).collection('Scores').where('student_id', '==', stuId).where('student_name', '==', stuName).get()
+            if not docs:
+                data = {
+                    'student_id': stuId,
+                    'student_name': stuName,
+                    'score': int(score),
+                    'flag': True
+                }
+                docref = db.collection('StudyHall').document(doc_id).collection('Scores').document()
+                docref.set(data)
+            else:
+                for d in docs:
+                    d_id = d.id
+                    flag_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id).get()
+                    flag = flag_doc.to_dict()['flag']
+                    if not flag:
+                        score_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id)
+                        score_doc.update({"score": firestore.Increment(int(score))})
+                        score_doc.update({"flag": True})
+
+    return redirect(url_for("studentQuiz", orgId=orgId, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name))
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/archives")
 def studentArchives(orgId, stuId, stuName):

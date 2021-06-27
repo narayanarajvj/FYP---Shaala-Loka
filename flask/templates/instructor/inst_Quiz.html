@@ -21,18 +21,22 @@
 
 <div class="inst-study-container">
     <br>
+    <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">
+        <img src="{{ url_for('static', filename = 'assets/inst_back.png') }}" width="95%" height="95%">
+      </a>
     <h3> SUBJECT : {{ sh_name }}</h3>
     <h4> Teacher : {{ insName }}</h4>
 </div>
 
 <div class="inst-quiz-container"><br>
-    <p class="instr">Please Enter the content for Generating the Quiz. </p>
+    <p class="instr">Please enter the content for generating the Quiz. </p>
     <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/quiz" method="POST">
         <div class="quiz_form">
             <textarea id="textarea" placeholder="Enter the content" name="textarea" rows="10" cols="80" required="required"></textarea>
             <button type="submit" value="submit">Generate Quiz</button>
         </div>
     </form>
+    <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/clear-quiz">End Quiz</a>
 </div>
 
 {% endblock %}

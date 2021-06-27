@@ -8,7 +8,7 @@ html,body{
     height: 90vh;
 }
 body{
-	background: url("../Images/Background_mobile.jpg") no-repeat;
+	background: url("assets/Background_mobile.jpg") no-repeat;
 	background-size: cover;
 	font-family: 'Lora', serif;
 }
@@ -76,7 +76,7 @@ body{
 
 @media screen and (min-width:1025px){
 	body{
-		background: url("../Images/Background.png") no-repeat;
+		background: url("assets/Background.png") no-repeat;
 		background-size: cover;
 	}
 	.banner{
@@ -630,14 +630,7 @@ body{
 	.inst-study-container .teacher-name{
 		text-align:left;
 	}
-	.back-btn, .discussion-back-btn{
-		font-size:24pt;
-		color:white;
-		margin:-1% 2%;
-		text-decoration: none;
-		float:left;
-		font-weight:900;
-	}
+	
 	.upload-file{
 		margin: -3.5% 0 0 62%;
 		width:fit-content;
@@ -1149,6 +1142,7 @@ body{
 		outline: none;
 		border: none;
 		padding: 2%;
+		resize: none;
 	}
 	#textarea::placeholder{
 		text-align: center;
@@ -1166,6 +1160,20 @@ body{
 		border-radius: 4px;
 		cursor: pointer;
 	}
-	
+
+	/* -----------------BACK BUTTON--------------------- */
+	.back-btn, .discussion-back-btn{
+		color:white;
+		margin:0% 0 0 2%;
+		float:left;
+		width:3%;
+		border-radius:50%;
+	}
+	.back-btn img{
+		border-radius:50%;
+	} 
+	.back-btn :hover{
+		box-shadow:5px 3px 10px 4px rgba(0,0,0,0.4);
+	}
 }
 

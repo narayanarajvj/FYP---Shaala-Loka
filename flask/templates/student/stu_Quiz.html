@@ -1,27 +1,80 @@
-{% extends 'student/base.html' %}
-{% include 'student/header.html' %}
 
-{% block body %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shaala Loka</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'quiz/quizStyle.css') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">
+            <a href="/student/{{ stuId }}">
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
+            </a>
+        </div>
+        </nav>
+        <div class="stu-nav-buttons">
+            <ul>
+            <li>
+                <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/schedule">
+                    <p>Schedule</p>
+                </a>
+            </li>
+            <li>
+                <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall">
+                    <p>Study Hall</p>
+                </a>
+            </li>
+            <li>
+                <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/archives">
+                    <p>Archives</p>
+                </a>
+            </li>
+            <li>
+            <i class="fa fa-bars" style="font-size:24px"></i>
+            <ul>
+                <li><a href="#">My Profile</a></li>
+                <li><a href="/home">LogOut</a></li>
+            </ul>
+            </li>
+            </ul>
+        </div>
+    </nav>
+    
 
 <div class="stu-study-container">
-    <br>
+    <br><br>
+    <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn" style="margin-top:-1%">
+        <img src="{{ url_for('static', filename = 'assets/stu_back.png') }}" width="95%" height="95%">
+      </a>
     <h3 >SUBJECT : {{ sh_name }}</h3>
     <h4 class="heading"> Teacher : {{ insName }}</h4>
     <!-- start Quiz button -->      
 </div>
       
 <div class="stu-quiz-container">
+    {% if questions %}
     <div class="start_btn"><button>Start Quiz</button></div>
+    {% else %}
+    <div class="start_btn"><button style="cursor: not-allowed; color: black;" disabled>Start Quiz</button></div>
+    {% endif %}
 </div>
       <!-- Info Box -->
 <div class="info_box">
     <div class="info-title"><span>Some Rules of this Quiz</span></div>
     <div class="info-list">
-        <div class="info">1. You will have only <span>30 seconds</span> per each question.</div>
+        <div class="info">1. You will have only <span>30 seconds</span> per question.</div>
         <div class="info">2. Once you select your answer, it can't be undone.</div>
         <div class="info">3. You can't select any option once time goes off.</div>
-        <div class="info">4. You can't exit from the Quiz while you're playing.</div>
-        <div class="info">5. You'll get points on the basis of your correct answers.</div>
+        <div class="info">4. Only the first attempt is considered.</div>
+        <div class="info">5. Do not refresh, the content will be lost.</div>
+        <div class="info">6. You'll get your scores based on your correct answers.</div>
     </div>
     <div class="buttons">
         <button class="quit">Exit Quiz</button>
@@ -59,21 +112,27 @@
   
       <!-- Result Box -->
 <div class="result_box">
-    <div class="icon">
+    <!-- <div class="icon">
         <i class="fas fa-crown"></i>
-    </div>
+    </div> -->
+    <div class="result-text">RESULT</div>
     <div class="complete_text">You've completed the Quiz!</div>
     <div class="score_text">
         <!-- Here I've inserted Score Result from JavaScript -->
     </div>
     <div class="buttons">
-        <button class="restart" style="display: none">Replay Quiz</button>
+        <button class="restart" style="display: none"></button>
         <button class="quit">Quit Quiz</button>
     </div>
 </div>
 
 <script type="text/javascript">
     let questions = {{questions | tojson}};
+    let orgId = {{ orgId | tojson }};
+    let stuId = {{ stuId | tojson }};
+    let stuName = {{ stuName | tojson }};
+    let subjectId = {{ subjectId | tojson }};
+    let sh_name = {{ sh_name | tojson }};
 </script>
   
 <!-- Inside this JavaScript file I've inserted Questions and Options only -->
@@ -84,4 +143,6 @@
 
 <!-- {% set quest1 = question %} -->
 
-{% endblock %}
+
+</body>
+</html>

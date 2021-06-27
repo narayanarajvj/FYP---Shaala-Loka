@@ -179,7 +179,7 @@ nav{
 	.form button, .stu-form button, .login-form button{
 		font-size: 13pt;
 		width:24%;
-		margin:1% 0 2% 0;
+		margin:0 0 4% 0;
 		padding:2%;
 	}
 }

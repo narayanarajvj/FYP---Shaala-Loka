@@ -6,7 +6,9 @@
   <div class="discussion-container">
     <div class="main-div">
       <div class="main-div-stu-heading">
-        <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">&lt;</a>
+        <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn" style="margin-top:0.5%">
+          <img src="{{ url_for('static', filename = 'assets/stu_back.png') }}" width="75%" height="75%">
+        </a>
         <h4> {{ sh_name }} </h4>
       </div>
       <div class="main-div-chat">

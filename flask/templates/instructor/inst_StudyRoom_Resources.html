@@ -5,7 +5,9 @@
 
 <div class="inst-study-container">
     <br>
-    <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">&lt;</a>
+    <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">
+      <img src="{{ url_for('static', filename = 'assets/inst_back.png') }}" width="95%" height="95%">
+    </a>
     <h3 style="margin-bottom: 18px;"> SUBJECT : {{ sh_name }} </h3>
     <h4 class="teacher-name"> Teacher : {{ insName }} </h4>
     <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/resources" method="POST" enctype="multipart/form-data">

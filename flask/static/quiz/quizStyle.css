@@ -1,15 +1,18 @@
 /* importing google fonts */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap');
 *{
-    margin: 0;
-    padding: 0;
+    /* margin: 0;
+    padding: 0; */
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Lora', serif;
 }
-
-body{
-    /*background: #007bff;*/
-    background:white;
+.stu-quiz-container{
+    width:75%;
+    height: 30vh;
+    background: rgba(0,0,0,0.7);
+    width:75%;
+    margin:-4% auto;
+    border-radius:0px 0px 8px 8px;
 }
 #overlays{
     position: fixed;
@@ -45,13 +48,16 @@ body{
 }
 .start_btn{
     position: absolute;
-    top: 53%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
                 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-
+.start_btn :hover{
+    background:#8e4162;
+    color:white;
+}
 .info_box.activeInfo,
 .quiz_box.activeQuiz,
 .result_box.activeResult{
@@ -64,7 +70,7 @@ body{
 .start_btn button{
     font-size: 25px;
     font-weight: 500;
-    background:#8e4162;
+    
     padding: 15px 30px;
     outline: none;
     border: none;
@@ -160,7 +166,7 @@ body{
 }
 
 .quiz_box header .timer{
-    color: #black;
+    color: black;
     background: #cb8da6;
     border: 1px solid #8e4162;
     height: 45px;
@@ -227,6 +233,7 @@ section .option_list .option{
     cursor: pointer;
     transition: all 0.3s ease;
     display: flex;
+    text-transform:capitalize;
     align-items: center;
     justify-content: space-between;
 }
@@ -236,7 +243,7 @@ section .option_list .option:last-child{
 }
 
 section .option_list .option:hover{
-    color: #black;
+    color: black;
     background: #c5819d;
     border: 1px solid #c5819d;
 }
@@ -262,22 +269,25 @@ section .option_list .option .icon{
     width: 26px;
     border: 2px solid transparent;
     border-radius: 50%;
-    text-align: center;
+    text-align:center;
     font-size: 13px;
     pointer-events: none;
     transition: all 0.3s ease;
+    display: none;
     line-height: 24px;
 }
 .option_list .option .icon.tick{
     color: #23903c;
     border-color: #23903c;
     background: #d4edda;
+    display:none;
 }
 
 .option_list .option .icon.cross{
     color: #a42834;
     background: #f8d7da;
     border-color: #a42834;
+    display:none;
 }
 
 footer{
@@ -297,6 +307,7 @@ footer .total_que span{
 footer .total_que span p{
     font-weight: 500;
     padding: 0 5px;
+    margin:0;
 }
 
 footer .total_que span p:first-child{
@@ -352,6 +363,13 @@ footer button.show{
     background:#8e4162;
     margin-bottom: 10px;
 }
+.result_box .result-text{
+    text-align: center;
+    padding: 1% 0 4% 0;
+    font-weight: 900;
+    font-size: 18pt;
+    color: #8e4162;
+}
 
 .result_box .complete_text{
     font-size: 20px;
@@ -366,8 +384,9 @@ footer button.show{
 }
 
 .result_box .score_text span p{
-    padding: 0 4px;
+    padding: 0 6px;
     font-weight: 600;
+    margin:0;
 }
 
 .result_box .buttons{
@@ -384,6 +403,7 @@ footer button.show{
     cursor: pointer;
     border: none;
     outline: none;
+    color:white;
     border-radius: 5px;
     background:#8e4162;
     transition: all 0.3s ease;
@@ -401,7 +421,7 @@ footer button.show{
 
 .buttons.quit{
     background: #cb8da6;
-    background: #fff;
+    
 }
 
 .buttons.quit:hover{

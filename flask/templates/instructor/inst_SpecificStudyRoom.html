@@ -77,8 +77,9 @@
         <form class="stud-room-form" action="{{ url_for('instructorSessionLink', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name) }}" method="POST">
           <br>
           <input type="url" name="meetLink" id="meetLink" placeholder="Enter the link.">
-          <button name="submit" type="submit" onClick="javascript: window.open(document.getElementById('meetLink').value);"> Submit </button>
+          <button name="submit" type="submit" onClick="javascript: window.open(document.getElementById('meetLink').value);">Start Session</button>
         </form>
+        <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/clear-session-link">End Session</a>
       </div>
     </div>
     <div id="overlay"></div>
