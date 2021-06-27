@@ -640,7 +640,7 @@ def instructorClearSessionLink(orgId, insId, insName, subjectId, sh_name):
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
     for doc in docs_sh:
         doc_id = doc.id
-        db.collection('StudyHall').document(doc_id).update('session_link', firestore.DELETE_FIELD)
+        db.collection('StudyHall').document(doc_id).update({'session_link': ""})
         docs = db.collection('StudyHall').document(doc_id).collection('Scores').order_by('student_id').limit(30).get()
     return redirect(url_for('instructorSpecificStudyHall', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs))  
 
@@ -663,7 +663,7 @@ def instructorClearQuiz(orgId, insId, insName, subjectId, sh_name):
     for doc in docs_sh:
         doc_id = doc.id
         docref = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId)
-        docref.update("questions", firestore.DELETE_FIELD)
+        docref.update({"questions": ""})
         flash("Previous Quiz has successfully ended")
         docs = db.collection('StudyHall').document(doc_id).collection('Scores').where('flag', '==', True).get()
         for d in docs:
