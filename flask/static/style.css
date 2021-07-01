@@ -206,6 +206,7 @@ body{
 		font-size:14pt;
 		padding:1%;
 		text-align: center;
+		white-space: nowrap;
 	}
 	.table table>tbody>tr:nth-child(even)>td, .modal-body table>tbody>tr:nth-child(even)>td{
 	    background-color: #e1e2e3;

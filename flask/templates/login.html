@@ -40,8 +40,16 @@
             <br>
             <input type="text" name="id" id="id" placeholder="ID" required>
             <input type="password" name="password" id="password" placeholder="Password" required>
+            <div style="display: inline-block;">{{ recaptcha }}</div> <br/><br/>
   		    <button name="submit" type="submit"> Sign In </button>
         </form>
     </div>
 </body>
+
+<script>
+    if ( window.history.replaceState ) {
+      window.history.replaceState( null, null, window.location.href );
+    }
+</script>
+
 </html>

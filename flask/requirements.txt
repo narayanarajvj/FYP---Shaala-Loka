@@ -7,3 +7,4 @@ pdfminer==20191125
 nltk==3.6.2
 Cython==0.29.23
 scikit-learn==0.22.2.post1
+Flask-reCaptcha==0.4.2

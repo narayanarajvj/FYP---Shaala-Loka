@@ -27,14 +27,13 @@ from nltk.stem.porter import PorterStemmer
 import pickle
 import numpy as np
 
-# import nltk
-# from pprint import pprint
-# from Question.OuterQuestgen.Questgen import quiz_main
 from Question import question
-
+from flask_recaptcha import ReCaptcha
 
 app = Flask(__name__)
-app.secret_key = 'vijay'
+recaptcha = ReCaptcha(app=app)
+
+app.secret_key = os.environ.get('SECRET_KEY')
 # app.config["SESSION_PERMANENT"] = False
 # app.config["SESSION_TYPE"] = "filesystem"
 # Session(app)
@@ -62,6 +61,18 @@ db = firestore.client()
 ALLOWED_EXTENSIONS = {'pdf'}
 
 
+app.config.update(dict(
+    RECAPTCHA_ENABLED = True,
+    RECAPTCHA_SITE_KEY = os.environ.get('RECAPTCHA_SITE_KEY'),
+    RECAPTCHA_SECRET_KEY = os.environ.get('RECAPTCHA_SECRET_KEY'),
+    RECAPTCHA_THEME = "dark"
+))
+
+recaptcha = ReCaptcha()
+recaptcha.init_app(app)
+
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
+
 # NLP CONTEXT ANALYSIS STARTS HERE
 
 class PdfConverter:
@@ -81,8 +92,7 @@ class PdfConverter:
         pagenos = range(pagenos, pagenos + maxpages)
         pagenos = set(pagenos)
         caching = True
-        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching,
-                                      check_extractable=True):
+        for page in PDFPage.get_pages(fp, pagenos, maxpages=maxpages, password=password, caching=caching,check_extractable=True):
             interpreter.process_page(page)
         fp.close()
         device.close()
@@ -176,8 +186,7 @@ def predict(filepath, blobname, orgId, stuId, stuName):
 # NLP CONTEXT ANALYSIS ENDS
 
 def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 # NLP QUIZ
@@ -221,13 +230,18 @@ def login():
         password = base64.b64encode(password.encode("utf-8"))
         role = None
 
-        docref = db.collection('Login').where('id', '==', id).where('password', '==', password).get()
-        if docref:
-            for doc in docref:
-                if doc.to_dict()['id'] and doc.to_dict()['password']:
-                    role = doc.to_dict()['role']
+
+        if recaptcha.verify():
+            docref = db.collection('Login').where('id', '==', id).where('password', '==', password).get()
+            if docref:
+                for doc in docref:
+                    if doc.to_dict()['id'] and doc.to_dict()['password']:
+                        role = doc.to_dict()['role']
+            else:
+                error = 'Invalid ID or Password. Please try again!'
         else:
-            error = 'Invalid ID or Password. Please try again!'
+            error = 'Incorrect ReCaptcha'
+
         if role == 'Organization':
             return redirect(url_for('organizationHome', orgId=id))
         elif role == 'Instructor':
@@ -241,7 +255,7 @@ def login():
 @app.route("/organization-registration", methods=["POST", "GET"])
 def organizationRegistration():
     if request.method == 'POST':
-        orgId = request.form['org_id']
+        orgId = request.form['org_id'].upper()
         orgName = request.form['org_name']
         emailId = request.form['email_id']
         password = request.form['password']
@@ -280,12 +294,12 @@ def organizationRegistration():
 def instructorRegistration():
     error = None
     if request.method == 'POST':
-        instId = request.form['instructor_id']
+        instId = request.form['instructor_id'].upper()
         instName = request.form['instructor_name']
-        orgId = request.form['org_id']
+        orgId = request.form['org_id'].upper()
         emailId = request.form['email_id']
         designation = request.form['designation']
-        dept = request.form['department']
+        dept = request.form['department'].upper()
         password = request.form['password']
         enc_password = base64.b64encode(password.encode("utf-8"))
 
@@ -322,14 +336,14 @@ def instructorRegistration():
 def studentRegistration():
     error = None
     if request.method == 'POST':
-        stuId = request.form['student_id']
+        stuId = request.form['student_id'].upper()
         stuName = request.form['student_name']
-        orgId = request.form['org_id']
+        orgId = request.form['org_id'].upper()
         emailId = request.form['email_id']
         password = request.form['password']
         level = request.form['level']
-        sec = request.form['section']
-        stuDept = request.form['department']
+        sec = request.form['section'].upper()
+        stuDept = request.form['department'].upper()
         enc_password = base64.b64encode(password.encode("utf-8"))
 
         org_ref = db.collection('Organization').where('org_id', '==', orgId).get()
@@ -366,6 +380,7 @@ def studentRegistration():
 
 @app.route("/<orgId>")
 def organizationHome(orgId):
+    orgName = None
     docs = db.collection('Organization').where('org_id', '==', orgId).get()
     for doc in docs:
         if doc.to_dict()['org_id'] == orgId:
@@ -375,15 +390,13 @@ def organizationHome(orgId):
 
 @app.route("/<orgId>/instructor")
 def organizationInstructor(orgId):
-    docs = db.collection(u'Organization').document(orgId).collection('Instructor').order_by(u'id').limit(
-        10).get()
+    docs = db.collection(u'Organization').document(orgId).collection('Instructor').order_by(u'id').limit(50).get()
     return render_template("organization/org_Instructor.html", orgId=orgId, docs=docs)
 
 
 @app.route("/<orgId>/student")
 def organizationStudent(orgId):
-    docs = db.collection(u'Organization').document(orgId).collection('Student').order_by(u'id').limit(
-        10).get()
+    docs = db.collection(u'Organization').document(orgId).collection('Student').order_by(u'id').limit(50).get()
     return render_template("organization/org_Student.html", orgId=orgId, docs=docs)
 
 
@@ -396,8 +409,7 @@ def approval(orgId, collectionName, id):
     for doc in docref:
         if not doc.to_dict()['approval_status']:
             doc_id = doc.id
-            db.collection('Organization').document(orgId).collection(collectionName).document(doc_id).update(
-                {'approval_status': True})
+            db.collection('Organization').document(orgId).collection(collectionName).document(doc_id).update({'approval_status': True})
             password = doc.to_dict()['password']
             email = doc.to_dict()['email_id']
         role = collectionName
@@ -501,12 +513,13 @@ def instructorStudyHall(orgId, insId, insName):
 @app.route("/<orgId>/<insId>/<insName>/new-study-hall", methods=["POST", "GET"])
 def instructorNewClassroom(orgId, insId, insName):
     if request.method == 'POST':
-        subjectId = request.form['subject_id']
         sh_name = request.form['subject_name']
         description = request.form['description']
-        department = request.form['department']
+        department = request.form['department'].upper()
         level = request.form['level']
-        section = request.form['section']
+        section = request.form['section'].upper()
+
+        subjectId = str(insId)+str(department)+str(level)+str(section)
 
         docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
         if docs:
@@ -516,7 +529,6 @@ def instructorNewClassroom(orgId, insId, insName):
 
         docref = db.collection('StudyHall').document()
         data = {
-            'sh_id': docref.id,
             'subject_id': subjectId,
             'sh_name': sh_name,
             'description': description,
@@ -746,6 +758,14 @@ def studentJoin(orgId, stuId, stuName, insId,subjectId):
         doc_id = doc.id
         student_list = db.collection('StudyHall').document(doc_id)
         student_list.update({'students': firestore.ArrayUnion([stuId])})
+        data = {
+                    'student_id': stuId,
+                    'student_name': stuName,
+                    'score': 0,
+                    'flag': False
+                }
+        docref = db.collection('StudyHall').document(doc_id).collection('Scores').document()
+        docref.set(data)
     return redirect(url_for("studentStudyHall", orgId=orgId, stuId=stuId, stuName=stuName))
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/study-hall/<subjectId>/<sh_name>")
@@ -837,8 +857,12 @@ def studentQuiz(orgId, stuId, stuName, subjectId, sh_name):
     for doc in docs_sh:
         doc_id = doc.id
         insName = doc.to_dict()['instructor_name']
-        docs = db.collection('StudyHall').document(doc_id).collection('Quiz').document(subjectId).get()
-        questions = docs.to_dict()['questions']
+        docs = db.collection('StudyHall').document(doc_id).collection('Quiz').get()
+        for d in docs:
+            d_id = d.id
+            if d_id:
+                doc_questions = db.collection('StudyHall').document(doc_id).collection('Quiz').document(d_id).get()
+                questions = doc_questions.to_dict()['questions']
     return render_template("student/stu_Quiz.html", orgId=orgId, insName=insName, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name, questions=questions)
 
 @app.route("/student/<orgId>/<stuId>/<stuName>/<subjectId>/<sh_name>/get-score", methods=['GET', 'POST'])
@@ -849,24 +873,14 @@ def studentScore(orgId, stuId, stuName, subjectId, sh_name):
         for doc in docs_sh:
             doc_id = doc.id
             docs = db.collection('StudyHall').document(doc_id).collection('Scores').where('student_id', '==', stuId).where('student_name', '==', stuName).get()
-            if not docs:
-                data = {
-                    'student_id': stuId,
-                    'student_name': stuName,
-                    'score': int(score),
-                    'flag': True
-                }
-                docref = db.collection('StudyHall').document(doc_id).collection('Scores').document()
-                docref.set(data)
-            else:
-                for d in docs:
-                    d_id = d.id
-                    flag_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id).get()
-                    flag = flag_doc.to_dict()['flag']
-                    if not flag:
-                        score_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id)
-                        score_doc.update({"score": firestore.Increment(int(score))})
-                        score_doc.update({"flag": True})
+            for d in docs:
+                d_id = d.id
+                flag_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id).get()
+                flag = flag_doc.to_dict()['flag']
+                if not flag:
+                    score_doc = db.collection('StudyHall').document(doc_id).collection('Scores').document(d_id)
+                    score_doc.update({"score": firestore.Increment(int(score))})
+                    score_doc.update({"flag": True})
 
     return redirect(url_for("studentQuiz", orgId=orgId, stuId=stuId, stuName=stuName, subjectId=subjectId, sh_name=sh_name))
 
