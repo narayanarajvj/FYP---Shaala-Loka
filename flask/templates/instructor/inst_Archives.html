@@ -5,7 +5,7 @@
 
 <div class="inst-archives-top-container">
     <br>
-    <h2> INSTRUCTOR RESOURCES </h2>
+    <h3> INSTRUCTOR RESOURCES </h3>
     <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/filter" method="POST">
       <button type="submit">Filter</button>
       <div class="inst-archives-form" >
@@ -43,9 +43,9 @@
       {% for doc in docs %}
           <div class="inst-archives-card">
               <br>
-              <h4>STUDENT NAME: <em>{{ doc.to_dict()['student_name'] }}</em></h4>
-              <h4>STUDENT ID: <em>{{ doc.to_dict()['student_id'] }}</em></h4>
-              <h4>STUDENT EMAIL ID: <em class="email">{{ doc.to_dict()['email_id'] }}</em></h4>
+              <h5>STUDENT NAME: <em>{{ doc.to_dict()['student_name'] }}</em></h5>
+              <h5>STUDENT ID: <em>{{ doc.to_dict()['student_id'] }}</em></h5>
+              <h5>STUDENT EMAIL ID: <em class="email">{{ doc.to_dict()['email_id'] }}</em></h5>
               {% for key, item in doc.to_dict()['interests'].items() %}
                   <div class="inst-archives-card-files">
                       <p class="archive-files"><span class="res-domain">{{ key }}</span>: {{ item }}</p>

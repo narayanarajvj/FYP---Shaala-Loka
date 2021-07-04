@@ -15,10 +15,10 @@
     </div>
 
 
-    <div class="table">
-        <span style="background-color: #edb230;">* Here you can approve and remove the Students after verification</span>
-        <br><br>
-        <table>
+    <div class="table w3-responsive w3-large" >
+        <span style="background-color: #edb230;">* Here you can Approve and Remove the Students after verification</span>
+        <br>
+        <table class="w3-table-all w3-section w3-margin w3-centered ">
             <thead>
                 <tr>
                     <th>id</th>
@@ -41,9 +41,9 @@
                       <td>{{ doc.to_dict()['department'] }}</td>
                       <td>
                         {% if doc.to_dict()['approval_status'] == False %}
-                            <a href="/{{ orgId }}/approve/Student/{{ doc.to_dict()['id'] }}" id="{{ doc.to_dict()['id'] }} " class="approve-btn" onclick="approveBtn(this)">Approve</a>
+                            <a href="/{{ orgId }}/approve/Student/{{ doc.to_dict()['id'] }}" id="{{ doc.to_dict()['id'] }} " class="w3-button w3-green w3-round-large w3-medium w3-padding-small" onclick="approveBtn(this)">Approve</a>
                         {% endif %}
-                          <a href="/{{ orgId }}/remove/Student/{{ doc.to_dict()['id'] }}" class="remove-btn" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
+                          <a href="/{{ orgId }}/remove/Student/{{ doc.to_dict()['id'] }}" class="w3-button w3-red w3-round-large w3-medium w3-padding-small" onclick="return confirm('Are You Sure To Remove ?')">Remove</a>
                       </td>
                 </tr>
             {% endfor %}

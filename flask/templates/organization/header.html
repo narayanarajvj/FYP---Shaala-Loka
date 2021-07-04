@@ -1,25 +1,18 @@
 {% extends 'organization/base.html' %}
 
 {% block body %}
-<nav>
-    <div class="nav-logo">
-        <a href="/{{ orgId }}">
-            <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
-        </a>
+
+<div class="org-nav-w3 w3-bar w3-white w3-border w3-large w3-hide-small">
+    <a href="/{{ orgId }}" class="w3-bar-item" style="padding:0" >
+        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%"style="width:200px;" alt="Shaala Loka Logo"/>
+    </a>
+    <div class="w3-right">
+        <span><a href="#" class="w3-bar-item w3 w3-padding-24 w3-mobile">Profile</a></span>
+        <span><a href="/logout" class="w3-bar-item w3 w3-padding-24 w3-mobile">Log Out</a></span> 
     </div>
-    <div class="org-nav-buttons">
-        <ul>
-            <li>
-                <a href="">
-                    <p>My Profile</p>
-                </a>
-            </li>
-            <li>
-                <a href="/home">
-                    <p>Log Out</p>
-                </a>
-            </li>
-        </ul>
-    </div>
-</nav>
+</div>
+
 {% endblock %}
+
+
+

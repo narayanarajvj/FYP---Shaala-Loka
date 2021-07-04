@@ -4,10 +4,9 @@
 {% block body %}
 
 <div class="stu-study-container">
-    <br><br>
-    <h3> SUBJECT : {{ sh_name }}</h3>
-    <h4> Teacher : {{ insName }}</h4>
-    <h4 title="Cummulative Score - sum of all points scored in quiz"> Score : {{ score }}</h4>
+    <h3 class="w3-margin-top"> SUBJECT : {{ sh_name }}</h3>
+    <h4 class="w3-show-inline-block"> Teacher : {{ insName }}</h4>
+    <h4 title="Cummulative Score acquired by you in every quiz" class="w3-right w3-white w3-padding-small w3-round" style="color:#8e4162 !important; margin-top:-1%;"> Score : {{ score }}</h4>
 </div>
  
 <div class="inst-spec-stud-container">
@@ -15,7 +14,7 @@
     {% if session_link %}
     <a href="{{ session_link }}" target="_blank" style="cursor: pointer;">
     {% else %}
-    <a href="javascript:void(0)" style="cursor: not-allowed;" title="No Session Link">
+    <a href="javascript:void(0)" style="cursor: not-allowed;" title="Session Ended">
     {% endif %}
       <img src="{{ url_for('static', filename = 'assets/meet2.jpg') }}" alt="Lecture">
       <h4>Lectures</h4>

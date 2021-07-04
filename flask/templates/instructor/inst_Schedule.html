@@ -4,6 +4,7 @@
 {% block body %}
 
   <h1 class="inst-heading">  Your Upcoming Classes </h1>
+  <div class="w3-padding-small">
   {% for doc in docs_list %}
       <div class="schedule-container">
         <div class="schedule-card">
@@ -16,5 +17,5 @@
         </div>
       </div>
   {% endfor %}
-
+</div>
 {% endblock %}

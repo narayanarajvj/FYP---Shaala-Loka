@@ -8,12 +8,12 @@
     <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">
       <img src="{{ url_for('static', filename = 'assets/inst_back.png') }}" width="95%" height="95%">
     </a>
-    <h3 style="margin-bottom: 18px;"> SUBJECT : {{ sh_name }} </h3>
+    <h3 style="margin-bottom:5px;"> SUBJECT : {{ sh_name }} [{{ level }}-{{ section }}] </h3>
     <h4 class="teacher-name"> Teacher : {{ insName }} </h4>
     <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/resources" method="POST" enctype="multipart/form-data">
       <div class="upload-file"> 
         <input type="file" id="inst_resources" class="file" name="inst_resources">
-        <input type = "submit" value="Upload" class="upload-submit"/>
+        <input type = "submit" value="Upload" class=" w3-btn w3-white w3-round-large"/>
       </div>
     </form>
 </div>

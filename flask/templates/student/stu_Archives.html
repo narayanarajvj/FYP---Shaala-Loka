@@ -3,15 +3,15 @@
 
 {% block body %}
 
-<div class="stu-archives-top-container">
+<div class="stu-archives-top-container w3-padding">
+
+    <h3  style="margin-bottom: 2%;">Your Archives</h3>
     <br>
-    <h3>Your Archives</h3>
-    <br><br>
-    <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/archives-predict" method="POST" enctype="multipart/form-data">
+    <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/archives-predict" method="POST" enctype="multipart/form-data" class="w3-margin-top">
         <div class="upload-file"> 
             <input type="file" id="stu_resources" name="stu_resources" />
         <!-- <button onclick="reload()"> -->
-            <input type = "submit" value="Upload" class="upload-submit"/>
+            <input type = "submit" value="Upload" class=" w3-btn w3-white w3-round-large"/>
         <!-- </button> -->
         </div>
     </form>

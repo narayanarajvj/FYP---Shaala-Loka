@@ -5,30 +5,19 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'style.css') }}">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename = 'registrationLogin.css') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo">
-      <a href="/student/{{ stuId }}">
-        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
-      </a>
+  <div class="stu-nav-w3 w3-bar w3-white w3-border w3-large w3-hide-small">
+    <a href="/student/{{ stuId }}" class="w3-bar-item" style="padding:0" >
+        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%"style="width:200px;" alt="Shaala Loka Logo"/>
+    </a>
+    <div class="w3-right">
+        <span><a href="#" class="w3-bar-item w3 w3-padding-24 w3-mobile">Profile</a></span>
+        <span><a href="/logout" class="w3-bar-item w3 w3-padding-24 w3-mobile">Log Out</a></span> 
     </div>
-    <div class="stud-nav-buttons">
-      <ul>
-        <li>
-          <a href="">
-            <p>My Profile</p>
-          </a>
-        </li>
-        <li>
-          <a href="/home">
-            <p>Log Out</p>
-          </a>
-        </li>
-      </ul>   
-    </div>
-  </nav>
+  </div>
 
   <div class="welcome">
     <h2> Welcome, {{ stuName }}!</h2>

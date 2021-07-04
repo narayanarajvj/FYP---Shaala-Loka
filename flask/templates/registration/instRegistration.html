@@ -14,12 +14,15 @@
   	    <form action = "/instructor-registration" method = "POST">
   		<br><br>
             <input type="text" name="instructor_id" id="instructor_id" placeholder="Instructor Id" pattern="[A-Za-z]{3}[A-Za-z0-9]{3-9}" required>
-            <input type="text" name="instructor_name" id="instructor_name" placeholder="Instructor name" pattern="[a-zA-Z\s]+$" required>
-            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" required>
+            <input type="text" name="instructor_name" id="instructor_name" placeholder="Instructor name" required>
+            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" required><span id="info_icon" style="font-size:20px; color:black" title="The Organisation Id must be valid and the respective Organisation should be registered already. Caution! Once submitted this Id cannot be changed hence, Verify!">i</span>
+            
             <input type="email" name="email_id" id="email_id" placeholder="Email-Id" required>
             <input type="text" name="designation" id="designation" placeholder="designation" required>
-            <input type="text" name="department" id="department"  placeholder="department" required>
-            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required>
+            <input type="text" name="department" id="department"  placeholder="department" required><span id="info_icon" style="font-size:20px; color:black" title=" Enter the Department name in shorthand form. (for example, enter 'Computer Science Engineering' as 'CSE')">i</span>
+          
+            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required><span id="info_icon" style="font-size:20px; color:black" title="The Password must contain atleast 6 characters.">i</span>
+            
             <input type="password" name="password_two" id="password_two" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm your Password" required>
             <button name="submit" type="submit"> sign up </button>
   	    </form>

@@ -2,13 +2,11 @@
 
 {% block body %}
 
-<nav>
-    <div class="nav-logo">
-        <a href="/home">
-            <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" alt="Shaala Loka Logo"/>
-        </a>
-      </div>
-</nav>
+<div class="w3-bar w3-white w3-border w3-large w3-hide-small">
+    <a href="/home" class="w3-bar-item" style="padding:0" >
+        <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%"style="width:200px;" alt="Shaala Loka Logo"/>
+    </a>
+</div>
 
 
 {% endblock %}

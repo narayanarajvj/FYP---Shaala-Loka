@@ -13,11 +13,14 @@
     <div class="stu-form">
   	    <form action = "/student-registration" method = "POST">
   		<br><br>
-            <input type="text" name="student_id" id="student_id" placeholder="student Id" pattern="[A-Za-z]{3}[A-Za-z0-9]{3-9}" required>
-            <input type="text" name="student_name" id="student_name" placeholder="student name" pattern="[a-zA-Z\s]+$" required>
-            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" required>
+            <input type="text" name="student_id" id="student_id" placeholder="student Id" pattern="[A-Za-z]{3}[A-Za-z0-9]{3-9}" required><span id="info_icon" style="font-size:20px; color:black" title="If you have not received a Unique Id from your Organisation, then enter in a combination such as Organisation Id, Level, Section, Roll No (for example: considering Organisation Id: 1JS, Level: 8, Section: A, RollNo: 24 then, StudentId: 1JS8A24 )">i</span>
+            
+            <input type="text" name="student_name" id="student_name" placeholder="student name" required>
+            <input type="text" name="org_id" id="org_id" placeholder="Organization Id" required><span id="info_icon" style="font-size:20px; color:black" title="The Organisation Id must be valid and the respective Organisation should be registered already. Caution! Once submitted this Id cannot be changed hence, Verify!">i</span>
+            
             <input type="email" name="email_id" id="email_id" placeholder="Email-Id" required>
-            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required>
+            <input type="password" name="password" id="password" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Must have at least 6 characters' : ''); if(this.checkValidity()) form.password_two.pattern = this.value;" placeholder="Password"  required><span id="info_icon" style="font-size:20px; color:black" title="The Password must contain atleast 6 characters.">i</span>
+            
             <input type="password" name="password_two" id="password_two" pattern="^\S{6,}$" onchange="this.setCustomValidity(this.validity.patternMismatch ? 'Please enter the same Password as above' : '');" placeholder="Confirm your Password" pattern="^\S{6,}$" required>
             <select name="level" id="level" required>
                 <option selected disabled value="">Please Select Your Level</option>
@@ -37,7 +40,7 @@
             <input type="text" name="section" class="section" placeholder="section" required>
             <div id="department_field">
                 <input type="text" name="department" class="department" placeholder="department" required>
-                <i class="fa fa-info-circle" id="info_icon" style="font-size:22px; color:#aaaeb4" title="If you do not have any particular Department, then enter 'NA'. If you have any Departments, then enter in shorthand form. (for example, enter 'Computer Science Engineering' as 'CSE')"></i>
+                <span id="info_icon" style="font-size:20px; color:black" title="If you do not have any particular Department, then enter 'NA'. If you have any Departments, then enter in shorthand form. (for example, enter 'Computer Science Engineering' as 'CSE')">i</span>
             </div>
 
   		    <button class="submit" name="submit" type="submit" id="submit"> sign up </button>

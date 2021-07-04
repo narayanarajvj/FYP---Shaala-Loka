@@ -1,7 +1,6 @@
 from logging import error
 from re import sub
 from flask import Flask, render_template, request, flash, redirect, url_for, session
-# from flask_session import Session
 import firebase_admin
 from firebase_admin import credentials, firestore, storage
 import base64
@@ -34,9 +33,6 @@ app = Flask(__name__)
 recaptcha = ReCaptcha(app=app)
 
 app.secret_key = os.environ.get('SECRET_KEY')
-# app.config["SESSION_PERMANENT"] = False
-# app.config["SESSION_TYPE"] = "filesystem"
-# Session(app)
 
 mail = Mail()
 
@@ -210,12 +206,46 @@ def quiz(textarea, orgId, insId, subjectId):
 
     return
 
+# ORGANIZATION OPERATIONS
+
+def orgApprovalOperations(orgId, id, password, role, collectionName):
+    arr_upd = db.collection('Organization').document(orgId)
+    if collectionName == "Instructor":
+        arr_upd.update({u'instructors': firestore.ArrayUnion([id])})
+    elif collectionName == "Student":
+        arr_upd.update({u'students': firestore.ArrayUnion([id])})
+
+    if role and password:
+        data = {
+            'id': id,
+            'password': password,
+            'role': role
+        }
+        docref = db.collection('Login').document(data['id'])
+        docref.set(data)
+
+    return
+
+def orgRemovalOperations(orgId, id, collectionName):
+    arr_upd = db.collection('Organization').document(orgId)
+    if collectionName == "Instructor":
+        arr_upd.update({u'instructors': firestore.ArrayRemove([id])})
+    elif collectionName == "Student":
+        arr_upd.update({u'students': firestore.ArrayRemove([id])})
+
+    docs2 = db.collection('Login').where('id', '==', id).get()
+    for doc in docs2:
+        key2 = doc.id
+        db.collection('Login').document(key2).delete()
+
+    return
+
 # HOME PAGE
 
 @app.route("/")
 @app.route("/home")
 def main():
-    # session.clear()
+    session["id"] = None
     return render_template("index.html")
 
 # LOGIN STARTS HERE
@@ -223,24 +253,26 @@ def main():
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     error = None
+    session["id"] = None
     if request.method == 'POST':
-        id = request.form['id']
+        session["id"] = request.form['id'].upper()
+        id = request.form['id'].upper()
         password = request.form['password']
 
         password = base64.b64encode(password.encode("utf-8"))
         role = None
 
 
-        if recaptcha.verify():
-            docref = db.collection('Login').where('id', '==', id).where('password', '==', password).get()
-            if docref:
-                for doc in docref:
-                    if doc.to_dict()['id'] and doc.to_dict()['password']:
-                        role = doc.to_dict()['role']
-            else:
-                error = 'Invalid ID or Password. Please try again!'
+        # if recaptcha.verify():
+        docref = db.collection('Login').where('id', '==', id).where('password', '==', password).get()
+        if docref:
+            for doc in docref:
+                if doc.to_dict()['id'] and doc.to_dict()['password']:
+                    role = doc.to_dict()['role']
         else:
-            error = 'Incorrect ReCaptcha'
+            error = 'Invalid ID or Password. Please try again!'
+        # else:
+        #     error = 'Incorrect ReCaptcha'
 
         if role == 'Organization':
             return redirect(url_for('organizationHome', orgId=id))
@@ -249,6 +281,13 @@ def login():
         elif role == 'Student':
             return redirect(url_for('studentHome', stuId=id))
     return render_template('login.html', error=error)
+
+# LOGOUT STARTS HERE
+
+@app.route("/logout")
+def logout():
+    session["id"] = None
+    return redirect("/")
 
 # REGISTRATION STARTS HERE
 
@@ -380,6 +419,8 @@ def studentRegistration():
 
 @app.route("/<orgId>")
 def organizationHome(orgId):
+    if not session.get("id"):
+        return redirect("/login")
     orgName = None
     docs = db.collection('Organization').where('org_id', '==', orgId).get()
     for doc in docs:
@@ -387,54 +428,64 @@ def organizationHome(orgId):
             orgName = doc.to_dict()['org_name']
     return render_template("organization/org_Landing.html", orgId=orgId, orgName=orgName)
 
-
 @app.route("/<orgId>/instructor")
 def organizationInstructor(orgId):
+    if not session.get("id"):
+        return redirect("/login")
     docs = db.collection(u'Organization').document(orgId).collection('Instructor').order_by(u'id').limit(50).get()
     return render_template("organization/org_Instructor.html", orgId=orgId, docs=docs)
 
 
 @app.route("/<orgId>/student")
 def organizationStudent(orgId):
+    if not session.get("id"):
+        return redirect("/login")
     docs = db.collection(u'Organization').document(orgId).collection('Student').order_by(u'id').limit(50).get()
     return render_template("organization/org_Student.html", orgId=orgId, docs=docs)
 
 
 @app.route("/<orgId>/approve/<collectionName>/<id>")
-def approval(orgId, collectionName, id):
+def organizationApproval(orgId, collectionName, id):
     role = None
     password = None
     email = None
+    name = None
     docref = db.collection('Organization').document(orgId).collection(collectionName).where('id', '==', id).get()
+
     for doc in docref:
         if not doc.to_dict()['approval_status']:
             doc_id = doc.id
             db.collection('Organization').document(orgId).collection(collectionName).document(doc_id).update({'approval_status': True})
             password = doc.to_dict()['password']
             email = doc.to_dict()['email_id']
+            if collectionName == 'Instructor':
+                name = doc.to_dict()['instructor_name']
+            elif collectionName == 'Student':
+                name = doc.to_dict()['student_name']
         role = collectionName
 
-    arr_upd = db.collection('Organization').document(orgId)
-    if collectionName == "Instructor":
-        arr_upd.update({u'instructors': firestore.ArrayUnion([id])})
-    elif collectionName == "Student":
-        arr_upd.update({u'students': firestore.ArrayUnion([id])})
+    op1 = multiprocessing.Process(target=orgApprovalOperations, args=(orgId, id, password, role, collectionName))
+    op1.start()
 
-    if role and password:
-        data = {
-            'id': id,
-            'password': password,
-            'role': role
-        }
-        docref = db.collection('Login').document(data['id'])
-        docref.set(data)
+    msg = Message('Shaala Loka - Profile Approved - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
+    msg.body = f'''
+GREETINGS FROM SHAALA LOKA!!!
+
+Dear {name},
+
+In accordance with the login request made to organization ({orgId}), we are happy to inform you that they have successfully authenticated and approved your account!
+Henceforth you will be able to login and actively use your account.
+
+Hope you have a great time!
+
+Regards,
+Admin Team, 
+Shaala Loka
+'''
+    mail.send(msg)
 
     flash("ID: "+id+" Approved Successfully")
 
-    msg = Message('Shaala Loka - Profile Approved - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
-    msg.body = f"Your Organization has successfully authenticated your account (ID: {id}). You can Login from now " \
-               "onwards."
-    mail.send(msg)
     if collectionName == "Instructor":
         return redirect(url_for('organizationInstructor', orgId=orgId))
     if collectionName == "Student":
@@ -442,30 +493,41 @@ def approval(orgId, collectionName, id):
     return redirect(url_for('organizationHome', orgId=orgId))
 
 @app.route("/<orgId>/remove/<collectionName>/<id>")
-def removal(orgId, collectionName, id):
+def organizationRemoval(orgId, collectionName, id):
     email = None
+    name = None
     docs = db.collection('Organization').document(orgId).collection(collectionName).where('id', '==', id).get()
     for doc in docs:
-        key1 = doc.id
+        doc_id = doc.id
         email = doc.to_dict()['email_id']
-        db.collection('Organization').document(orgId).collection(collectionName).document(key1).delete()
+        if collectionName == 'Instructor':
+            name = doc.to_dict()['instructor_name']
+        elif collectionName == 'Student':
+            name = doc.to_dict()['student_name']
+        db.collection('Organization').document(orgId).collection(collectionName).document(doc_id).delete()
 
-    arr_upd = db.collection('Organization').document(orgId)
-    if collectionName == "Instructor":
-        arr_upd.update({u'instructors': firestore.ArrayRemove([id])})
-    elif collectionName == "Student":
-        arr_upd.update({u'students': firestore.ArrayRemove([id])})
+    op2 = multiprocessing.Process(target=orgRemovalOperations, args=(orgId, id, collectionName))
+    op2.start()
 
     msg = Message('Shaala Loka - Profile Disabled - '+orgId, sender='shaalaloka@gmail.com', recipients=[email])
-    msg.body = f"Your Organization has disabled your account (ID: {id}). You will be unable to Login henceforth."
+    msg.body = f'''
+GREETINGS FROM SHAALA LOKA!!!
+
+Dear {name},
+
+We would like to inform you that your organization ({orgId}) has disabled your account.
+Henceforth you will not be able to login or use any of our services.
+
+Thank you and All the best!
+
+Regards,
+Admin Team, 
+Shaala Loka.
+'''
     mail.send(msg)
 
-    docs2 = db.collection('Login').where('id', '==', id).get()
-    for doc in docs2:
-        key2 = doc.id
-        db.collection('Login').document(key2).delete()
-
     flash("ID: "+id+" Removed Successfully")
+
     if collectionName == "Instructor":
         return redirect(url_for('organizationInstructor', orgId=orgId))
     if collectionName == "Student":
@@ -476,11 +538,12 @@ def removal(orgId, collectionName, id):
 
 @app.route("/instructor/<insId>")
 def instructorHome(insId):
+    if not session.get("id"):
+        return redirect("/login")
     insName = None
     orgId = None
     docs_org = db.collection('Organization').where('instructors', 'array_contains', insId).get()
     for doc in docs_org:
-        orgName = doc.to_dict()['org_name']
         orgId = doc.to_dict()['org_id']
 
     docs_ins = db.collection('Organization').document(orgId).collection('Instructor').where('id', '==', insId).get()
@@ -491,6 +554,8 @@ def instructorHome(insId):
 
 @app.route("/<orgId>/<insId>/<insName>/schedule")
 def instructorSchedule(orgId, insId, insName):
+    if not session.get("id"):
+        return redirect("/login")
     docs_list = []
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).get()
     for doc in docs_sh:
@@ -507,19 +572,22 @@ def instructorSchedule(orgId, insId, insName):
 
 @app.route("/<orgId>/<insId>/<insName>/study-hall")
 def instructorStudyHall(orgId, insId, insName):
+    if not session.get("id"):
+        return redirect("/login")
     docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).order_by('subject_id').limit(10).get()
     return render_template("instructor/inst_StudyRoom.html", orgId=orgId, insId=insId, insName=insName, docs=docs)
 
 @app.route("/<orgId>/<insId>/<insName>/new-study-hall", methods=["POST", "GET"])
 def instructorNewClassroom(orgId, insId, insName):
     if request.method == 'POST':
+        subjectId = request.form['subject_id'].upper()
         sh_name = request.form['subject_name']
         description = request.form['description']
         department = request.form['department'].upper()
         level = request.form['level']
         section = request.form['section'].upper()
 
-        subjectId = str(insId)+str(department)+str(level)+str(section)
+        subjectId = str(insId)+str(subjectId)+str(level)+str(section)
 
         docs = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
         if docs:
@@ -546,12 +614,16 @@ def instructorNewClassroom(orgId, insId, insName):
 
 @app.route("/<orgId>/<insId>/<insName>/study-hall/<subjectId>/<sh_name>")
 def instructorSpecificStudyHall(orgId, insId, insName, subjectId, sh_name):
+    if not session.get("id"):
+        return redirect("/login")
     docs = None
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
     for doc in docs_sh:
         doc_id = doc.id
+        level = doc.to_dict()['level']
+        section = doc.to_dict()['section']
         docs = db.collection('StudyHall').document(doc_id).collection('Scores').order_by('student_id').limit(30).get()
-    return render_template("instructor/inst_SpecificStudyRoom.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs)
+    return render_template("instructor/inst_SpecificStudyRoom.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, level=level, section=section, docs=docs)
 
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/new-schedule", methods=["POST", "GET"])
 def studyHallNewSchedule(orgId, insId, insName, subjectId, sh_name):
@@ -576,6 +648,8 @@ def studyHallNewSchedule(orgId, insId, insName, subjectId, sh_name):
 
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/discussion", methods=["POST", "GET"])
 def instructorDiscussionRoom(orgId, insId, insName, subjectId, sh_name):
+    if not session.get("id"):
+        return redirect("/login")
     docs = None
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
     if request.method == 'POST':
@@ -594,6 +668,8 @@ def instructorDiscussionRoom(orgId, insId, insName, subjectId, sh_name):
 
     for doc in docs_sh:
         doc_id = doc.id
+        level = doc.to_dict()['level']
+        section = doc.to_dict()['section']
         docs = db.collection('StudyHall').document(doc_id).collection('ChatRoom').order_by('timestamp').limit(30).get()
 
     def convert_timestamp(timestamp):
@@ -601,39 +677,44 @@ def instructorDiscussionRoom(orgId, insId, insName, subjectId, sh_name):
         hr,mi = timestamp.hour, timestamp.minute
         return str(hr)+":"+str(mi)
 
-    return render_template("instructor/inst_Discussions.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs, convert_timestamp=convert_timestamp)
+    return render_template("instructor/inst_Discussions.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, level=level, section=section, docs=docs, convert_timestamp=convert_timestamp)
 
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/resources", methods=["POST", "GET"])
 def instructorResources(orgId, insId, insName, subjectId, sh_name):
+    if not session.get("id"):
+        return redirect("/login")
     docs = None
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('instructor_id', '==', insId).where('subject_id', '==', subjectId).get()
     if request.method == 'POST':
         file_uploaded = request.files['inst_resources']
-        filename = secure_filename(file_uploaded.filename)
-        blob = bucket.blob(orgId + '/' + insId + '/' + subjectId +'/'+ filename)
-        blob.upload_from_file(file_uploaded)
-        blob.make_public()
-        url = blob.public_url
-        timestamp = firestore.SERVER_TIMESTAMP
-        data = {
-            'filename': filename,
-            'instructor_id': insId,
-            'name': insName,
-            'timestamp': timestamp,
-            'url': url
-        }
-        for doc in docs_sh:
-            doc_id = doc.id
-            doc_res = db.collection('StudyHall').document(doc_id).collection('Resources').where('filename', '==', filename).get()
-            if not doc_res:
-                docref = db.collection('StudyHall').document(doc_id).collection('Resources').document()
-                docref.set(data)
+        if file_uploaded:
+            filename = secure_filename(file_uploaded.filename)
+            blob = bucket.blob(orgId + '/' + insId + '/' + subjectId +'/'+ filename)
+            blob.upload_from_file(file_uploaded)
+            blob.make_public()
+            url = blob.public_url
+            timestamp = firestore.SERVER_TIMESTAMP
+            data = {
+                'filename': filename,
+                'instructor_id': insId,
+                'name': insName,
+                'timestamp': timestamp,
+                'url': url
+            }
+            for doc in docs_sh:
+                doc_id = doc.id
+                doc_res = db.collection('StudyHall').document(doc_id).collection('Resources').where('filename', '==', filename).get()
+                if not doc_res:
+                    docref = db.collection('StudyHall').document(doc_id).collection('Resources').document()
+                    docref.set(data)
         
     for doc in docs_sh:
         doc_id = doc.id
+        level = doc.to_dict()['level']
+        section = doc.to_dict()['section']
         docs = db.collection('StudyHall').document(doc_id).collection('Resources').order_by('timestamp').limit(20).get()
 
-    return render_template("instructor/inst_StudyRoom_Resources.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, docs=docs)
+    return render_template("instructor/inst_StudyRoom_Resources.html", orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name, level=level, section=section, docs=docs)
 
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/session-link", methods=["POST", "GET"])
 def instructorSessionLink(orgId, insId, insName, subjectId, sh_name):
@@ -658,6 +739,8 @@ def instructorClearSessionLink(orgId, insId, insName, subjectId, sh_name):
 
 @app.route("/<orgId>/<insId>/<insName>/<subjectId>/<sh_name>/quiz", methods=["POST", "GET"])
 def instructorQuiz(orgId, insId, insName, subjectId, sh_name):
+    if not session.get("id"):
+        return redirect("/login")
     error = None
     if request.method == 'POST':
         textarea = request.form['textarea']
@@ -686,11 +769,15 @@ def instructorClearQuiz(orgId, insId, insName, subjectId, sh_name):
 
 @app.route("/<orgId>/<insId>/<insName>/archives")
 def instructorArchives(orgId, insId, insName):
+    if not session.get("id"):
+        return redirect("/login")
     docs = db.collection('Archives').where('org_id', '==', orgId).limit(15).get()
     return render_template("instructor/inst_Archives.html", orgId=orgId, insId=insId, insName=insName, docs=docs)
 
 @app.route("/<orgId>/<insId>/<insName>/filter", methods=["POST", "GET"])
 def instructorArchivesFilter(orgId, insId, insName):
+    if not session.get("id"):
+        return redirect("/login")
     if request.method == 'POST':
         domains = request.form.getlist('domain')
         docs = db.collection('Archives').where('org_id', '==', orgId).where('interests_list', 'array_contains_any', domains).get()
@@ -707,7 +794,6 @@ def studentHome(stuId):
     orgId = None
     docs_org = db.collection('Organization').where('students', 'array_contains', stuId).get()
     for doc in docs_org:
-        orgName = doc.to_dict()['org_name']
         orgId = doc.to_dict()['org_id']
 
     docs_ins = db.collection('Organization').document(orgId).collection('Student').where('id', '==', stuId).get()
@@ -790,27 +876,28 @@ def studentResources(orgId, stuId, stuName, subjectId, sh_name):
     docs_sh = db.collection('StudyHall').where('org_id', '==', orgId).where('students', 'array_contains', stuId).where('subject_id', '==', subjectId).get()
     if request.method == 'POST':
         file_uploaded = request.files['stu_resources']
-        filename = secure_filename(file_uploaded.filename)
-        for doc in docs_sh:
-            insId = doc.to_dict()['instructor_id']
-        blob = bucket.blob(orgId + '/' + insId + '/' + subjectId +'/'+ filename)
-        blob.upload_from_file(file_uploaded)
-        blob.make_public()
-        url = blob.public_url
-        timestamp = firestore.SERVER_TIMESTAMP
-        data = {
-            'filename': filename,
-            'student_id': stuId,
-            'name': stuName,
-            'timestamp': timestamp,
-            'url': url
-        }
-        for doc in docs_sh:
-            doc_id = doc.id
-            doc_res = db.collection('StudyHall').document(doc_id).collection('Resources').where('filename', '==', filename).get()
-            if not doc_res:
-                docref = db.collection('StudyHall').document(doc_id).collection('Resources').document()
-                docref.set(data)
+        if file_uploaded:
+            filename = secure_filename(file_uploaded.filename)
+            for doc in docs_sh:
+                insId = doc.to_dict()['instructor_id']
+            blob = bucket.blob(orgId + '/' + insId + '/' + subjectId +'/'+ filename)
+            blob.upload_from_file(file_uploaded)
+            blob.make_public()
+            url = blob.public_url
+            timestamp = firestore.SERVER_TIMESTAMP
+            data = {
+                'filename': filename,
+                'student_id': stuId,
+                'name': stuName,
+                'timestamp': timestamp,
+                'url': url
+            }
+            for doc in docs_sh:
+                doc_id = doc.id
+                doc_res = db.collection('StudyHall').document(doc_id).collection('Resources').where('filename', '==', filename).get()
+                if not doc_res:
+                    docref = db.collection('StudyHall').document(doc_id).collection('Resources').document()
+                    docref.set(data)
         
     for doc in docs_sh:
         doc_id = doc.id

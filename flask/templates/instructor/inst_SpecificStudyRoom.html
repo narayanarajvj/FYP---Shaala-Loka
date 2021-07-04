@@ -4,9 +4,10 @@
 {% block body %}
 
   <div class="inst-study-container">
+    <h3> SUBJECT : {{ sh_name }} [{{ level }}-{{ section }}]</h3>
     <br>
-    <h3> SUBJECT : {{ sh_name }}</h3>
     <h4> Teacher : {{ insName }}</h4>
+
     <button data-modal-target="#schedule-modal" class="inst-schedule-button"> Create Schedule </button>
     <button data-modal-target="#modal" class="inst-button"> List of Students </button>
   </div>
@@ -74,12 +75,13 @@
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
+        <p style="text-align: justify;">Please enter the valid URL for scheduling a session. On clicking Start Session you will be redirected to the Session. By clicking on End Session your Session will no longer be open for new students to enter or ends the session.</p>
         <form class="stud-room-form" action="{{ url_for('instructorSessionLink', orgId=orgId, insId=insId, insName=insName, subjectId=subjectId, sh_name=sh_name) }}" method="POST">
           <br>
           <input type="url" name="meetLink" id="meetLink" placeholder="Enter the link.">
           <button name="submit" type="submit" onClick="javascript: window.open(document.getElementById('meetLink').value);">Start Session</button>
+        <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/clear-session-link" class="w3-button w3-red w3-hover-red w3-round-large w3-margin-bottom w3-large w3-padding-small" style=" display:block; width:35%; margin:0 auto;">End Session</a>
         </form>
-        <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ subjectId }}/{{ sh_name }}/clear-session-link">End Session</a>
       </div>
     </div>
     <div id="overlay"></div>

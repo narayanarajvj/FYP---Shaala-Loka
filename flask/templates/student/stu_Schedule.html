@@ -6,13 +6,13 @@
   <h1 class="inst-heading">  Your Upcoming Classes </h1>
   {% for doc in docs_list %}
     <div class="schedule-container">
-      <div class="schedule-card">
+      <div class="schedule-card" style="height:3% !important">
         <h4>subject  :  {{ doc['sh_name'] }}</h4>
         <h5 style="margin:-1.5% 0 1.5% 2%; font-size:14pt">topic: {{ doc['topic_name'] }} </h5>
         <h5>instructor: {{ doc['instructor_name'] }}</h5>
-        <p class="schedule-class" style="margin-top:20px">level: {{ doc['level'] }}</p>
-        <p class="schedule-section" style="margin-top:20px">section: {{ doc['section'] }}</p>
-        <p class="schedule-date-time" style="margin-top:-9%">date: {{ doc['date'] }} <br> time: {{ doc['time'] }}</p>
+        <p class="schedule-class" style="margin-top:1.5%; margin-bottom: 0.5%">level: {{ doc['level'] }}</p>
+        <p class="schedule-section" style="margin-top:1.5%; margin-bottom: 0.5%;">section: {{ doc['section'] }}</p>
+        <p class="schedule-date-time" style="margin-top:-7%;">date: {{ doc['date'] }} <br> time: {{ doc['time'] }}</p>
         <span class="clear"></span>
       </div>
     </div>

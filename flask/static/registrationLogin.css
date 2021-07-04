@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@500&display=swap');
+*{
+	font-family: 'Lora', serif !important;
+}
 body{
 	background: url("/static/assets/Background_mobile.jpg") ;
 	background-size: cover;
@@ -14,7 +17,6 @@ nav{
 .heading{
 	text-transform: capitalize;
 	text-align: center;
-	font-family: 'Lora', serif;
 	font-size: 52pt;
 	margin-top: 6%;
 	padding: 2%;
@@ -22,7 +24,6 @@ nav{
 .login-link{
 	text-transform: capitalize;
 	text-align: center;
-	font-family: 'Lora', serif;
 	font-size: 42pt;
 	margin-top: 2%;
 	padding: 2%;
@@ -43,7 +44,7 @@ nav{
 	font-size: 38pt;
 	margin: 8%;
 	padding: 2%;
-	font-family: 'Lora', serif;
+
 	border:none;
 	outline: none;
 	width:78%;
@@ -68,7 +69,6 @@ nav{
 	font-size: 38pt;
 	margin: 8%;
 	padding: 2%;
-	font-family: 'Playfair Display', serif;
 	border:none;
 	outline: none;
 	width:67%;
@@ -81,7 +81,6 @@ nav{
 	border-radius:8px;
 	padding: 3%;
 	margin:7%;
-	font-family: 'Lora', serif;
 	font-weight: 700;
 	text-transform: capitalize;
 	background: #edb230;
@@ -165,16 +164,15 @@ nav{
 	.stu-form .section{
 		margin-top:-0.8%;
 	}
-	i{
-		width: 5%;
-		float:right;
-		margin: -13.5% 7%;
-		cursor:pointer;
-	}
+
 	#info_icon{
 		margin: -13.5% 4%;
 		float:right;
 		width:5%;
+		border:1px solid #aaaeb4;
+		border-radius:50%;
+		background:#aaaeb4;
+		cursor:pointer;
 	}
 	.form button, .stu-form button, .login-form button{
 		font-size: 13pt;
@@ -182,4 +180,25 @@ nav{
 		margin:0 0 4% 0;
 		padding:2%;
 	}
+	::-webkit-scrollbar {
+		height: 10px;
+		width: 8px;
+	  }
+	  
+	  /* Track */
+	  ::-webkit-scrollbar-track {
+		background: #d5d6d3; 
+		border-radius: 8px;
+	  }
+	   
+	  /* Handle */
+	  ::-webkit-scrollbar-thumb {
+		background: #888; 
+		border-radius: 8px;
+	  }
+	  
+	  /* Handle on hover */
+	  ::-webkit-scrollbar-thumb:hover {
+		background: #555; 
+	  }
 }

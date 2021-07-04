@@ -10,7 +10,6 @@
 <div class="inst-study-container">
   <br>
     <h3>Your Current Study Halls</h3>
-    <br>
     <button data-modal-target="#modal" class="inst-button"> New Study Hall </button>
 </div>
     
@@ -24,8 +23,11 @@
           <div id="floatItems"> 
             <p id="dept"> Department: {{ doc.to_dict()['department'] }} </p>
             <p id="class"> Class: {{ doc.to_dict()['level'] }} </p>
-            <p id="sec"> Section:{{ doc.to_dict()['section'] }} </p>
+            <p id="sec"> Section: {{ doc.to_dict()['section'] }} </p>
           </div>
+          <form action="" method="" style="text-align: center;">
+            <button class="w3-button w3-red w3-hover-red w3-padding-small w3-margin-bottom w3-round w3-large" title="Leave Study Hall" onclick="alert('Are you sure you want to Delete this Study Hall?');">Delete Study Hall</button>
+          </form>
       <div class="custom-shape-divider-top-1621680160" >
         <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
@@ -47,10 +49,17 @@
       <div class="modal-body">
         <form class="stud-room-form" action="/{{ orgId }}/{{ insId }}/{{ insName }}/new-study-hall" method="POST">
           <br>
+          <input type="text" name="subject_id" placeholder="Subject Code" required>
           <input type="text" name="subject_name" placeholder="Subject" required>
           <input type="text" name="description" placeholder="Description" required>
-          <input type="text" name="department" placeholder="Department" required>
-          <input type="text" name="level" placeholder="Level" required>
+          <input type="text" name="department" placeholder="Department" required> <span id="sh_info_icon" style="font-size:20px; color:black" title="Enter the Department name in shorthand form. (for example, enter 'Computer Science Engineering' as 'CSE')">i</span>
+          <!-- <input type="text" name="level" placeholder="Level" required> -->
+          <select name="level" id="level" required>
+            <option selected disabled value="">Please Select Your Level</option>
+            {% for i in range(1,13) %}
+              <option value="1">{{ i }}</option>
+            {% endfor %}
+          </select>
           <input type="text" name="section" placeholder="Section" required>
           <button name="submit" type="submit"> Submit </button>
         </form>
