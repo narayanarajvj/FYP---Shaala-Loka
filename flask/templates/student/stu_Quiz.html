@@ -132,6 +132,9 @@
     document.onkeydown = function (e) {
         return false;
     }
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
 </script>
 
 

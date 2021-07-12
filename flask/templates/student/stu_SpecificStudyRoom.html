@@ -4,9 +4,9 @@
 {% block body %}
 
 <div class="stu-study-container">
-    <h3 class="w3-margin-top"> SUBJECT : {{ sh_name }}</h3>
+    <h3 class="w3-margin-top"> SUBJECT : {{ sh_name }} [{{ level }}-{{ section }}]</h3>
     <h4 class="w3-show-inline-block"> Teacher : {{ insName }}</h4>
-    <h4 title="Cummulative Score acquired by you in every quiz" class="w3-right w3-white w3-padding-small w3-round" style="color:#8e4162 !important; margin-top:-1%;"> Score : {{ score }}</h4>
+    <h4 title="Cummulative Score acquired by you in every quiz" class="w3-right w3-white w3-padding-small w3-round" style="color:#8e4162 !important; margin-top:-1%; cursor: default;"> Score : {{ score }}</h4>
 </div>
  
 <div class="inst-spec-stud-container">

@@ -43,7 +43,7 @@
 <!------------------ LIST OF STUDENTS MODAL POPUP -------------------->
     <div class="modal" id="modal">
       <div class="modal-header" >
-        <h4 class="modal-title">List Of Students</h4>
+        <h4 class="modal-title"><b>List Of Students</b></h4>
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
@@ -71,7 +71,7 @@
 <!--------------------- LECTURE MODAL POPUP ------------------------->
     <div class="modal" id="lecture-modal">
       <div class="modal-header" >
-        <h4 class="modal-title">Schedule Lecture</h4>
+        <h4 class="modal-title"><b>Schedule Lecture</b></h4>
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
@@ -89,7 +89,7 @@
 <!----------------------- SCHEDULE MODAL POPUP ---------------------------->
     <div class="modal" id="schedule-modal">
       <div class="modal-header" >
-        <h4 class="modal-title">Schedule Next Session</h4>
+        <h4 class="modal-title"><b>Schedule Next Session</b></h4>
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
@@ -97,7 +97,10 @@
           <br>
           <input type="text" name="topic_name" placeholder="Topic" required>
           <input type="date" name="date"  required>
+          <label class="w3-text-white" style="margin: 0 10%;">Start Time:</label>
           <input type="time" name="time"  required>
+          <!-- <label class="w3-text-white" style="margin: 0 10%;">End Time:</label>
+          <input type="time" name="endtime"  required> -->
           <button name="submit" type="submit"> Schedule </button>
         </form>
       </div>

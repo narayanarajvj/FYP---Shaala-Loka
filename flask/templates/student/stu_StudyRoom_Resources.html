@@ -8,7 +8,7 @@
     <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall/{{ subjectId }}/{{ sh_name }}" class="back-btn">
       <img src="{{ url_for('static', filename = 'assets/stu_back.png') }}" width="95%" height="95%">
     </a>
-    <h3 style="margin-bottom: 2.5%; margin-top: -0.5%; padding-top: 0px;"> SUBJECT : {{ sh_name }} </h3>
+    <h3 style="margin-bottom: 2.5%; margin-top: -0.5%; padding-top: 0px;"> SUBJECT : {{ sh_name }} [{{ level }}-{{ section }}]</h3>
     <h4 class="teacher-name"> Teacher : {{ insName }} </h4>
     <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ subjectId }}/{{ sh_name }}/resources" method="POST" enctype="multipart/form-data">
       <div class="upload-file"> 
@@ -21,7 +21,7 @@
 <div class="inst-stud-room-resources-container">
   {% if docs %}
     {% for doc in docs %}
-    <div class="studyRoomResourcesCard">
+    <div class="studyRoomResourcesCard" title="Click to Download">
         <a style="text-decoration: none;" href="{{ doc.to_dict()['url'] }}">  
           {% if doc.to_dict()['student_id'] %}
           <img src="{{ url_for('static', filename = 'assets/stu_file.png') }}" alt="file">

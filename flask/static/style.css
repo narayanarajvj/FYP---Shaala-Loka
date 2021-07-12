@@ -1033,6 +1033,7 @@ body{
         text-overflow: clip;
 		margin-bottom: 0;
 		color: white;
+		text-align: center;
 	}
 	.error-msg{
 		text-align: center;
@@ -1068,7 +1069,7 @@ body{
 		font-size: 12pt;
 	}
 	.inst-quiz-container button{
-		border: 1px solid white;
+		border: none;
 		display: inline;
 		margin: 1.5% 30%;
 		background: #245d74;
@@ -1124,6 +1125,18 @@ body{
 		border-radius:50%;
 		background:#aaaeb4;
 		cursor:pointer;
+	}
+
+	/* PROFILE */
+
+	.profile-cont {
+		margin-left: 30%;
+		
+	}
+	  .profile-cont div{
+		/* padding: 0.1% 0 0 0; */
+		font-size: 14pt;
+		text-transform: capitalize;
 	}
 	  
 }

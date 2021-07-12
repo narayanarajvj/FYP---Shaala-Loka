@@ -14,13 +14,13 @@
         <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%"style="width:200px;" alt="Shaala Loka Logo"/>
     </a>
     <div class="w3-right">
-        <span><a href="#" class="w3-bar-item w3 w3-padding-24 w3-mobile">Profile</a></span>
+        <span><a href="/student/{{ stuId }}/profile" class="w3-bar-item w3 w3-padding-24 w3-mobile">Profile</a></span>
         <span><a href="/logout" class="w3-bar-item w3 w3-padding-24 w3-mobile">Log Out</a></span> 
     </div>
   </div>
 
   <div class="welcome">
-    <h2> Welcome, {{ stuName }}!</h2>
+    <h2><b> Welcome, {{ stuName }}! </b></h2>
   </div>
 
   <div class="container">
@@ -33,7 +33,7 @@
     <div class="study_room">
       <a href="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/study-hall">
         <img src="{{ url_for('static', filename = 'assets/study_room.png') }}" alt="study_room">
-        <h4>study room</h4>
+        <h4>study hall</h4>
       </a>
     </div>
     <div class="archives">

@@ -19,31 +19,22 @@
         <span><a href="/logout" class="w3-bar-item w3 w3-padding-24 w3-mobile">Log Out</a></span> 
     </div>
   </div>
-
-  <div class="welcome">
-    <h2><b> Welcome, {{ insName }}! </b></h2>
+  <div class="w3-right"> 
+    <a href="/{{ orgId }}/Instructor/{{ insId }}/delete-profile" class="w3-button w3-margin w3-red w3-hover-red w3-border-0 w3-round w3-padding w3-large" onclick="return confirm('Are You Sure, you want to Delete your Profile?')">Delete Profile</a>
   </div>
 
-  <div class="container">
-    <div class="schedule">
-      <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/schedule">
-        <img src="{{ url_for('static', filename = 'assets/schedule.png') }}" alt="schedule">
-        <h4>schedule</h4>
-      </a>
+    <div class="w3-container w3-padding w3-section w3-large" style="margin:1% auto;">
+      <h3 class="w3-center"><b>PROFILE</b></h3> 
+      <div class="profile-cont">
+        <div class="w3-margin"><p><b>Instructor Id :</b> {{ insId }} </p></div>
+        <div class="w3-margin"><p><b>Instructor Name :</b> {{ insName }} </p></div>
+        <div class="w3-margin"><p><b>Organization Id :</b> {{ orgId }} </p></div>
+        <div class="w3-margin"><p><b>Organization Name :</b> {{ orgName }} </p></div>
+        <div class="w3-margin"><p><b>Email Id :</b><span style="text-transform: lowercase"> {{ email_id }} </span></p></div>
+        <div class="w3-margin"><p><b>Department :</b> {{ dept }} </p></div>
+        <div class="w3-margin"><p><b>Designation :</b> {{ designation }} </p></div>
+      </div>
     </div>
-    <div class="study_room">
-      <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/study-hall">
-        <img src="{{ url_for('static', filename = 'assets/study_room.png') }}" alt="study_hall">
-        <h4>study hall</h4>
-      </a>
-    </div>
-    <div class="archives">
-      <a href="/{{ orgId }}/{{ insId }}/{{ insName }}/archives">
-        <img src="{{ url_for('static', filename = 'assets/archives.png') }}" alt="archives">
-        <h4>resources</h4>
-      </a>
-    </div>
-  </div>  
-  
+
 </body>
 </html>

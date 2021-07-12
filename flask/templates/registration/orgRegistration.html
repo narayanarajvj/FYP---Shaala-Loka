@@ -3,9 +3,12 @@
 
 
 {% block body %}
-    <h2 class="heading">Organisation Registration</h2>
+    <h2 class="heading"><b>Organisation Registration</b></h2>
     <h4 class="login-link"> Have an account? <a href="/login"> Login to your account </a> </h4>
 
+    {% if error %}
+        <p class="login-link" style="color: red"><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
 
     <div class="form">
   	    <form action = "/organization-registration" method = "POST">

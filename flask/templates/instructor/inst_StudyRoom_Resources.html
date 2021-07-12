@@ -21,7 +21,7 @@
 <div class="inst-stud-room-resources-container">
   {% if docs %}
     {% for doc in docs %}
-    <div class="studyRoomResourcesCard">
+    <div class="studyRoomResourcesCard" title="Click to Download">
         <a style="text-decoration: none;" href="{{ doc.to_dict()['url'] }}">
           {% if doc.to_dict()['instructor_id'] %}
             <img src="{{ url_for('static', filename = 'assets/inst_file.png') }}" alt="file">

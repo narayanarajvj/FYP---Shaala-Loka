@@ -21,8 +21,8 @@
             <p id="class"> Class: {{ doc.to_dict()['level'] }} </p>
             <p id="sec"> Section: {{ doc.to_dict()['section'] }} </p>
           </div>
-          <form action="" method="" style="text-align: center;">
-          <button class="w3-button w3-red w3-hover-red w3-padding-small w3-margin-bottom w3-round w3-large" title="Leave Study Hall" onclick="alert('Are you sure you want to Leave this Study Hall?');">Leave Study Hall</button>
+          <form action="/student/{{ orgId }}/{{ stuId }}/{{ stuName }}/{{ doc.to_dict()['subject_id'] }}/leave-study-hall" method="POST" style="text-align: center;">
+            <button class="w3-button w3-red w3-hover-red w3-padding-small w3-margin-bottom w3-round w3-large" title="Leave Study Hall" onclick="alert('Are you sure you want to Leave this Study Hall?');">Leave Study Hall</button>
           </form>
       <div class="custom-shape-divider-top-1621680160" >
           <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
@@ -40,7 +40,7 @@
 <!------------------ JOIN STUDY HALL MODAL POPUP -------------------->
 <div class="modal" id="modal">
   <div class="modal-header" >
-    <h4 class="modal-title">List Of Study Halls</h4>
+    <h4 class="modal-title"><b>List Of Study Halls</b></h4>
     <button data-close-button class="btn-close">&times</button>
   </div>
   <div class="modal-body">

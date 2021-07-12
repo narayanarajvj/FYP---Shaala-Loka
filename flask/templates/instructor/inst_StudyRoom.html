@@ -25,7 +25,7 @@
             <p id="class"> Class: {{ doc.to_dict()['level'] }} </p>
             <p id="sec"> Section: {{ doc.to_dict()['section'] }} </p>
           </div>
-          <form action="" method="" style="text-align: center;">
+          <form action="/{{ orgId }}/{{ insId }}/{{ insName }}/{{ doc.to_dict()['subject_id'] }}/delete-study-hall" method="POST" style="text-align: center;">
             <button class="w3-button w3-red w3-hover-red w3-padding-small w3-margin-bottom w3-round w3-large" title="Leave Study Hall" onclick="alert('Are you sure you want to Delete this Study Hall?');">Delete Study Hall</button>
           </form>
       <div class="custom-shape-divider-top-1621680160" >
@@ -43,7 +43,7 @@
  <!-------------- MODAL POPUP --------------->
     <div class="modal" id="modal">
       <div class="modal-header" >
-        <h4 class="modal-title">New Study Hall</h4>
+        <h4 class="modal-title"><b>New Study Hall</b></h4>
         <button data-close-button class="btn-close">&times</button>
       </div>
       <div class="modal-body">
@@ -57,7 +57,7 @@
           <select name="level" id="level" required>
             <option selected disabled value="">Please Select Your Level</option>
             {% for i in range(1,13) %}
-              <option value="1">{{ i }}</option>
+              <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
           </select>
           <input type="text" name="section" placeholder="Section" required>

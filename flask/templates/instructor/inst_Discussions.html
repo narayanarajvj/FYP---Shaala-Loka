@@ -10,16 +10,16 @@
     <h4> {{ sh_name }} [{{ level }}-{{ section }}] </h4>
   </div>
 
-  <div class="inst-dis-cont w3-light-grey w3-border-black w3-container w3-border-right" style="width:81%;">
+  <div class="inst-dis-cont w3-light-grey w3-border-black w3-container w3-border-right" id="msg-box" style="width:81%;">
 
     {% if docs %}
     {% for doc in docs %}
     {% if doc.to_dict()['id'] != insId %}
       <div class="w3-container w3-section w3-block ">
         <div class="inst-dis-left-msg w3-container w3-left w3-text-white w3-round-large w3-border w3-animate-opacity" style="min-width:20%; max-width: 47%;">
-          <p class="w3-small w3-cell-top">{{ doc.to_dict()['name'] }}</p>
+          <p class="w3-small w3-cell-top"><em>{{ doc.to_dict()['name'] }}</em></p>
           <p class="text">{{ doc.to_dict()['message'] }}</p>
-          <p class="w3-tiny w3-cell-bottom">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+          <p class="w3-tiny w3-cell-bottom"><em>{{ convert_timestamp(doc.to_dict()['timestamp']) }}</em></p> 
         </div>
       </div>
     {% endif %}
@@ -28,7 +28,7 @@
     <div class="w3-container w3-section w3-margin-right w3-block">
       <div class="dis-right-msg w3-container w3-right w3-round-large w3-white w3-border w3-animate-opacity" style="min-width:20%; max-width: 47%;">
         <p class="text w3-margin-top">{{ doc.to_dict()['message'] }}</p>
-        <p class="w3-tiny w3-cell-bottom w3-right-align">{{ convert_timestamp(doc.to_dict()['timestamp']) }}</p> 
+        <p class="w3-tiny w3-cell-bottom w3-right-align"><em>{{ convert_timestamp(doc.to_dict()['timestamp']) }}</em></p> 
       </div>
     </div>
     {% endif %}
@@ -44,5 +44,9 @@
     </form>
   </div>
 
+  <script>
+    var objDiv = document.getElementById("msg-box");
+    objDiv.scrollTop = objDiv.scrollHeight;
+  </script>
 
 {% endblock %}
