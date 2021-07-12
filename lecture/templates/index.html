@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Shaala Loka Lecture</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+        <link rel="shortcut icon" href="{{ url_for('static', filename = 'assets/title_logo.ico') }}">
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <!-- <div class="w3-bar w3-white w3-border w3-xlarge w3-hide-small">
+            <a href="" class="w3-bar-item" style="padding:0 0 3% 0" >
+                <img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%"style="width:200px; margin-top:0;" alt="Shaala Loka Logo"/>
+            </a>
+        </div> -->
+        <h3 class="w3-center"><img src="{{ url_for('static', filename = 'assets/Shaala_Loka_Logo.png') }}" width="100%" style="width:200px; margin-top:0;" alt="Shaala Loka Logo"/><b>LECTURE SESSION</b></h3>
+        <form class="to-join w3-center">
+            <input type="text" class="w3-round  w3-padding-small" placeholder="Enter your Name..." name=”username” id="username">
+            <button id="join_leave" class="w3-round  w3-padding-small w3-text-black" style="background: #edb230;">Join</button>
+            <button id="share_screen" class="w3-round w3-padding-small w3-margin-left" style="background: #245d74;" disabled>Share Screen</button>
+            <button id="toggle_chat" class="w3-round w3-padding-small w3-margin-left" style="background: #245d74;" disabled>Messages</button>
+            <!-- <button class="w3-round w3-padding-small w3-margin-left" id="muteAudio">Mute</button> -->
+            <!-- <button class="w3-round w3-padding-small w3-margin-left" id="stopVideo">Video Off</button> -->
+        </form>
+        <p id="count" class="w3-center">Disconnected...</p>
+        <div id="root">
+            <div id="container" class="container">
+                <div id="local" class="participant"><div class="w3-round"></div><div class="label w3-round">You</div></div>
+                <!-- more participants will be added dynamically here -->
+            </div>
+            <div id="chat">
+                <div id="chat-scroll">
+                    <div id="chat-content">
+                        <!-- chat content will be added dynamically here -->
+                    </div>
+                </div>
+                <input id="chat-input" title="Click Enter to Send the message." placeholder="Type Message here and Click Enter to Send" type="text">
+            </div>
+        </div>
+        <script src="https://media.twiliocdn.com/sdk/js/video/releases/2.3.0/twilio-video.min.js"></script>
+        <script src="https://media.twiliocdn.com/sdk/js/conversations/releases/1.0.0/twilio-conversations.min.js"></script>
+        <script src="{{ url_for('static', filename='app.js') }}"></script>
+        <!-- <script>
+            const off=function(){
+                local_stream.getAudioTracks()[0].enabled = false;
+            };
+            const on=function(){
+                local_stream.getAudioTracks()[0].enabled = true;
+            };
+        </script> -->
+    </body>
+</html>
